@@ -1,0 +1,466 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (P.R.C.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\SysMon.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\SysMon.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 235, 55
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 SysMon"
+FONT 9, "宋体"
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    CTEXT           "SysMon v1.0 Beta",IDC_STATIC,48,10,119,8,SS_NOPREFIX
+    CTEXT           "COPYLEFT 2001",IDC_STATIC,48,23,119,8
+    DEFPUSHBUTTON   "确定",IDOK,178,7,50,14,WS_GROUP
+    CTEXT           "Written by Anaki",IDC_STATIC,48,36,119,8
+END
+
+IDD_SYSMON_DIALOG DIALOGEX 0, 0, 248, 191
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "SysMon"
+MENU IDR_MENU_SYS
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+END
+
+IDD_PROPPAGE_SERVICE DIALOG DISCARDABLE  0, 0, 235, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "服务管理"
+FONT 9, "宋体"
+BEGIN
+    GROUPBOX        "服务类型",IDC_TYPE,7,7,58,48,WS_GROUP
+    CONTROL         "Services",IDC_TYPESERVICES,"Button",BS_AUTOCHECKBOX | 
+                    BS_PUSHLIKE | WS_TABSTOP,15,21,43,12
+    CONTROL         "Drivers",IDC_TYPEDRIVERS,"Button",BS_AUTOCHECKBOX | 
+                    BS_PUSHLIKE | WS_TABSTOP,15,37,43,12
+    GROUPBOX        "查看服务",IDC_VIEW,7,61,58,50,WS_GROUP
+    CONTROL         "已停止",IDC_VIEWSTOPED,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,15,87,35,8
+    CONTROL         "全部",IDC_VIEWALL,"Button",BS_AUTORADIOBUTTON,15,99,35,
+                    8
+    CONTROL         "运行中",IDC_VIEWRUNNING,"Button",BS_AUTORADIOBUTTON,15,
+                    75,35,8
+    PUSHBUTTON      "新建服务...",IDC_CREATESVR,12,118,50,14
+    PUSHBUTTON      "查看记录...",IDC_VIEWLOG,12,135,50,14
+    CONTROL         "List1",IDC_SVRLIST,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | WS_BORDER | WS_TABSTOP,68,7,160,142
+END
+
+IDD_PROPPAGE_SETTING DIALOG DISCARDABLE  0, 0, 235, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "综合设置"
+FONT 9, "宋体"
+BEGIN
+    CONTROL         "退出时保存设置",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,50,138,72,10
+    GROUPBOX        "日志设置",IDC_STATIC,7,7,110,124
+    LTEXT           "服务管理日志:",IDC_STATIC,14,20,53,8
+    LTEXT           "监控日志:",IDC_STATIC,14,75,37,8
+    EDITTEXT        IDC_EDIT2,20,30,87,12,ES_AUTOHSCROLL
+    CONTROL         "限制大小",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,20,61,45,10
+    EDITTEXT        IDC_EDIT3,66,60,28,12
+    LTEXT           "K",IDC_STATIC,95,62,8,8
+    PUSHBUTTON      "浏览...",IDC_BUTTON1,74,44,33,14
+    EDITTEXT        IDC_EDIT4,20,85,87,12,ES_AUTOHSCROLL
+    CONTROL         "限制大小",IDC_CHECK3,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,20,118,45,10
+    EDITTEXT        IDC_EDIT5,66,116,28,12
+    LTEXT           "K",IDC_STATIC,95,118,8,8
+    PUSHBUTTON      "浏览...",IDC_BUTTON2,74,99,33,14
+    GROUPBOX        "刷新频率",IDC_STATIC,125,7,103,124
+    LTEXT           "系统资源:",IDC_STATIC,133,19,37,8
+    CONTROL         "Slider1",IDC_SLIDER1,"msctls_trackbar32",TBS_BOTH | 
+                    TBS_NOTICKS | WS_TABSTOP,140,29,82,6
+    LTEXT           "进程管理:",IDC_STATIC,133,41,37,8
+    CONTROL         "Slider1",IDC_SLIDER2,"msctls_trackbar32",TBS_BOTH | 
+                    TBS_NOTICKS | WS_TABSTOP,140,51,82,6
+    LTEXT           "服务管理:",IDC_STATIC,133,63,37,8
+    CONTROL         "Slider1",IDC_SLIDER3,"msctls_trackbar32",TBS_BOTH | 
+                    TBS_NOTICKS | WS_TABSTOP,140,73,82,6
+    LTEXT           "手动",IDC_STATIC,189,19,17,8
+    LTEXT           "手动",IDC_STATIC,189,41,17,8
+    LTEXT           "手动",IDC_STATIC,189,63,17,8
+    LTEXT           "监控",IDC_STATIC,133,85,17,8
+    CONTROL         "Slider1",IDC_SLIDER4,"msctls_trackbar32",TBS_BOTH | 
+                    TBS_NOTICKS | WS_TABSTOP,140,95,82,6
+    LTEXT           "手动",IDC_STATIC,189,85,17,8
+    LTEXT           "计划任务:",IDC_STATIC,133,107,37,8
+    CONTROL         "Slider1",IDC_SLIDER5,"msctls_trackbar32",TBS_BOTH | 
+                    TBS_NOTICKS | WS_TABSTOP,140,117,82,6
+    LTEXT           "手动",IDC_STATIC,189,107,17,8
+    PUSHBUTTON      "应用",IDC_BUTTON3,196,135,32,14
+    PUSHBUTTON      "默认值",IDC_BUTTON4,159,135,32,14
+END
+
+IDD_PROPPAGE_PROCESS DIALOG DISCARDABLE  0, 0, 235, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "进程管理"
+FONT 9, "宋体"
+BEGIN
+    CONTROL         "List1",IDC_LIST_PROCESS,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | WS_BORDER | WS_TABSTOP,7,7,221,142
+END
+
+IDD_PROPPAGE_RULE DIALOG DISCARDABLE  0, 0, 236, 157
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "监控规则"
+FONT 9, "宋体"
+BEGIN
+    CONTROL         "List1",IDC_RULELIST,"SysListView32",LVS_REPORT | 
+                    WS_BORDER | WS_TABSTOP,7,20,222,83
+    LTEXT           "",IDC_STATIC,8,8,8,8
+    GROUPBOX        "响应方式",IDC_STATIC,7,106,82,44
+    CONTROL         "重新启动服务",IDC_RADIO_RESTART,"Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP,14,119,72,10
+    CONTROL         "重新启动计算机",IDC_RADIO_REBOOT,"Button",
+                    BS_AUTORADIOBUTTON | WS_TABSTOP,14,134,72,10
+    CONTROL         "重新启动时,发送消息到:",IDC_CHECK_SENDMSG,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,97,123,99,10
+    EDITTEXT        IDC_EDIT_MSGTO,97,136,132,14,ES_AUTOHSCROLL | 
+                    WS_DISABLED
+    PUSHBUTTON      "添加监视",IDC_BUTTON_ADDMON,87,4,40,14
+    PUSHBUTTON      "删除监视",IDC_BUTTON_DECMON,131,4,40,14,WS_DISABLED
+    PUSHBUTTON      "应 用",ID_APPLY_NOW,189,4,40,14,WS_DISABLED
+    EDITTEXT        IDC_EDIT_PERCENT,151,108,12,12,ES_RIGHT | ES_NUMBER | 
+                    WS_DISABLED
+    CONTROL         "当资源少于",IDC_CHECK_RESOURCE,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,97,109,52,10
+    LTEXT           "% 时,重启计算机",IDC_STATIC,165,109,61,10,
+                    SS_CENTERIMAGE
+    CONTROL         "启动监控功能",IDC_CHECK_STARTMON,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,8,7,60,8
+END
+
+IDD_PROPPAGE_SYSINFO DIALOG DISCARDABLE  0, 0, 235, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "系统信息"
+FONT 9, "宋体"
+BEGIN
+    GROUPBOX        "内存状况(K)",IDC_MEMORY,7,7,108,142
+    LTEXT           "使用率:",IDC_MEMORYPERCENT,13,23,53,8
+    LTEXT           "物理内存:",IDC_MEMORYPHYSICAL,13,41,53,8
+    LTEXT           "剩余物理内存:",IDC_MEMORYPHYSICALLEFT,13,59,53,8
+    LTEXT           "页面总数:",IDC_MEMORYPAGE,13,77,53,8
+    LTEXT           "剩余页面数:",IDC_MEMORYPAGELEFT,13,95,53,8
+    LTEXT           "虚拟内存:",IDC_MEMORYUSER,13,113,53,8
+    LTEXT           "剩余虚拟内存:",IDC_MEMORYUSERLEFT,13,131,53,8
+    RTEXT           "未知",IDC_MEMPERCENT,71,23,39,8
+    RTEXT           "未知",IDC_MEMPHYSICAL,71,41,39,8
+    RTEXT           "未知",IDC_MEMPHYSICALLEFT,71,59,39,8
+    RTEXT           "未知",IDC_MEMPAGE,71,77,39,8
+    RTEXT           "未知",IDC_MEMPAGELEFT,71,95,39,8
+    RTEXT           "未知",IDC_MEMUSER,67,113,43,8
+    RTEXT           "未知",IDC_MEMUSERLEFT,67,131,43,8
+    GROUPBOX        "系统资源",IDC_RESOURCE,120,7,108,142
+END
+
+IDD_PROPPAGE_TASK DIALOG DISCARDABLE  0, 0, 235, 156
+STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "计划任务"
+FONT 9, "宋体"
+BEGIN
+END
+
+IDD_DIALOG1 DIALOGEX 0, 0, 199, 135
+STYLE WS_POPUP | WS_CAPTION
+EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "请选择需要监控的服务"
+FONT 9, "宋体", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "添加(&A)",IDOK,85,118,50,14
+    PUSHBUTTON      "取消(&C)",IDCANCEL,142,118,50,14
+    CONTROL         "List1",IDC_LIST_SELECT,"SysListView32",LVS_REPORT | 
+                    WS_BORDER | WS_TABSTOP,7,7,185,106
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x29L
+#else
+ FILEFLAGS 0x28L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "SysMon Microsoft 基础类应用程序\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "SysMon\0"
+            VALUE "LegalCopyright", "版权所有 (C) 2001\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "SysMon.EXE\0"
+            VALUE "PrivateBuild", "0327\0"
+            VALUE "ProductName", "SysMon 应用程序\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "SpecialBuild", "Beta\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_SYSMON_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 241
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 184
+    END
+
+    IDD_PROPPAGE_SERVICE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 149
+    END
+
+    IDD_PROPPAGE_SETTING, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 149
+    END
+
+    IDD_PROPPAGE_PROCESS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 149
+    END
+
+    IDD_PROPPAGE_RULE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 229
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 150
+    END
+
+    IDD_PROPPAGE_SYSINFO, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 149
+    END
+
+    IDD_PROPPAGE_TASK, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 149
+    END
+
+    IDD_DIALOG1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 192
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 128
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU_SYS MENU DISCARDABLE 
+BEGIN
+    POPUP "系统(&S)"
+    BEGIN
+        MENUITEM "帮助(&H)",                    IDM_SYS_HELP
+        MENUITEM "关于(&A)...",                 IDR_SYS_ABOUT
+        MENUITEM SEPARATOR
+        MENUITEM "退出(&E)",                    IDM_SYS_EXIT
+    END
+END
+
+IDR_MENU_PROCESS MENU DISCARDABLE 
+BEGIN
+    POPUP "_PROCESS_"
+    BEGIN
+        MENUITEM "正常结束(&Q)",                IDM_PROC_SENDMSG
+        MENUITEM "强行终止(&T)",                IDM_PROC_TERMINATE
+        MENUITEM SEPARATOR
+        MENUITEM "刷新列表(&R)",                IDM_PROC_REFRESH
+    END
+END
+
+IDR_MENU_SHELLICON MENU DISCARDABLE 
+BEGIN
+    POPUP "_ShellIcon_"
+    BEGIN
+        MENUITEM "显示主窗口(&S)",              IDM_SHELLICON_SHOWWINDOW
+        MENUITEM SEPARATOR
+        MENUITEM "退出(&E)",                    IDM_SHELLICON_EXIT
+    END
+END
+
+IDR_MENU_SERVICE MENU DISCARDABLE 
+BEGIN
+    POPUP "_Service_"
+    BEGIN
+        MENUITEM "启动服务(&L)",                IDM_SVR_LOAD
+        MENUITEM "停止服务(&S)",                IDM_SVR_STOP
+        MENUITEM "暂停服务(&P)",                IDM_SVR_PAUSE
+        MENUITEM "继续服务(&R)",                IDM_SVR_RESUME
+        MENUITEM SEPARATOR
+        MENUITEM "刷新列表(&F)",                IDM_SVR_REFRESH
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "关于 SysMon(&A)..."
+END
+
+#endif    // Chinese (P.R.C.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\SysMon.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
