@@ -27,7 +27,7 @@ IMPLEMENT_DYNCREATE(CPropService, CPropertyPage)
 CPropService::CPropService() : CPropertyPage(CPropService::IDD)
 {
 	//{{AFX_DATA_INIT(CPropService)
-		// NOTE: the ClassWizard will add member initialization here
+	// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 }
 
@@ -35,7 +35,7 @@ CPropService::~CPropService()
 {
 }
 
-void CPropService::DoDataExchange(CDataExchange* pDX)
+void CPropService::DoDataExchange(CDataExchange *pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CPropService)
@@ -43,96 +43,93 @@ void CPropService::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CPropService, CPropertyPage)
-	//{{AFX_MSG_MAP(CPropService)
-	ON_BN_CLICKED(IDC_TYPEDRIVERS, OnTypeDrivers)
-	ON_BN_CLICKED(IDC_TYPESERVICES, OnTypeServices)
-	ON_BN_CLICKED(IDC_VIEWALL, OnViewAll)
-	ON_BN_CLICKED(IDC_VIEWSTOPED, OnViewStoped)
-	ON_BN_CLICKED(IDC_VIEWRUNNING, OnViewRunning)
-	ON_BN_CLICKED(IDC_CREATESVR, OnCreateSvr)
-	ON_BN_CLICKED(IDC_VIEWLOG, OnViewLog)
-	ON_WM_CONTEXTMENU()
-	ON_COMMAND(IDM_SVR_LOAD, OnSvrLoad)
-	ON_COMMAND(IDM_SVR_STOP, OnSvrStop)
-	ON_COMMAND(IDM_SVR_RESUME, OnSvrResume)
-	ON_COMMAND(IDM_SVR_PAUSE, OnSvrPause)
-	ON_COMMAND(IDM_SVR_REFRESH, OnSvrRefresh)
-	ON_UPDATE_COMMAND_UI(IDM_SVR_LOAD, OnUpdateSvrLoad)
-	ON_UPDATE_COMMAND_UI(IDM_SVR_PAUSE, OnUpdateSvrPause)
-	ON_UPDATE_COMMAND_UI(IDM_SVR_RESUME, OnUpdateSvrResume)
-	ON_UPDATE_COMMAND_UI(IDM_SVR_STOP, OnUpdateSvrStop)
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CPropService)
+ON_BN_CLICKED(IDC_TYPEDRIVERS, OnTypeDrivers)
+ON_BN_CLICKED(IDC_TYPESERVICES, OnTypeServices)
+ON_BN_CLICKED(IDC_VIEWALL, OnViewAll)
+ON_BN_CLICKED(IDC_VIEWSTOPED, OnViewStoped)
+ON_BN_CLICKED(IDC_VIEWRUNNING, OnViewRunning)
+ON_BN_CLICKED(IDC_CREATESVR, OnCreateSvr)
+ON_BN_CLICKED(IDC_VIEWLOG, OnViewLog)
+ON_WM_CONTEXTMENU()
+ON_COMMAND(IDM_SVR_LOAD, OnSvrLoad)
+ON_COMMAND(IDM_SVR_STOP, OnSvrStop)
+ON_COMMAND(IDM_SVR_RESUME, OnSvrResume)
+ON_COMMAND(IDM_SVR_PAUSE, OnSvrPause)
+ON_COMMAND(IDM_SVR_REFRESH, OnSvrRefresh)
+ON_UPDATE_COMMAND_UI(IDM_SVR_LOAD, OnUpdateSvrLoad)
+ON_UPDATE_COMMAND_UI(IDM_SVR_PAUSE, OnUpdateSvrPause)
+ON_UPDATE_COMMAND_UI(IDM_SVR_RESUME, OnUpdateSvrResume)
+ON_UPDATE_COMMAND_UI(IDM_SVR_STOP, OnUpdateSvrStop)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CPropService message handlers
 
-BOOL CPropService::OnInitDialog() 
+BOOL CPropService::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
-	
+
 	// TODO: Add extra initialization here
 	m_strMachineName = GetLocalMachineName();
 
-	// ≥ı ºªØ CListCtrl
-	m_svrList.InsertColumn(0, _T("–Ú∫≈"), LVCFMT_LEFT, 70);
-	m_svrList.InsertColumn(1, _T("œ‘ æ√˚≥∆"), LVCFMT_LEFT, 70);
-	m_svrList.InsertColumn(2, _T("∑˛ŒÒ√˚≥∆"), LVCFMT_LEFT, 70);
-	m_svrList.InsertColumn(3, _T("∑˛ŒÒ¿‡–Õ"), LVCFMT_LEFT, 70);
-	m_svrList.InsertColumn(4, _T("∆Ù∂Ø¿‡±"), LVCFMT_LEFT, 70);
+	// ÂàùÂßãÂåñ CListCtrl
+	m_svrList.InsertColumn(0, _T("Â∫èÂè∑"), LVCFMT_LEFT, 70);
+	m_svrList.InsertColumn(1, _T("ÊòæÁ§∫ÂêçÁß∞"), LVCFMT_LEFT, 70);
+	m_svrList.InsertColumn(2, _T("ÊúçÂä°ÂêçÁß∞"), LVCFMT_LEFT, 70);
+	m_svrList.InsertColumn(3, _T("ÊúçÂä°Á±ªÂûã"), LVCFMT_LEFT, 70);
+	m_svrList.InsertColumn(4, _T("ÂêØÂä®Á±ªÂà´"), LVCFMT_LEFT, 70);
 
-	m_svrList.InsertColumn(5, _T("µ±«∞◊¥Ã¨"), LVCFMT_LEFT, 50);
-	m_svrList.InsertColumn(6, _T("∆Ù∂Ø◊È»∫"), LVCFMT_LEFT, 50);
-	m_svrList.InsertColumn(7, _T("∆Ù∂Ø”√ªß"), LVCFMT_LEFT, 50);
-	m_svrList.InsertColumn(8, _T("“¿¥Êπÿœµ"), LVCFMT_LEFT, 50);
-	m_svrList.InsertColumn(9, _T("Œƒº˛¬∑æ∂"), LVCFMT_LEFT, 150);
-/*// For Future
-	m_svrList.InsertColumn(10, _T("√Ë ˆ"), LVCFMT_LEFT, 70);
+	m_svrList.InsertColumn(5, _T("ÂΩìÂâçÁä∂ÊÄÅ"), LVCFMT_LEFT, 50);
+	m_svrList.InsertColumn(6, _T("ÂêØÂä®ÁªÑÁæ§"), LVCFMT_LEFT, 50);
+	m_svrList.InsertColumn(7, _T("ÂêØÂä®Áî®Êà∑"), LVCFMT_LEFT, 50);
+	m_svrList.InsertColumn(8, _T("‰æùÂ≠òÂÖ≥Á≥ª"), LVCFMT_LEFT, 50);
+	m_svrList.InsertColumn(9, _T("Êñá‰ª∂Ë∑ØÂæÑ"), LVCFMT_LEFT, 150);
+	/*// For Future
+	m_svrList.InsertColumn(10, _T("ÊèèËø∞"), LVCFMT_LEFT, 70);
 //*/
-    m_svrList.SetExtendedStyle(m_svrList.GetExtendedStyle()
-        |LVS_EX_FULLROWSELECT|LVS_EX_GRIDLINES|LVS_EX_HEADERDRAGDROP
-		|LVS_EX_ONECLICKACTIVATE);
+	m_svrList.SetExtendedStyle(m_svrList.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES | LVS_EX_HEADERDRAGDROP | LVS_EX_ONECLICKACTIVATE);
 
-	m_svrList.SetFocus();	// À˘“‘∫Ø ˝∑µªÿ FALSE
+	m_svrList.SetFocus(); // ÊâÄ‰ª•ÂáΩÊï∞ËøîÂõû FALSE
 
-	// À¢–¬¡–±Ì
-	((CButton*)GetDlgItem(IDC_TYPESERVICES))->SetCheck(1);
-	((CButton*)GetDlgItem(IDC_VIEWRUNNING))->SetCheck(1);
+	// Âà∑Êñ∞ÂàóË°®
+	((CButton *)GetDlgItem(IDC_TYPESERVICES))->SetCheck(1);
+	((CButton *)GetDlgItem(IDC_VIEWRUNNING))->SetCheck(1);
 	m_dwType = SERVICE_WIN32;
 	m_dwStatus = SERVICE_ACTIVE;
 
 	GetSvrList();
 	AutoSizeColumns(&m_svrList);
 
-	return FALSE;  // return TRUE  unless you set the focus to a control
+	return FALSE; // return TRUE  unless you set the focus to a control
 }
 
 CString CPropService::GetStartupString(DWORD dwStartupType)
 {
 	CString strStartup;
 
-	switch(dwStartupType)
+	switch (dwStartupType)
 	{
-		case SERVICE_BOOT_START:
-			strStartup = _T("Boot");
-			break;
-		case SERVICE_SYSTEM_START:
-			strStartup = _T("System");
-			break;
-		case SERVICE_AUTO_START:
-			strStartup = _T("Automatic");
-			break;
-		case SERVICE_DEMAND_START:
-			strStartup = _T("Manual");
-			break;
-		case SERVICE_DISABLED:
-			strStartup = _T("Disabled");
-			break;
-		default:
-			strStartup = _T("Unknown");
-			break;
+	case SERVICE_BOOT_START:
+		strStartup = _T("Boot");
+		break;
+	case SERVICE_SYSTEM_START:
+		strStartup = _T("System");
+		break;
+	case SERVICE_AUTO_START:
+		strStartup = _T("Automatic");
+		break;
+	case SERVICE_DEMAND_START:
+		strStartup = _T("Manual");
+		break;
+	case SERVICE_DISABLED:
+		strStartup = _T("Disabled");
+		break;
+	default:
+		strStartup = _T("Unknown");
+		break;
 	}
 
 	return strStartup;
@@ -142,32 +139,32 @@ CString CPropService::GetStatusString(DWORD dwServiceStatus)
 {
 	CString strStatus;
 
-	switch(dwServiceStatus)
+	switch (dwServiceStatus)
 	{
-		case SERVICE_STOPPED:
-			strStatus = _T("Stopped");
-			break;
-		case SERVICE_START_PENDING:
-			strStatus = _T("Starting");
-			break;
-		case SERVICE_STOP_PENDING:
-			strStatus = _T("Stopping");
-			break;
-		case SERVICE_RUNNING:
-			strStatus = _T("Running");
-			break;
-		case SERVICE_CONTINUE_PENDING:
-			strStatus = _T("Continuing");
-			break;
-		case SERVICE_PAUSE_PENDING:
-			strStatus = _T("Pausing");
-			break;
-		case SERVICE_PAUSED:
-			strStatus = _T("Paused");
-			break;
-		default:
-			strStatus = _T("Unknown");
-			break;
+	case SERVICE_STOPPED:
+		strStatus = _T("Stopped");
+		break;
+	case SERVICE_START_PENDING:
+		strStatus = _T("Starting");
+		break;
+	case SERVICE_STOP_PENDING:
+		strStatus = _T("Stopping");
+		break;
+	case SERVICE_RUNNING:
+		strStatus = _T("Running");
+		break;
+	case SERVICE_CONTINUE_PENDING:
+		strStatus = _T("Continuing");
+		break;
+	case SERVICE_PAUSE_PENDING:
+		strStatus = _T("Pausing");
+		break;
+	case SERVICE_PAUSED:
+		strStatus = _T("Paused");
+		break;
+	default:
+		strStatus = _T("Unknown");
+		break;
 	}
 
 	return strStatus;
@@ -179,18 +176,18 @@ BOOL CPropService::GetSvrList()
 	LONG lRet = 0L;
 
 	lRet = RegOpenKey(HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Services",
-		&hRegServicesKey);
+					  &hRegServicesKey);
 
-	if(lRet == NO_ERROR)
+	if (lRet == NO_ERROR)
 	{
 		DWORD dwSubKeys = 0, dwMaxSubKeyNameLen = 0;
-		lRet = RegQueryInfoKey(hRegServicesKey, NULL, NULL, NULL, &dwSubKeys, &dwMaxSubKeyNameLen, 
-			NULL, NULL, NULL, NULL, NULL, NULL);
+		lRet = RegQueryInfoKey(hRegServicesKey, NULL, NULL, NULL, &dwSubKeys, &dwMaxSubKeyNameLen,
+							   NULL, NULL, NULL, NULL, NULL, NULL);
 
-		if(lRet)
+		if (lRet)
 		{
 			WriteToLog(
-				"\n****************\n≤È—Ø◊¢≤·±ÌœÓ ß∞‹!\nHKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services \n¥ÌŒÛ–≈œ¢:\n",
+				"\n****************\nÊü•ËØ¢Ê≥®ÂÜåË°®È°πÂ§±Ë¥•!\nHKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services \nÈîôËØØ‰ø°ÊÅØ:\n",
 				lRet);
 
 			return FALSE;
@@ -198,10 +195,10 @@ BOOL CPropService::GetSvrList()
 
 		SC_HANDLE hSCManager = OpenSCManager(m_strMachineName, NULL, GENERIC_READ);
 
-		if(hSCManager == NULL)
+		if (hSCManager == NULL)
 		{
 			WriteToLog(
-				"\n****************\n¥Úø™∑˛ŒÒπ‹¿Ìæ‰±˙ ß∞‹!\nHKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services \n¥ÌŒÛ–≈œ¢:\n",
+				"\n****************\nÊâìÂºÄÊúçÂä°ÁÆ°ÁêÜÂè•ÊüÑÂ§±Ë¥•!\nHKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services \nÈîôËØØ‰ø°ÊÅØ:\n",
 				GetLastError());
 
 			return FALSE;
@@ -209,7 +206,7 @@ BOOL CPropService::GetSvrList()
 
 		VERIFY(dwMaxSubKeyNameLen <= MAX_PATH + 1);
 		m_svrList.SetRedraw(false);
-		for (DWORD dwIndex = 0;	dwIndex < dwSubKeys; dwIndex++)
+		for (DWORD dwIndex = 0; dwIndex < dwSubKeys; dwIndex++)
 		{
 			char pszServiceName[MAX_PATH + 1] = "";
 			char pszStartup[128] = "";
@@ -219,24 +216,24 @@ BOOL CPropService::GetSvrList()
 			//	RegQueryInfoKey
 			lRet = RegEnumKey(hRegServicesKey, dwIndex, pszServiceName, dwServiceNameLen);
 
-			if(lRet == ERROR_NO_MORE_ITEMS)
+			if (lRet == ERROR_NO_MORE_ITEMS)
 				break;
 
-			if(lRet != NO_ERROR)
+			if (lRet != NO_ERROR)
 			{
 				WriteToLog(
-					"\n****************\n√∂æŸ◊¢≤·±ÌœÓ ß∞‹!\nHKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services \nindex = Œ¥÷™\n¥ÌŒÛ–≈œ¢:\n",
+					"\n****************\nÊûö‰∏æÊ≥®ÂÜåË°®È°πÂ§±Ë¥•!\nHKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services \nindex = Êú™Áü•\nÈîôËØØ‰ø°ÊÅØ:\n",
 					GetLastError());
 
 				continue;
 			}
 
 			SC_HANDLE hService = OpenService(hSCManager, pszServiceName, GENERIC_READ);
-			if(hService == NULL)
+			if (hService == NULL)
 			{
 				CString errMsg;
 				errMsg.Format("\n\nIndex = %03d\nServiceName = %s\n", dwIndex, pszServiceName);
-				errMsg += "****************\n¥Úø™∑˛ŒÒ¥ÌŒÛ!\n¥ÌŒÛ–≈œ¢:\n";
+				errMsg += "****************\nÊâìÂºÄÊúçÂä°ÈîôËØØ!\nÈîôËØØ‰ø°ÊÅØ:\n";
 				WriteToLog(errMsg, GetLastError());
 
 				continue;
@@ -247,14 +244,14 @@ BOOL CPropService::GetSvrList()
 			// pass a false size to QueryServiceConfig
 			QueryServiceConfig(hService, NULL, 0, &cbBytesNeeded);
 			pqsc = (LPQUERY_SERVICE_CONFIG)malloc(cbBytesNeeded);
-			if(QueryServiceConfig(hService, pqsc, cbBytesNeeded, &cbBytesNeeded) == 0)
+			if (QueryServiceConfig(hService, pqsc, cbBytesNeeded, &cbBytesNeeded) == 0)
 			{
 				free(pqsc);
 				CloseServiceHandle(hService);
 				hService = 0;
 
 				WriteToLog(
-					"\n****************\n≤È—Ø∑˛ŒÒ≈‰÷√¥ÌŒÛ!\n¥ÌŒÛ–≈œ¢:\n",
+					"\n****************\nÊü•ËØ¢ÊúçÂä°ÈÖçÁΩÆÈîôËØØ!\nÈîôËØØ‰ø°ÊÅØ:\n",
 					GetLastError());
 
 				continue;
@@ -262,7 +259,7 @@ BOOL CPropService::GetSvrList()
 
 			strcpy(pszStartup, GetStartupString(pqsc->dwStartType));
 
-			if(!(pqsc->dwServiceType & m_dwType))
+			if (!(pqsc->dwServiceType & m_dwType))
 			{
 				free(pqsc);
 				CloseServiceHandle(hService);
@@ -270,21 +267,21 @@ BOOL CPropService::GetSvrList()
 
 				continue;
 			}
-			
-			// »°∑˛ŒÒµ±«∞◊¥Ã¨
+
+			// ÂèñÊúçÂä°ÂΩìÂâçÁä∂ÊÄÅ
 			SERVICE_STATUS ss;
-			if(QueryServiceStatus(hService, &ss))
+			if (QueryServiceStatus(hService, &ss))
 				strcpy(pszStatus, GetStatusString(ss.dwCurrentState));
 			else
 			{
-				strcpy(pszStatus, _T("Œ¥÷™"));
+				strcpy(pszStatus, _T("Êú™Áü•"));
 				WriteToLog(
-					"\n****************\n»°∑˛ŒÒµ±«∞◊¥Ã¨ ß∞‹!\n¥ÌŒÛ–≈œ¢:\n",
+					"\n****************\nÂèñÊúçÂä°ÂΩìÂâçÁä∂ÊÄÅÂ§±Ë¥•!\nÈîôËØØ‰ø°ÊÅØ:\n",
 					GetLastError());
 			}
 
-			if(((m_dwStatus == SERVICE_ACTIVE) && (ss.dwCurrentState == SERVICE_STOPPED))	||
-			   ((m_dwStatus == SERVICE_INACTIVE) && (ss.dwCurrentState != SERVICE_STOPPED)))
+			if (((m_dwStatus == SERVICE_ACTIVE) && (ss.dwCurrentState == SERVICE_STOPPED)) ||
+				((m_dwStatus == SERVICE_INACTIVE) && (ss.dwCurrentState != SERVICE_STOPPED)))
 			{
 				free(pqsc);
 				CloseServiceHandle(hService);
@@ -292,8 +289,8 @@ BOOL CPropService::GetSvrList()
 
 				continue;
 			}
-/*//
-			// »°√Ë ˆ–≈œ¢
+			/*//
+			// ÂèñÊèèËø∞‰ø°ÊÅØ
 			SERVICE_DESCRIPTION* pSD;
 			DWORD dwSDLen;
 			// pass it a fail length
@@ -308,13 +305,13 @@ BOOL CPropService::GetSvrList()
 			else
 			{
 				WriteToLog(
-					"\n****************\n»°∑˛ŒÒ√Ë ˆ¥ÌŒÛ!\n¥ÌŒÛ–≈œ¢:\n",
+					"\n****************\nÂèñÊúçÂä°ÊèèËø∞ÈîôËØØ!\nÈîôËØØ‰ø°ÊÅØ:\n",
 					GetLastError());
 			}
 //*/
 			InsertInList(pqsc->lpDisplayName, pszServiceName, m_dwType, pszStartup,
-				 pszStatus, pqsc->lpLoadOrderGroup, pqsc->lpServiceStartName,
-				 pqsc->lpDependencies, pqsc->lpBinaryPathName/*, strSD */);
+						 pszStatus, pqsc->lpLoadOrderGroup, pqsc->lpServiceStartName,
+						 pqsc->lpDependencies, pqsc->lpBinaryPathName /*, strSD */);
 
 			free(pqsc);
 			CloseServiceHandle(hService);
@@ -327,17 +324,17 @@ BOOL CPropService::GetSvrList()
 	else
 	{
 		WriteToLog(
-			"\n****************\n¥Úø™◊¢≤·±ÌœÓ ß∞‹!\nHKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services \n¥ÌŒÛ–≈œ¢:\n",
+			"\n****************\nÊâìÂºÄÊ≥®ÂÜåË°®È°πÂ§±Ë¥•!\nHKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services \nÈîôËØØ‰ø°ÊÅØ:\n",
 			lRet);
 
 		return FALSE;
 	}
-	
+
 	lRet = RegCloseKey(hRegServicesKey);
-	if(lRet)
+	if (lRet)
 	{
-		WriteToLog("\n****************\nπÿ±’◊¢≤·±ÌœÓ ß∞‹!\nHKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services \n¥ÌŒÛ–≈œ¢:\n",
-			lRet);
+		WriteToLog("\n****************\nÂÖ≥Èó≠Ê≥®ÂÜåË°®È°πÂ§±Ë¥•!\nHKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services \nÈîôËØØ‰ø°ÊÅØ:\n",
+				   lRet);
 	}
 
 	return TRUE;
@@ -347,7 +344,7 @@ BOOL CPropService::InsertInList(LPCTSTR lpSvrName, LPCTSTR lpDisplayName,
 								DWORD dwServiceType, LPCTSTR lpStartType,
 								LPCTSTR lpCurrentState, LPTSTR lpLoadOrderGroup,
 								LPTSTR lpServiceStartName, LPTSTR lpDependencies,
-								LPTSTR lpBinaryPathName/*, CString strDescription */)
+								LPTSTR lpBinaryPathName /*, CString strDescription */)
 {
 	int nCount = m_svrList.GetItemCount();
 	int iInsPos = m_svrList.InsertItem(nCount, "");
@@ -358,7 +355,7 @@ BOOL CPropService::InsertInList(LPCTSTR lpSvrName, LPCTSTR lpDisplayName,
 	m_svrList.SetItemText(iInsPos, 1, _T(lpSvrName));
 	m_svrList.SetItemText(iInsPos, 2, _T(lpDisplayName));
 
-	if(dwServiceType == SERVICE_WIN32)
+	if (dwServiceType == SERVICE_WIN32)
 		strTemp = "Service";
 	else
 		strTemp = "Driver";
@@ -370,7 +367,7 @@ BOOL CPropService::InsertInList(LPCTSTR lpSvrName, LPCTSTR lpDisplayName,
 	m_svrList.SetItemText(iInsPos, 7, _T(lpServiceStartName));
 	m_svrList.SetItemText(iInsPos, 8, _T(lpDependencies));
 	m_svrList.SetItemText(iInsPos, 9, _T(lpBinaryPathName));
-//	m_svrList.SetItemText(iInsPos, 10, _T(strDescription));
+	//	m_svrList.SetItemText(iInsPos, 10, _T(strDescription));
 
 	return TRUE;
 }
@@ -381,25 +378,25 @@ void CPropService::OnTypeDrivers()
 	SetType(0, 1);
 }
 
-void CPropService::OnTypeServices() 
+void CPropService::OnTypeServices()
 {
 	// TODO: Add your control notification handler code here
 	SetType(1, 0);
 }
 
-void CPropService::OnViewAll() 
+void CPropService::OnViewAll()
 {
 	// TODO: Add your control notification handler code here
 	SetState(0, 0, 1);
 }
 
-void CPropService::OnViewStoped() 
+void CPropService::OnViewStoped()
 {
 	// TODO: Add your control notification handler code here
 	SetState(0, 1, 0);
 }
 
-void CPropService::OnViewRunning() 
+void CPropService::OnViewRunning()
 {
 	// TODO: Add your control notification handler code here
 	SetState(1, 0, 0);
@@ -407,18 +404,18 @@ void CPropService::OnViewRunning()
 
 void CPropService::SetState(int nActive, int nInactive, int nAll)
 {
-	((CButton*)GetDlgItem(IDC_VIEWRUNNING))->SetCheck(nActive);	
-	((CButton*)GetDlgItem(IDC_VIEWSTOPED))->SetCheck(nInactive);
-	((CButton*)GetDlgItem(IDC_VIEWALL))->SetCheck(nAll);
+	((CButton *)GetDlgItem(IDC_VIEWRUNNING))->SetCheck(nActive);
+	((CButton *)GetDlgItem(IDC_VIEWSTOPED))->SetCheck(nInactive);
+	((CButton *)GetDlgItem(IDC_VIEWALL))->SetCheck(nAll);
 
-	if(((CButton*)GetDlgItem(IDC_VIEWRUNNING))->GetCheck())
+	if (((CButton *)GetDlgItem(IDC_VIEWRUNNING))->GetCheck())
 		m_dwStatus = SERVICE_ACTIVE;
-	else if(((CButton*)GetDlgItem(IDC_VIEWSTOPED))->GetCheck())
+	else if (((CButton *)GetDlgItem(IDC_VIEWSTOPED))->GetCheck())
 		m_dwStatus = SERVICE_INACTIVE;
 	else
 		m_dwStatus = SERVICE_ACTIVE | SERVICE_INACTIVE;
 
-	// À¢–¬¡–±Ì
+	// Âà∑Êñ∞ÂàóË°®
 	m_svrList.DeleteAllItems();
 	GetSvrList();
 	AutoSizeColumns(&m_svrList);
@@ -426,15 +423,15 @@ void CPropService::SetState(int nActive, int nInactive, int nAll)
 
 void CPropService::SetType(int nServices, int nDrivers)
 {
-	((CButton*)GetDlgItem(IDC_TYPESERVICES))->SetCheck(nServices);
-	((CButton*)GetDlgItem(IDC_TYPEDRIVERS))->SetCheck(nDrivers);
+	((CButton *)GetDlgItem(IDC_TYPESERVICES))->SetCheck(nServices);
+	((CButton *)GetDlgItem(IDC_TYPEDRIVERS))->SetCheck(nDrivers);
 
-	if(((CButton*)GetDlgItem(IDC_TYPESERVICES))->GetCheck())
+	if (((CButton *)GetDlgItem(IDC_TYPESERVICES))->GetCheck())
 		m_dwType = SERVICE_WIN32;
 	else
 		m_dwType = SERVICE_DRIVER;
 
-	// À¢–¬¡–±Ì
+	// Âà∑Êñ∞ÂàóË°®
 	m_svrList.DeleteAllItems();
 	GetSvrList();
 	AutoSizeColumns(&m_svrList);
@@ -445,14 +442,14 @@ BOOL CPropService::WriteToLog(CString strMsg, LONG lErrMsg)
 	FILE *fLog = 0;
 
 	fLog = fopen("ErrLog.txt", "a+t");
-	if(!fLog)
+	if (!fLog)
 	{
-		AfxMessageBox(_T("Œﬁ∑®¥¥Ω®»’÷æŒƒº˛. \n¥ÌŒÛŒﬁ∑®œ‘ æ!"),
-			MB_OK | MB_ICONEXCLAMATION);
-	
+		AfxMessageBox(_T("Êó†Ê≥ïÂàõÂª∫Êó•ÂøóÊñá‰ª∂. \nÈîôËØØÊó†Ê≥ïÊòæÁ§∫!"),
+					  MB_OK | MB_ICONEXCLAMATION);
+
 		return FALSE;
 	}
-/*
+	/*
 	if(lErrMsg < 0)
 	{
 		fprintf(fLog, "%s", _T(strMsg));
@@ -461,34 +458,34 @@ BOOL CPropService::WriteToLog(CString strMsg, LONG lErrMsg)
 	}
 */
 	static char buffer[256];
-	char *end = buffer + 
-		FormatMessage(FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_SYSTEM, 0, 
-		lErrMsg,MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),buffer, sizeof(buffer)-1, 0);
+	char *end = buffer +
+				FormatMessage(FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_SYSTEM, 0,
+							  lErrMsg, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), buffer, sizeof(buffer) - 1, 0);
 
-	if(end == buffer)
-		fprintf(fLog, "%s#%s", _T(strMsg), _T("Œﬁ∑®»∑∂®!"));
+	if (end == buffer)
+		fprintf(fLog, "%s#%s", _T(strMsg), _T("Êó†Ê≥ïÁ°ÆÂÆö!"));
 
-	for(end--; end >= buffer && (*end == '\r' || *end == '\n') ;end--) 
+	for (end--; end >= buffer && (*end == '\r' || *end == '\n'); end--)
 		;
 
-    end[1] = 0;
+	end[1] = 0;
 
-    CString str = (CString)buffer;
+	CString str = (CString)buffer;
 
 	fprintf(fLog, "%s#%s", _T(strMsg), _T(str));
-	if(fLog)
+	if (fLog)
 		fclose(fLog);
 
 	return TRUE;
 }
 
-void CPropService::OnCreateSvr() 
+void CPropService::OnCreateSvr()
 {
 	// TODO: Add your control notification handler code here
 	AfxMessageBox(_T("Sorry, it's not available for now!"));
 }
 
-void CPropService::OnViewLog() 
+void CPropService::OnViewLog()
 {
 	// TODO: Add your control notification handler code here
 	ShellExecute(NULL, "open", "ErrLog.txt", NULL, NULL, SW_SHOWNORMAL);
@@ -496,24 +493,23 @@ void CPropService::OnViewLog()
 
 DWORD CPropService::SvrControl(DWORD dwCtrlCode)
 {
-	SC_HANDLE       m_scServiceManager;
-	BOOL            m_bConnected;
-	SC_HANDLE       m_scService;
-	BOOL            m_bServiceOpen;
-	BOOL            bSuccess = FALSE;
-	SERVICE_STATUS	m_ServiceStatus;
-	DWORD			m_dwCurState;
-
+	SC_HANDLE m_scServiceManager;
+	BOOL m_bConnected;
+	SC_HANDLE m_scService;
+	BOOL m_bServiceOpen;
+	BOOL bSuccess = FALSE;
+	SERVICE_STATUS m_ServiceStatus;
+	DWORD m_dwCurState;
 
 	// Open Service Manager
 	m_scServiceManager = OpenSCManager((LPCTSTR)m_strMachineName,
-		NULL, GENERIC_READ | GENERIC_EXECUTE);
+									   NULL, GENERIC_READ | GENERIC_EXECUTE);
 	m_bConnected = (m_scServiceManager != (SC_HANDLE)NULL);
-	
-	if(!m_bConnected)
+
+	if (!m_bConnected)
 	{
 		WriteToLog(
-			"\n****************\n≤Ÿ◊›∑˛ŒÒ ±, ¥Úø™π‹¿Ìæ‰±˙ ß∞‹!\n",
+			"\n****************\nÊìçÁ∫µÊúçÂä°Êó∂, ÊâìÂºÄÁÆ°ÁêÜÂè•ÊüÑÂ§±Ë¥•!\n",
 			GetLastError());
 
 		return FALSE;
@@ -521,13 +517,13 @@ DWORD CPropService::SvrControl(DWORD dwCtrlCode)
 
 	// Open Service
 	m_scService = OpenService(m_scServiceManager,
-		(LPCTSTR)m_strCurSvrName, GENERIC_READ | GENERIC_EXECUTE);
+							  (LPCTSTR)m_strCurSvrName, GENERIC_READ | GENERIC_EXECUTE);
 	m_bServiceOpen = (m_scService != (SC_HANDLE)NULL);
-	
-	if(!m_bServiceOpen)
+
+	if (!m_bServiceOpen)
 	{
 		WriteToLog(
-			"\n****************\n≤Ÿ◊›∑˛ŒÒ ±, ¥Úø™∑˛ŒÒæ‰±˙ ß∞‹!\n",
+			"\n****************\nÊìçÁ∫µÊúçÂä°Êó∂, ÊâìÂºÄÊúçÂä°Âè•ÊüÑÂ§±Ë¥•!\n",
 			GetLastError());
 
 		return FALSE;
@@ -538,58 +534,58 @@ DWORD CPropService::SvrControl(DWORD dwCtrlCode)
 	m_dwCurState = m_ServiceStatus.dwCurrentState;
 
 	// Control Service
-	if(m_dwCurState == SERVICE_STOPPED)
+	if (m_dwCurState == SERVICE_STOPPED)
 	{
-		if(dwCtrlCode == SERVICE_CONTROL_PAUSE)
+		if (dwCtrlCode == SERVICE_CONTROL_PAUSE)
 			AfxMessageBox(_T("You cannot pause a stopped service."));
-		else if(dwCtrlCode == SERVICE_CONTROL_STOP)
+		else if (dwCtrlCode == SERVICE_CONTROL_STOP)
 			AfxMessageBox(_T("Service is already stopped."));
-		else 
+		else
 		{
 			bSuccess = StartService(m_scService, 0, NULL);
-			if(!bSuccess)
+			if (!bSuccess)
 			{
 				WriteToLog(
-					"\n****************\n∆Ù∂Ø∑˛ŒÒ ± ß∞‹!\n",
+					"\n****************\nÂêØÂä®ÊúçÂä°Êó∂Â§±Ë¥•!\n",
 					GetLastError());
 			}
 		}
 	}
 	else
 	{
-		if(m_dwCurState == SERVICE_RUNNING && dwCtrlCode == SERVICE_CONTROL_CONTINUE)
+		if (m_dwCurState == SERVICE_RUNNING && dwCtrlCode == SERVICE_CONTROL_CONTINUE)
 			AfxMessageBox(_T("Service is already started."));
 		else
 		{
-			if(m_dwCurState == SERVICE_PAUSED && dwCtrlCode == SERVICE_CONTROL_PAUSE)
-			{	
+			if (m_dwCurState == SERVICE_PAUSED && dwCtrlCode == SERVICE_CONTROL_PAUSE)
+			{
 				bSuccess = ControlService(m_scService, SERVICE_CONTROL_CONTINUE, &m_ServiceStatus);
-				if(!bSuccess)
+				if (!bSuccess)
 				{
 					WriteToLog(
-					"\n****************\nºÃ–¯∑˛ŒÒ ± ß∞‹!\n",
-					GetLastError());
+						"\n****************\nÁªßÁª≠ÊúçÂä°Êó∂Â§±Ë¥•!\n",
+						GetLastError());
 				}
 			}
 			else
 			{
-				if(m_dwCurState == SERVICE_STOPPED && dwCtrlCode == SERVICE_CONTROL_STOP)
+				if (m_dwCurState == SERVICE_STOPPED && dwCtrlCode == SERVICE_CONTROL_STOP)
 					AfxMessageBox(_T("Service is already stopped."));
 				else
 				{
 					bSuccess = ControlService(m_scService, dwCtrlCode, &m_ServiceStatus);
-					if(!bSuccess)
+					if (!bSuccess)
 					{
 						WriteToLog(
-							"\n****************\nøÿ÷∆∑˛ŒÒ ± ß∞‹!\n",
+							"\n****************\nÊéßÂà∂ÊúçÂä°Êó∂Â§±Ë¥•!\n",
 							GetLastError());
 					}
 				}
 			}
 		}
-	}		
+	}
 
-/*	if(!bSuccess)
+	/*	if(!bSuccess)
 	{
 		if(m_dwLastError != 0)
 			m_strError.Format(_T("%s\r\nSystem Error: %ld (%s)."), 
@@ -601,48 +597,48 @@ DWORD CPropService::SvrControl(DWORD dwCtrlCode)
 	return bSuccess;
 }
 
-void CPropService::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CPropService::OnContextMenu(CWnd *pWnd, CPoint point)
 {
 	// TODO: Add your message handler code here
-	// ªÒµ√µ±«∞—°‘Ò
+	// Ëé∑ÂæóÂΩìÂâçÈÄâÊã©
 	int nCurSel = m_svrList.GetNextItem(-1, LVNI_SELECTED);
-	if(nCurSel != -1)
+	if (nCurSel != -1)
 		m_strCurSvrName = m_svrList.GetItemText(nCurSel, 2);
 	else
 		return;
 
-	// —È÷§º¸≈Ã≤Ÿ◊˜µƒµØ≥ˆ Ω≤Àµ•
-	if( point.x == -1 && point.y == -1 )
+	// È™åËØÅÈîÆÁõòÊìç‰ΩúÁöÑÂºπÂá∫ÂºèËèúÂçï
+	if (point.x == -1 && point.y == -1)
 	{
 		CRect rect;
-		GetClientRect( &rect );
+		GetClientRect(&rect);
 		point = rect.TopLeft();
-		point.Offset( 5, 5 );
-		ClientToScreen( &point );
+		point.Offset(5, 5);
+		ClientToScreen(&point);
 	}
 
-	// »°≤Àµ•◊ ‘¥
+	// ÂèñËèúÂçïËµÑÊ∫ê
 	CMenu mnuTop;
-	mnuTop.LoadMenu( IDR_MENU_SERVICE );
+	mnuTop.LoadMenu(IDR_MENU_SERVICE);
 
-	// »°◊”≤Àµ•
-	CMenu* pPopup = mnuTop.GetSubMenu( 0 );
-	ASSERT_VALID( pPopup );
+	// ÂèñÂ≠êËèúÂçï
+	CMenu *pPopup = mnuTop.GetSubMenu(0);
+	ASSERT_VALID(pPopup);
 
-	// ‘⁄’‚¿Ô MFC ◊‘∂Ø”√ UPDATE_COMMAND_UI ª˙÷∆ºÏ≤‚≤Àµ•◊¥Ã¨
+	// Âú®ËøôÈáå MFC Ëá™Âä®Áî® UPDATE_COMMAND_UI Êú∫Âà∂Ê£ÄÊµãËèúÂçïÁä∂ÊÄÅ
 
-	// œ‘ æ≤Àµ•
-	pPopup->TrackPopupMenu(	TPM_LEFTALIGN | TPM_LEFTBUTTON,
-							point.x, point.y,
-							AfxGetMainWnd(), NULL );
+	// ÊòæÁ§∫ËèúÂçï
+	pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_LEFTBUTTON,
+						   point.x, point.y,
+						   AfxGetMainWnd(), NULL);
 
-	// µØ≥ˆ Ω≤Àµ•µƒ√¸¡Óª·±ª MFC µƒœ˚œ¢¬∑”…ª˙÷∆◊‘∂Ø¥¶¿Ì	
+	// ÂºπÂá∫ÂºèËèúÂçïÁöÑÂëΩ‰ª§‰ºöË¢´ MFC ÁöÑÊ∂àÊÅØË∑ØÁî±Êú∫Âà∂Ëá™Âä®Â§ÑÁêÜ
 }
 
-void CPropService::OnSvrLoad() 
+void CPropService::OnSvrLoad()
 {
 	// TODO: Add your command handler code here
-/*	int nCurSel = m_svrList.GetNextItem(-1, LVNI_SELECTED);
+	/*	int nCurSel = m_svrList.GetNextItem(-1, LVNI_SELECTED);
 	if(nCurSel != -1)
 		m_strCurSvrName = m_svrList.GetItemText(nCurSel, 2);
 	else
@@ -651,10 +647,10 @@ void CPropService::OnSvrLoad()
 	SvrControl(SERVICE_CONTROL_CONTINUE);
 }
 
-void CPropService::OnSvrStop() 
+void CPropService::OnSvrStop()
 {
 	// TODO: Add your command handler code here
-/*	int nCurSel = m_svrList.GetNextItem(-1, LVNI_SELECTED);
+	/*	int nCurSel = m_svrList.GetNextItem(-1, LVNI_SELECTED);
 	if(nCurSel != -1)
 		m_strCurSvrName = m_svrList.GetItemText(nCurSel, 2);
 	else
@@ -663,10 +659,10 @@ void CPropService::OnSvrStop()
 	SvrControl(SERVICE_CONTROL_STOP);
 }
 
-void CPropService::OnSvrResume() 
+void CPropService::OnSvrResume()
 {
 	// TODO: Add your command handler code here
-/*	int nCurSel = m_svrList.GetNextItem(-1, LVNI_SELECTED);
+	/*	int nCurSel = m_svrList.GetNextItem(-1, LVNI_SELECTED);
 	if(nCurSel != -1)
 		m_strCurSvrName = m_svrList.GetItemText(nCurSel, 2);
 	else
@@ -675,10 +671,10 @@ void CPropService::OnSvrResume()
 	SvrControl(SERVICE_CONTROL_PAUSE);
 }
 
-void CPropService::OnSvrPause() 
+void CPropService::OnSvrPause()
 {
 	// TODO: Add your command handler code here
-/*	int nCurSel = m_svrList.GetNextItem(-1, LVNI_SELECTED);
+	/*	int nCurSel = m_svrList.GetNextItem(-1, LVNI_SELECTED);
 	if(nCurSel != -1)
 		m_strCurSvrName = m_svrList.GetItemText(nCurSel, 2);
 	else
@@ -687,7 +683,7 @@ void CPropService::OnSvrPause()
 	SvrControl(SERVICE_CONTROL_PAUSE);
 }
 
-void CPropService::OnSvrRefresh() 
+void CPropService::OnSvrRefresh()
 {
 	// TODO: Add your command handler code here
 	m_svrList.DeleteAllItems();
@@ -701,27 +697,27 @@ DWORD CPropService::GetSvrStatus(CString strServiceName)
 	SC_HANDLE hService = OpenService(hSCManager, strServiceName, GENERIC_READ);
 	SERVICE_STATUS ss;
 	LONG lRet = QueryServiceStatus(hService, &ss);
-	if(hService)
+	if (hService)
 	{
 		CloseServiceHandle(hService);
 		hService = NULL;
 	}
-	if(hSCManager)
+	if (hSCManager)
 	{
 		CloseServiceHandle(hSCManager);
 		hSCManager = NULL;
 	}
 
-	if(lRet)
+	if (lRet)
 		return ss.dwCurrentState;
 
 	return NULL;
 }
 
-void CPropService::OnUpdateSvrLoad(CCmdUI* pCmdUI) 
+void CPropService::OnUpdateSvrLoad(CCmdUI *pCmdUI)
 {
 	// TODO: Add your command update UI handler code here
-/*	int nCurSel = m_svrList.GetNextItem(-1, LVNI_SELECTED);
+	/*	int nCurSel = m_svrList.GetNextItem(-1, LVNI_SELECTED);
 	if(nCurSel != -1)
 		m_strCurSvrName = m_svrList.GetItemText(nCurSel, 2);
 	else
@@ -732,27 +728,27 @@ void CPropService::OnUpdateSvrLoad(CCmdUI* pCmdUI)
 	{
 	case SERVICE_STOPPED:
 	case SERVICE_STOP_PENDING:
-		{
-			pCmdUI->Enable(TRUE);
-			break;
-		}
+	{
+		pCmdUI->Enable(TRUE);
+		break;
+	}
 	case SERVICE_PAUSE_PENDING:
 	case SERVICE_PAUSED:
 	case SERVICE_START_PENDING:
 	case SERVICE_RUNNING:
 	case SERVICE_CONTINUE_PENDING:
 	default:
-		{
-			pCmdUI->Enable(FALSE);
-			break;
-		}
+	{
+		pCmdUI->Enable(FALSE);
+		break;
+	}
 	}
 }
 
-void CPropService::OnUpdateSvrPause(CCmdUI* pCmdUI) 
+void CPropService::OnUpdateSvrPause(CCmdUI *pCmdUI)
 {
 	// TODO: Add your command update UI handler code here
-/*	int nCurSel = m_svrList.GetNextItem(-1, LVNI_SELECTED);
+	/*	int nCurSel = m_svrList.GetNextItem(-1, LVNI_SELECTED);
 	if(nCurSel != -1)
 		m_strCurSvrName = m_svrList.GetItemText(nCurSel, 2);
 	else
@@ -765,25 +761,25 @@ void CPropService::OnUpdateSvrPause(CCmdUI* pCmdUI)
 	case SERVICE_STOP_PENDING:
 	case SERVICE_PAUSE_PENDING:
 	case SERVICE_PAUSED:
-		{
-			pCmdUI->Enable(FALSE);
-			break;
-		}
+	{
+		pCmdUI->Enable(FALSE);
+		break;
+	}
 	case SERVICE_START_PENDING:
 	case SERVICE_RUNNING:
 	case SERVICE_CONTINUE_PENDING:
 	default:
-		{
-			pCmdUI->Enable(TRUE);
-			break;
-		}
+	{
+		pCmdUI->Enable(TRUE);
+		break;
+	}
 	}
 }
 
-void CPropService::OnUpdateSvrResume(CCmdUI* pCmdUI) 
+void CPropService::OnUpdateSvrResume(CCmdUI *pCmdUI)
 {
 	// TODO: Add your command update UI handler code here
-/*	int nCurSel = m_svrList.GetNextItem(-1, LVNI_SELECTED);
+	/*	int nCurSel = m_svrList.GetNextItem(-1, LVNI_SELECTED);
 	if(nCurSel != -1)
 		m_strCurSvrName = m_svrList.GetItemText(nCurSel, 2);
 	else
@@ -794,27 +790,27 @@ void CPropService::OnUpdateSvrResume(CCmdUI* pCmdUI)
 	{
 	case SERVICE_PAUSE_PENDING:
 	case SERVICE_PAUSED:
-		{
-			pCmdUI->Enable(TRUE);
-			break;
-		}
+	{
+		pCmdUI->Enable(TRUE);
+		break;
+	}
 	case SERVICE_STOPPED:
 	case SERVICE_STOP_PENDING:
 	case SERVICE_START_PENDING:
 	case SERVICE_RUNNING:
 	case SERVICE_CONTINUE_PENDING:
 	default:
-		{
-			pCmdUI->Enable(FALSE);
-			break;
-		}
+	{
+		pCmdUI->Enable(FALSE);
+		break;
+	}
 	}
 }
 
-void CPropService::OnUpdateSvrStop(CCmdUI* pCmdUI) 
+void CPropService::OnUpdateSvrStop(CCmdUI *pCmdUI)
 {
 	// TODO: Add your command update UI handler code here
-/*	int nCurSel = m_svrList.GetNextItem(-1, LVNI_SELECTED);
+	/*	int nCurSel = m_svrList.GetNextItem(-1, LVNI_SELECTED);
 	if(nCurSel != -1)
 		m_strCurSvrName = m_svrList.GetItemText(nCurSel, 2);
 	else
@@ -824,19 +820,19 @@ void CPropService::OnUpdateSvrStop(CCmdUI* pCmdUI)
 	{
 	case SERVICE_STOPPED:
 	case SERVICE_STOP_PENDING:
-		{
-			pCmdUI->Enable(FALSE);
-			break;
-		}
+	{
+		pCmdUI->Enable(FALSE);
+		break;
+	}
 	case SERVICE_PAUSE_PENDING:
 	case SERVICE_PAUSED:
 	case SERVICE_START_PENDING:
 	case SERVICE_RUNNING:
 	case SERVICE_CONTINUE_PENDING:
 	default:
-		{
-			pCmdUI->Enable(TRUE);
-			break;
-		}
+	{
+		pCmdUI->Enable(TRUE);
+		break;
+	}
 	}
 }

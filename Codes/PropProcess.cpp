@@ -7,8 +7,8 @@
 
 #include "windows.h"
 #include "Winbase.h"
-#include "winperf.h"   // for Windows NT
-#include "tlhelp32.h"  // for Windows 95
+#include "winperf.h"  // for Windows NT
+#include "tlhelp32.h" // for Windows 95
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -25,87 +25,84 @@ IMPLEMENT_DYNCREATE(CPropProcess, CPropertyPage)
 
 CPropProcess::CPropProcess() : CPropertyPage(CPropProcess::IDD)
 {
-	//{{AFX_DATA_INIT(CPropProcess)
-		// NOTE: the ClassWizard will add member initialization here
-	//}}AFX_DATA_INIT
+    //{{AFX_DATA_INIT(CPropProcess)
+    // NOTE: the ClassWizard will add member initialization here
+    //}}AFX_DATA_INIT
 }
 
 CPropProcess::~CPropProcess()
 {
 }
 
-void CPropProcess::DoDataExchange(CDataExchange* pDX)
+void CPropProcess::DoDataExchange(CDataExchange *pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
-	//{{AFX_DATA_MAP(CPropProcess)
-	DDX_Control(pDX, IDC_LIST_PROCESS, m_procList);
-	//}}AFX_DATA_MAP
+    CPropertyPage::DoDataExchange(pDX);
+    //{{AFX_DATA_MAP(CPropProcess)
+    DDX_Control(pDX, IDC_LIST_PROCESS, m_procList);
+    //}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CPropProcess, CPropertyPage)
-	//{{AFX_MSG_MAP(CPropProcess)
-	ON_WM_CONTEXTMENU()
-	ON_COMMAND(IDM_PROC_TERMINATE, OnProcTerminate)
-	ON_COMMAND(IDM_PROC_REFRESH, OnProcRefresh)
-	ON_COMMAND(IDM_PROC_SENDMSG, OnProcSendmsg)
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CPropProcess)
+ON_WM_CONTEXTMENU()
+ON_COMMAND(IDM_PROC_TERMINATE, OnProcTerminate)
+ON_COMMAND(IDM_PROC_REFRESH, OnProcRefresh)
+ON_COMMAND(IDM_PROC_SENDMSG, OnProcSendmsg)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CPropProcess message handlers
 
-BOOL CPropProcess::OnInitDialog() 
+BOOL CPropProcess::OnInitDialog()
 {
-	CPropertyPage::OnInitDialog();
-	
-	// TODO: Add extra initialization here
-	ForceKill = TRUE;
-	curTaskPos = -1;
+    CPropertyPage::OnInitDialog();
 
-	// ³õÊ¼»¯ CListCtrl
-	m_procList.InsertColumn(0, _T("ĞòºÅ"), LVCFMT_LEFT, 70);
-	m_procList.InsertColumn(1, _T("½ø³ÌÃû³Æ"), LVCFMT_LEFT, 70);
-	m_procList.InsertColumn(2, _T("Process ID"), LVCFMT_LEFT, 70);
-	m_procList.InsertColumn(3, _T("Wnd Handle"), LVCFMT_LEFT, 70);
-	m_procList.InsertColumn(4, _T("´°¿Ú±êÌâ"), LVCFMT_LEFT, 70);
+    // TODO: Add extra initialization here
+    ForceKill = TRUE;
+    curTaskPos = -1;
 
-	m_procList.InsertColumn(5, _T("ÓÅÏÈ¼¶"), LVCFMT_LEFT, 50);
-	m_procList.InsertColumn(6, _T("Ïß³ÌÊı"), LVCFMT_LEFT, 50);
-	m_procList.InsertColumn(7, _T("Â·¾¶"), LVCFMT_LEFT, 150);
+    // åˆå§‹åŒ– CListCtrl
+    m_procList.InsertColumn(0, _T("åºå·"), LVCFMT_LEFT, 70);
+    m_procList.InsertColumn(1, _T("è¿›ç¨‹åç§°"), LVCFMT_LEFT, 70);
+    m_procList.InsertColumn(2, _T("Process ID"), LVCFMT_LEFT, 70);
+    m_procList.InsertColumn(3, _T("Wnd Handle"), LVCFMT_LEFT, 70);
+    m_procList.InsertColumn(4, _T("çª—å£æ ‡é¢˜"), LVCFMT_LEFT, 70);
 
-    m_procList.SetExtendedStyle(m_procList.GetExtendedStyle()
-        |LVS_EX_FULLROWSELECT|LVS_EX_GRIDLINES|LVS_EX_HEADERDRAGDROP
-		|LVS_EX_ONECLICKACTIVATE);
+    m_procList.InsertColumn(5, _T("ä¼˜å…ˆçº§"), LVCFMT_LEFT, 50);
+    m_procList.InsertColumn(6, _T("çº¿ç¨‹æ•°"), LVCFMT_LEFT, 50);
+    m_procList.InsertColumn(7, _T("è·¯å¾„"), LVCFMT_LEFT, 150);
 
-	m_procList.SetFocus();	// ËùÒÔº¯Êı·µ»Ø FALSE
+    m_procList.SetExtendedStyle(m_procList.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES | LVS_EX_HEADERDRAGDROP | LVS_EX_ONECLICKACTIVATE);
 
-	RefreshProcList();
-	
-	return FALSE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+    m_procList.SetFocus(); // æ‰€ä»¥å‡½æ•°è¿”å› FALSE
+
+    RefreshProcList();
+
+    return FALSE; // return TRUE unless you set the focus to a control
+                  // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CPropProcess::OnContextMenu(CWnd* pWnd, CPoint point) 
+void CPropProcess::OnContextMenu(CWnd *pWnd, CPoint point)
 {
-	// TODO: Add your message handler code here
-	// È¡µÃÁĞ±íÇøÓò
-	CListCtrl* pList = (CListCtrl*)GetDlgItem(IDC_LIST_PROCESS);
-	VERIFY(pList != NULL);
+    // TODO: Add your message handler code here
+    // å–å¾—åˆ—è¡¨åŒºåŸŸ
+    CListCtrl *pList = (CListCtrl *)GetDlgItem(IDC_LIST_PROCESS);
+    VERIFY(pList != NULL);
 
-	CRect rect, rectHeader;
-	pList->GetWindowRect(&rect);
-	CHeaderCtrl* pHeader = pList->GetHeaderCtrl();	
-	pHeader->GetWindowRect(&rectHeader);
+    CRect rect, rectHeader;
+    pList->GetWindowRect(&rect);
+    CHeaderCtrl *pHeader = pList->GetHeaderCtrl();
+    pHeader->GetWindowRect(&rectHeader);
 
-	rectHeader.SetRect(rect.left, rect.top,
-		rect.left + rect.Width(), rect.top + rectHeader.Height() + 2);
+    rectHeader.SetRect(rect.left, rect.top,
+                       rect.left + rect.Width(), rect.top + rectHeader.Height() + 2);
 
-	rect.SubtractRect(&rect, &rectHeader);
-	if(!rect.PtInRect(point))
-		return;
-/*
-	// ÑéÖ¤¼üÅÌ²Ù×÷µÄµ¯³öÊ½²Ëµ¥
+    rect.SubtractRect(&rect, &rectHeader);
+    if (!rect.PtInRect(point))
+        return;
+    /*
+	// éªŒè¯é”®ç›˜æ“ä½œçš„å¼¹å‡ºå¼èœå•
 	ScreenToClient(&rect);
 	if( point.x == -1 && point.y == -1 )
 	{
@@ -116,169 +113,169 @@ void CPropProcess::OnContextMenu(CWnd* pWnd, CPoint point)
 		ClientToScreen( &point );
 	}
 */
-	// È¡²Ëµ¥×ÊÔ´
-	CMenu mnuTop;
-	mnuTop.LoadMenu( IDR_MENU_PROCESS );
+    // å–èœå•èµ„æº
+    CMenu mnuTop;
+    mnuTop.LoadMenu(IDR_MENU_PROCESS);
 
-	// È¡×Ó²Ëµ¥
-	CMenu* pPopup = mnuTop.GetSubMenu( 0 );
-	ASSERT_VALID( pPopup );
+    // å–å­èœå•
+    CMenu *pPopup = mnuTop.GetSubMenu(0);
+    ASSERT_VALID(pPopup);
 
-	// ÔÚÕâÀï MFC ×Ô¶¯ÓÃ UPDATE_COMMAND_UI »úÖÆ¼ì²â²Ëµ¥×´Ì¬
+    // åœ¨è¿™é‡Œ MFC è‡ªåŠ¨ç”¨ UPDATE_COMMAND_UI æœºåˆ¶æ£€æµ‹èœå•çŠ¶æ€
 
-	// ÏÔÊ¾²Ëµ¥
-	pPopup->TrackPopupMenu(	TPM_LEFTALIGN | TPM_LEFTBUTTON,
-							point.x, point.y,
-							AfxGetMainWnd(), NULL );
+    // æ˜¾ç¤ºèœå•
+    pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_LEFTBUTTON,
+                           point.x, point.y,
+                           AfxGetMainWnd(), NULL);
 
-	// µ¯³öÊ½²Ëµ¥µÄÃüÁî»á±» MFC µÄÏûÏ¢Â·ÓÉ»úÖÆ×Ô¶¯´¦Àí	
+    // å¼¹å‡ºå¼èœå•çš„å‘½ä»¤ä¼šè¢« MFC çš„æ¶ˆæ¯è·¯ç”±æœºåˆ¶è‡ªåŠ¨å¤„ç†
 }
 
-void CPropProcess::OnProcTerminate() 
+void CPropProcess::OnProcTerminate()
 {
-	// TODO: Add your command handler code here
-	POSITION pos = m_procList.GetFirstSelectedItemPosition();
-    if(pos == NULL)
-        AfxMessageBox(_T("ÇëÏÈÑ¡ÔñÒªÖÕÖ¹µÄ½ø³Ì!"));
+    // TODO: Add your command handler code here
+    POSITION pos = m_procList.GetFirstSelectedItemPosition();
+    if (pos == NULL)
+        AfxMessageBox(_T("è¯·å…ˆé€‰æ‹©è¦ç»ˆæ­¢çš„è¿›ç¨‹!"));
     else
     {
         while (pos)
         {
             int nItem = m_procList.GetNextSelectedItem(pos);
-            CString pid=m_procList.GetItemText(nItem, 2);
-			curTaskPos = atoi(m_procList.GetItemText(nItem, 0)) - 1;
-            int ret=Terminator(atoi(pid));
-            if(ret)
-			{
+            CString pid = m_procList.GetItemText(nItem, 2);
+            curTaskPos = atoi(m_procList.GetItemText(nItem, 0)) - 1;
+            int ret = Terminator(atoi(pid));
+            if (ret)
+            {
                 m_procList.DeleteItem(nItem);
-				curTaskPos = -1;
-				// OnProcRefresh(); // ÔÚËÙ¶È±È½ÏÂıµÄ»úÆ÷ÉÏ£¬¿ÉÄÜ³öÏÖÈÎÎñ»¹Ã»½áÊøÊ±¾ÍË¢ĞÂÁËÁĞ±í
-			}
+                curTaskPos = -1;
+                // OnProcRefresh(); // åœ¨é€Ÿåº¦æ¯”è¾ƒæ…¢çš„æœºå™¨ä¸Šï¼Œå¯èƒ½å‡ºç°ä»»åŠ¡è¿˜æ²¡ç»“æŸæ—¶å°±åˆ·æ–°äº†åˆ—è¡¨
+            }
         }
     }
 }
 
-void CPropProcess::OnProcRefresh() 
+void CPropProcess::OnProcRefresh()
 {
-	// TODO: Add your command handler code here
+    // TODO: Add your command handler code here
     m_procList.DeleteAllItems();
-    RefreshProcList();	
+    RefreshProcList();
 }
 
 ///////////////////////////////////////////////////////
 // Process Access Common Function
 
 // these constants will be used below
-#define INITIAL_SIZE        51200
-#define EXTEND_SIZE         25600
-#define REGKEY_PERF         "software\\microsoft\\windows nt\\currentversion\\perflib"
-#define REGSUBKEY_COUNTERS  "Counters"
-#define PROCESS_COUNTER     "process"
-#define PROCESSID_COUNTER   "id process"
-#define UNKNOWN_TASK        _T("Î´Öª") //"unknown"
+#define INITIAL_SIZE 51200
+#define EXTEND_SIZE 25600
+#define REGKEY_PERF "software\\microsoft\\windows nt\\currentversion\\perflib"
+#define REGSUBKEY_COUNTERS "Counters"
+#define PROCESS_COUNTER "process"
+#define PROCESSID_COUNTER "id process"
+#define UNKNOWN_TASK _T("æœªçŸ¥") //"unknown"
 
-// È«¾Öº¯Êı
+// å…¨å±€å‡½æ•°
 BOOL CALLBACK EnumWindowsProc(HWND hwnd, DWORD lParam)
 /*++
-ÃèÊö:
-    ´°¿ÚÃ¶¾ÙµÄ Callback function
+æè¿°:
+    çª—å£æšä¸¾çš„ Callback function
 
-²ÎÊı:
-    hwnd -- ´°¿Ú¾ä±ú
-    lParam -- ** Ã»ÓĞÊ¹ÓÃ **
+å‚æ•°:
+    hwnd -- çª—å£å¥æŸ„
+    lParam -- ** æ²¡æœ‰ä½¿ç”¨ **
 
-·µ»ØÖµ:
-    TRUE -- ¼ÌĞøÁĞ¾Ù
+è¿”å›å€¼:
+    TRUE -- ç»§ç»­åˆ—ä¸¾
 --*/
 {
-    DWORD             pid = 0;
-    DWORD             i;
-    CHAR              buf[TITLE_SIZE];
-    PPROC_LIST_ENUM   te = (PPROC_LIST_ENUM)lParam;
-    PPROC_LIST        tlist = te->tlist;
-    DWORD             numTasks = te->numtasks;
+    DWORD pid = 0;
+    DWORD i;
+    CHAR buf[TITLE_SIZE];
+    PPROC_LIST_ENUM te = (PPROC_LIST_ENUM)lParam;
+    PPROC_LIST tlist = te->tlist;
+    DWORD numTasks = te->numtasks;
 
-    // È¡µÃ´°¿ÚµÄ½ø³Ì ID
-    if (!GetWindowThreadProcessId( hwnd, &pid ))
+    // å–å¾—çª—å£çš„è¿›ç¨‹ ID
+    if (!GetWindowThreadProcessId(hwnd, &pid))
         return TRUE;
 
-    // ÔÚÈÎÎñÁĞ±íÖĞ²éÑ¯µ±Ç°´°¿Ú
+    // åœ¨ä»»åŠ¡åˆ—è¡¨ä¸­æŸ¥è¯¢å½“å‰çª—å£
     for (i = 0; i < numTasks; i++)
-	{
+    {
         if (tlist[i].dwProcessId == pid)
-		{
-			// ²éÕÒ¶¥²ã´°¿Ú±êÌâ
-			HWND parentHWND = GetParent(hwnd);
- 			while (parentHWND != NULL)
-			{
-				hwnd = parentHWND;
-				parentHWND = GetParent(parentHWND);
-			}
+        {
+            // æŸ¥æ‰¾é¡¶å±‚çª—å£æ ‡é¢˜
+            HWND parentHWND = GetParent(hwnd);
+            while (parentHWND != NULL)
+            {
+                hwnd = parentHWND;
+                parentHWND = GetParent(parentHWND);
+            }
 
             tlist[i].hwnd = hwnd;
 
-            // ÕÒµ½Ê±»ñÈ¡´°¿Ú±êÌâ
-            if (::GetWindowText(tlist[i].hwnd, buf, sizeof(buf) ))
-			{
-                //±£´æ´°¿Ú±êÌâ
-                strcpy( tlist[i].WindowTitle, buf );
+            // æ‰¾åˆ°æ—¶è·å–çª—å£æ ‡é¢˜
+            if (::GetWindowText(tlist[i].hwnd, buf, sizeof(buf)))
+            {
+                //ä¿å­˜çª—å£æ ‡é¢˜
+                strcpy(tlist[i].WindowTitle, buf);
             }
             break;
         }
     }
 
-    // ¼ÌĞøÁĞ¾Ù
+    // ç»§ç»­åˆ—ä¸¾
     return TRUE;
 }
 
 BOOL CPropProcess::EnableDebugPriv95(VOID)
 /*++
-ÃèÊö:
-    ¸Ä±ä½ø³ÌÓÅÏÈ¼¶. Win95 ÏµÁĞ²»±Ø¸Ä±ä
+æè¿°:
+    æ”¹å˜è¿›ç¨‹ä¼˜å…ˆçº§. Win95 ç³»åˆ—ä¸å¿…æ”¹å˜
 
-²ÎÊı:
+å‚æ•°:
 
-·µ»ØÖµ:
-    TRUE -- ³É¹¦
-    FALSE -- Ê§°Ü
+è¿”å›å€¼:
+    TRUE -- æˆåŠŸ
+    FALSE -- å¤±è´¥
 
 Comments: 
-    ×Ü·µ»Ø TRUE
+    æ€»è¿”å› TRUE
 --*/
 {
-   return TRUE;
+    return TRUE;
 }
 
 BOOL CPropProcess::EnableDebugPrivNT(VOID)
 /*++
-ÃèÊö:
-    ¸Ä±ä½ø³ÌÓÅÏÈ¼¶ÒÔ±ãÍê³ÉÖÕÖ¹½ø³Ì²Ù×÷
+æè¿°:
+    æ”¹å˜è¿›ç¨‹ä¼˜å…ˆçº§ä»¥ä¾¿å®Œæˆç»ˆæ­¢è¿›ç¨‹æ“ä½œ
 
-²ÎÊı:
+å‚æ•°:
 
-·µ»ØÖµ:
-    TRUE  -- ³É¹¦
-    FALSE -- Ê§°Ü
+è¿”å›å€¼:
+    TRUE  -- æˆåŠŸ
+    FALSE -- å¤±è´¥
 --*/
 {
     HANDLE hToken;
     LUID DebugValue;
     TOKEN_PRIVILEGES tkp;
 
-    // ¿ª·Å½ø³ÌµÄ´æÈ¡±êÊ¾
+    // å¼€æ”¾è¿›ç¨‹çš„å­˜å–æ ‡ç¤º
     if (!OpenProcessToken(GetCurrentProcess(),
-            TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY,
-            &hToken))
-	{
+                          TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY,
+                          &hToken))
+    {
         AfxMessageBox("OpenProcessToken failed with %d\n", GetLastError());
         return FALSE;
     }
 
-    // »ñÈ¡ SE_DEBUG_NAME ÌØÈ¨
-    if (!LookupPrivilegeValue((LPSTR) NULL,
-            SE_DEBUG_NAME,
-            &DebugValue))
-	{
+    // è·å– SE_DEBUG_NAME ç‰¹æƒ
+    if (!LookupPrivilegeValue((LPSTR)NULL,
+                              SE_DEBUG_NAME,
+                              &DebugValue))
+    {
         AfxMessageBox("LookupPrivilegeValue failed with %d\n", GetLastError());
         return FALSE;
     }
@@ -288,14 +285,15 @@ BOOL CPropProcess::EnableDebugPrivNT(VOID)
     tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
 
     AdjustTokenPrivileges(hToken,
-        FALSE,
-        &tkp,
-        sizeof(TOKEN_PRIVILEGES),
-        (PTOKEN_PRIVILEGES) NULL,
-        (PDWORD) NULL);
+                          FALSE,
+                          &tkp,
+                          sizeof(TOKEN_PRIVILEGES),
+                          (PTOKEN_PRIVILEGES)NULL,
+                          (PDWORD)NULL);
 
-    // AdjustTokenPrivileges µÄ·µ»ØÖµ²»ÄÜ±»²âÊÔ
-    if (GetLastError() != ERROR_SUCCESS) {
+    // AdjustTokenPrivileges çš„è¿”å›å€¼ä¸èƒ½è¢«æµ‹è¯•
+    if (GetLastError() != ERROR_SUCCESS)
+    {
         AfxMessageBox("AdjustTokenPrivileges failed with %d\n", GetLastError());
         return FALSE;
     }
@@ -305,124 +303,129 @@ BOOL CPropProcess::EnableDebugPrivNT(VOID)
 
 VOID CPropProcess::GetWindowTitles(PPROC_LIST_ENUM te)
 {
-    // Ã¶¾ÙËùÓĞµÄ´°¿Ú
-    EnumWindows((WNDENUMPROC)EnumWindowsProc, (LPARAM) te );
+    // æšä¸¾æ‰€æœ‰çš„çª—å£
+    EnumWindows((WNDENUMPROC)EnumWindowsProc, (LPARAM)te);
 }
 
 BOOL CPropProcess::MatchPattern(PUCHAR String, PUCHAR Pattern)
 {
-    UCHAR   c, p, l;
+    UCHAR c, p, l;
 
-    for (; ;) {
-        switch (p = *Pattern++) {
-            case 0:                             // end of pattern
-                return *String ? FALSE : TRUE;  // if end of string TRUE
+    for (;;)
+    {
+        switch (p = *Pattern++)
+        {
+        case 0:                            // end of pattern
+            return *String ? FALSE : TRUE; // if end of string TRUE
 
-            case '*':
-                while (*String) {               // match zero or more char
-                    if (MatchPattern (String++, Pattern))
-                        return TRUE;
+        case '*':
+            while (*String)
+            { // match zero or more char
+                if (MatchPattern(String++, Pattern))
+                    return TRUE;
+            }
+            return MatchPattern(String, Pattern);
+
+        case '?':
+            if (*String++ == 0) // match any one char
+                return FALSE;   // not end of string
+            break;
+
+        case '[':
+            if ((c = *String++) == 0) // match char set
+                return FALSE;         // syntax
+
+            c = toupper(c);
+            l = 0;
+            while (p = *Pattern++)
+            {
+                if (p == ']')     // if end of char set, then
+                    return FALSE; // no match found
+
+                if (p == '-')
+                {                 // check a range of chars?
+                    p = *Pattern; // get high limit of range
+                    if (p == 0 || p == ']')
+                        return FALSE; // syntax
+
+                    if (c >= l && c <= p)
+                        break; // if in range, move on
                 }
-                return MatchPattern (String, Pattern);
 
-            case '?':
-                if (*String++ == 0)             // match any one char
-                    return FALSE;                   // not end of string
-                break;
+                l = p;
+                if (c == p) // if char matches this element
+                    break;  // move on
+            }
 
-            case '[':
-                if ( (c = *String++) == 0)      // match char set
-                    return FALSE;                   // syntax
+            while (p && p != ']') // got a match in char set
+                p = *Pattern++;   // skip to end of set
 
-                c = toupper(c);
-                l = 0;
-                while (p = *Pattern++) {
-                    if (p == ']')               // if end of char set, then
-                        return FALSE;           // no match found
+            break;
 
-                    if (p == '-') {             // check a range of chars?
-                        p = *Pattern;           // get high limit of range
-                        if (p == 0  ||  p == ']')
-                            return FALSE;           // syntax
+        default:
+            c = *String++;
+            if (toupper(c) != p) // check for exact char
+                return FALSE;    // not a match
 
-                        if (c >= l  &&  c <= p)
-                            break;              // if in range, move on
-                    }
-
-                    l = p;
-                    if (c == p)                 // if char matches this element
-                        break;                  // move on
-                }
-
-                while (p  &&  p != ']')         // got a match in char set
-                    p = *Pattern++;             // skip to end of set
-
-                break;
-
-            default:
-                c = *String++;
-                if (toupper(c) != p)            // check for exact char
-                    return FALSE;                   // not a match
-
-                break;
+            break;
         }
     }
 }
 
 BOOL CPropProcess::GetTaskList(PPROC_LIST pTaskList, DWORD dwNumTasks)
 {
-	DWORD dwSysID;
-	dwSysID = GetSysID();
+    DWORD dwSysID;
+    dwSysID = GetSysID();
 
-	switch (dwSysID)
-	{
-	case VER_PLATFORM_WIN32_NT:
-		return GetTaskListNT(pTaskList, dwNumTasks);
+    switch (dwSysID)
+    {
+    case VER_PLATFORM_WIN32_NT:
+        return GetTaskListNT(pTaskList, dwNumTasks);
 
-	case VER_PLATFORM_WIN32_WINDOWS:
-		return GetTaskList95(pTaskList, dwNumTasks);
+    case VER_PLATFORM_WIN32_WINDOWS:
+        return GetTaskList95(pTaskList, dwNumTasks);
 
-	default:
-		AfxMessageBox(_T("±¾³ÌĞòÖ»ÄÜÔËĞĞÔÚ Windows(NT, 95 »ò¸ü¸ß) ²Ù×÷ÏµÍ³ÖĞ!"));
-		return FALSE;
-	}
+    default:
+        AfxMessageBox(_T("æœ¬ç¨‹åºåªèƒ½è¿è¡Œåœ¨ Windows(NT, 95 æˆ–æ›´é«˜) æ“ä½œç³»ç»Ÿä¸­!"));
+        return FALSE;
+    }
 }
 
 BOOL CPropProcess::EnableDebugPriv(VOID)
 {
-	DWORD dwSysID;
-	dwSysID = GetSysID();
+    DWORD dwSysID;
+    dwSysID = GetSysID();
 
-	switch (dwSysID)
-	{
-	case VER_PLATFORM_WIN32_NT:
-		return EnableDebugPrivNT();
+    switch (dwSysID)
+    {
+    case VER_PLATFORM_WIN32_NT:
+        return EnableDebugPrivNT();
 
-	case VER_PLATFORM_WIN32_WINDOWS:
-		return EnableDebugPriv95();
+    case VER_PLATFORM_WIN32_WINDOWS:
+        return EnableDebugPriv95();
 
-	default:
-		AfxMessageBox(_T("±¾³ÌĞòÖ»ÄÜÔËĞĞÔÚ Windows(NT, 95 »ò¸ü¸ß) ²Ù×÷ÏµÍ³ÖĞ!"));
-		return FALSE;
-	}
+    default:
+        AfxMessageBox(_T("æœ¬ç¨‹åºåªèƒ½è¿è¡Œåœ¨ Windows(NT, 95 æˆ–æ›´é«˜) æ“ä½œç³»ç»Ÿä¸­!"));
+        return FALSE;
+    }
 }
 
 BOOL CPropProcess::Terminator(DWORD pidToKill)
 {
-	if (pidToKill == 0)
-	{
-		AfxMessageBox(_T("È±ÉÙ Process ID !"));
-		return FALSE;
-	}
-    
-	// »ñµÃ²Ù×÷ÆäËû½ø³ÌµÄÈ¨Á¦
-	EnableDebugPriv();
+    if (pidToKill == 0)
+    {
+        AfxMessageBox(_T("ç¼ºå°‘ Process ID !"));
+        return FALSE;
+    }
 
-	ASSERT(curTaskList[curTaskPos].dwProcessId == pidToKill);
-	
-	return KillProcess(&curTaskList[curTaskPos], ForceKill);
+    // è·å¾—æ“ä½œå…¶ä»–è¿›ç¨‹çš„æƒåŠ›
+    EnableDebugPriv();
 
-/*// Ìí¼Ó·ÀÖ¹½áÊø×ÔÉíµÄ´úÂë
+    ASSERT(curTaskList[curTaskPos].dwProcessId == pidToKill);
+
+    return KillProcess(&curTaskList[curTaskPos], ForceKill);
+
+    /*// æ·»åŠ é˜²æ­¢ç»“æŸè‡ªèº«çš„ä»£ç 
 	CHAR              pname[MAX_PATH] = "";
     PROC_LIST_ENUM    te;
     DWORD             ThisPid;
@@ -432,7 +435,7 @@ BOOL CPropProcess::Terminator(DWORD pidToKill)
     char              tname[PROCESS_SIZE];
     LPSTR             p;
 
-	// Ã¶¾ÙËùÓĞ´°¿Ú²¢ÊÔÍ¼µÃµÃµ½´°¿Ú±êÌâ
+	// æšä¸¾æ‰€æœ‰çª—å£å¹¶è¯•å›¾å¾—å¾—åˆ°çª—å£æ ‡é¢˜
     te.tlist = curTaskList;
     te.numtasks = numTasks;
     GetWindowTitles( &te );
@@ -441,7 +444,7 @@ BOOL CPropProcess::Terminator(DWORD pidToKill)
 
     for (i=0; i<numTasks; i++)
 	{
-        // ·ÀÖ¹ÓÃ»§½áÊø KILL.EXE ¼°Æä¸¸´°¿Ú
+        // é˜²æ­¢ç”¨æˆ·ç»“æŸ KILL.EXE åŠå…¶çˆ¶çª—å£
         if (ThisPid == curTaskList[i].dwProcessId) {
             continue;
         }
@@ -469,13 +472,13 @@ BOOL CPropProcess::Terminator(DWORD pidToKill)
             if (KillProcess( &curTaskList[i], ForceKill ))
 			{
 				CString msg;
-				msg.Format("½ø³Ì #%d [%s] ÒÑ±»ÖÕÖ¹!", curTaskList[i].dwProcessId, curTaskList[i].ProcessName);
+				msg.Format("è¿›ç¨‹ #%d [%s] å·²è¢«ç»ˆæ­¢!", curTaskList[i].dwProcessId, curTaskList[i].ProcessName);
                 AfxMessageBox(_T(msg));
             }
 			else
 			{
 				CString msg;
-				msg.Format("½ø³Ì #%d [%s] ²»ÄÜÖÕÖ¹!", curTaskList[i].dwProcessId, curTaskList[i].ProcessName);
+				msg.Format("è¿›ç¨‹ #%d [%s] ä¸èƒ½ç»ˆæ­¢!", curTaskList[i].dwProcessId, curTaskList[i].ProcessName);
                 AfxMessageBox(_T(msg));
 
                 rval = FALSE;
@@ -489,59 +492,57 @@ BOOL CPropProcess::Terminator(DWORD pidToKill)
 
 BOOL CPropProcess::KillProcess(PPROC_LIST pTask, BOOL fForce)
 {
-	HANDLE hProcess;
+    HANDLE hProcess;
 
-	if (fForce || !pTask->hwnd)
-	{
-		hProcess = OpenProcess( PROCESS_ALL_ACCESS, FALSE, pTask->dwProcessId );
-	        if (hProcess)
-	        {
-			hProcess = OpenProcess( PROCESS_ALL_ACCESS, FALSE, pTask->dwProcessId );
-			if (hProcess == NULL)
-			{
-				return FALSE;
-			}
-	
-			if (!TerminateProcess( hProcess, 1 )) // ÖÕÖ¹½ø³Ì²¢·µ»ØÍË³öÂë 1
-			{
-				CloseHandle( hProcess );
-				return FALSE;
-			}
-	
-			CloseHandle( hProcess );
-			return TRUE;
-		}
-	}
+    if (fForce || !pTask->hwnd)
+    {
+        hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pTask->dwProcessId);
+        if (hProcess)
+        {
+            hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pTask->dwProcessId);
+            if (hProcess == NULL)
+            {
+                return FALSE;
+            }
 
-	// ·¢ËÍ WM_CLOSE ÏûÏ¢À´½áÊø½ø³Ì
-	::PostMessage( pTask->hwnd, WM_CLOSE, 0, 0 );
-//	::PostMessage( pTask->hwnd, WM_ENDSESSION, 0, 0 );
-	return TRUE;
+            if (!TerminateProcess(hProcess, 1)) // ç»ˆæ­¢è¿›ç¨‹å¹¶è¿”å›é€€å‡ºç  1
+            {
+                CloseHandle(hProcess);
+                return FALSE;
+            }
+
+            CloseHandle(hProcess);
+            return TRUE;
+        }
+    }
+
+    // å‘é€ WM_CLOSE æ¶ˆæ¯æ¥ç»“æŸè¿›ç¨‹
+    ::PostMessage(pTask->hwnd, WM_CLOSE, 0, 0);
+    //	::PostMessage( pTask->hwnd, WM_ENDSESSION, 0, 0 );
+    return TRUE;
 }
 
 DWORD CPropProcess::GetTaskListNT(PPROC_LIST pTask, DWORD dwNumTasks)
 {
-    DWORD                        rc;
-    HKEY                         hKeyNames;
-    DWORD                        dwType;
-    DWORD                        dwSize;
-    LPBYTE                       buf = NULL;
-    CHAR                         szSubKey[1024];
-    LANGID                       lid;
-    LPSTR                        p;
-    LPSTR                        p2;
-    PPERF_DATA_BLOCK             pPerf;
-    PPERF_OBJECT_TYPE            pObj;
-    PPERF_INSTANCE_DEFINITION    pInst;
-    PPERF_COUNTER_BLOCK          pCounter;
-    PPERF_COUNTER_DEFINITION     pCounterDef;
-    DWORD                        i;
-    DWORD                        dwProcessIdTitle;
-    DWORD                        dwProcessIdCounter;
-    CHAR                         szProcessName[MAX_PATH];
-    DWORD                        dwLimit = dwNumTasks - 1;
-
-
+    DWORD rc;
+    HKEY hKeyNames;
+    DWORD dwType;
+    DWORD dwSize;
+    LPBYTE buf = NULL;
+    CHAR szSubKey[1024];
+    LANGID lid;
+    LPSTR p;
+    LPSTR p2;
+    PPERF_DATA_BLOCK pPerf;
+    PPERF_OBJECT_TYPE pObj;
+    PPERF_INSTANCE_DEFINITION pInst;
+    PPERF_COUNTER_BLOCK pCounter;
+    PPERF_COUNTER_DEFINITION pCounterDef;
+    DWORD i;
+    DWORD dwProcessIdTitle;
+    DWORD dwProcessIdCounter;
+    CHAR szProcessName[MAX_PATH];
+    DWORD dwLimit = dwNumTasks - 1;
 
     //
     // Look for the list of counters.  Always use the neutral
@@ -551,54 +552,55 @@ DWORD CPropProcess::GetTaskListNT(PPROC_LIST pTask, DWORD dwNumTasks)
     // to show the user the counter names, so there is no need
     // to go find the corresponding name in the local language.
     //
-    lid = MAKELANGID( LANG_ENGLISH, SUBLANG_NEUTRAL );
-    sprintf( szSubKey, "%s\\%03x", REGKEY_PERF, lid );
-    rc = RegOpenKeyEx( HKEY_LOCAL_MACHINE,
-                       szSubKey,
-                       0,
-                       KEY_READ,
-                       &hKeyNames
-                     );
-    if (rc != ERROR_SUCCESS) {
+    lid = MAKELANGID(LANG_ENGLISH, SUBLANG_NEUTRAL);
+    sprintf(szSubKey, "%s\\%03x", REGKEY_PERF, lid);
+    rc = RegOpenKeyEx(HKEY_LOCAL_MACHINE,
+                      szSubKey,
+                      0,
+                      KEY_READ,
+                      &hKeyNames);
+    if (rc != ERROR_SUCCESS)
+    {
         goto exit;
     }
 
     //
     // get the buffer size for the counter names
     //
-    rc = RegQueryValueEx( hKeyNames,
-                          REGSUBKEY_COUNTERS,
-                          NULL,
-                          &dwType,
-                          NULL,
-                          &dwSize
-                        );
+    rc = RegQueryValueEx(hKeyNames,
+                         REGSUBKEY_COUNTERS,
+                         NULL,
+                         &dwType,
+                         NULL,
+                         &dwSize);
 
-    if (rc != ERROR_SUCCESS) {
+    if (rc != ERROR_SUCCESS)
+    {
         goto exit;
     }
 
     //
     // allocate the counter names buffer
     //
-    buf = (LPBYTE) malloc( dwSize );
-    if (buf == NULL) {
+    buf = (LPBYTE)malloc(dwSize);
+    if (buf == NULL)
+    {
         goto exit;
     }
-    memset( buf, 0, dwSize );
+    memset(buf, 0, dwSize);
 
     //
     // read the counter names from the registry
     //
-    rc = RegQueryValueEx( hKeyNames,
-                          REGSUBKEY_COUNTERS,
-                          NULL,
-                          &dwType,
-                          buf,
-                          &dwSize
-                        );
+    rc = RegQueryValueEx(hKeyNames,
+                         REGSUBKEY_COUNTERS,
+                         NULL,
+                         &dwType,
+                         buf,
+                         &dwSize);
 
-    if (rc != ERROR_SUCCESS) {
+    if (rc != ERROR_SUCCESS)
+    {
         goto exit;
     }
 
@@ -614,24 +616,30 @@ DWORD CPropProcess::GetTaskListNT(PPROC_LIST pTask, DWORD dwNumTasks)
     //
 
     p = (char *)buf;
-    while (*p) {
-        if (p > (char *)buf) {
-            for( p2=p-2; isdigit(*p2); p2--) ;
-            }
-        if (stricmp(p, PROCESS_COUNTER) == 0) {
-            //
-            // look backwards for the counter number
-            //
-            for( p2=p-2; isdigit(*p2); p2--) ;
-            strcpy( szSubKey, p2+1 );
+    while (*p)
+    {
+        if (p > (char *)buf)
+        {
+            for (p2 = p - 2; isdigit(*p2); p2--)
+                ;
         }
-        else
-        if (stricmp(p, PROCESSID_COUNTER) == 0) {
+        if (stricmp(p, PROCESS_COUNTER) == 0)
+        {
             //
             // look backwards for the counter number
             //
-            for( p2=p-2; isdigit(*p2); p2--) ;
-            dwProcessIdTitle = atol( p2+1 );
+            for (p2 = p - 2; isdigit(*p2); p2--)
+                ;
+            strcpy(szSubKey, p2 + 1);
+        }
+        else if (stricmp(p, PROCESSID_COUNTER) == 0)
+        {
+            //
+            // look backwards for the counter number
+            //
+            for (p2 = p - 2; isdigit(*p2); p2--)
+                ;
+            dwProcessIdTitle = atol(p2 + 1);
         }
         //
         // next string
@@ -642,31 +650,30 @@ DWORD CPropProcess::GetTaskListNT(PPROC_LIST pTask, DWORD dwNumTasks)
     //
     // free the counter names buffer
     //
-    free( buf );
-
+    free(buf);
 
     //
     // allocate the initial buffer for the performance data
     //
     dwSize = INITIAL_SIZE;
-    buf = (unsigned char *)malloc( dwSize );
-    if (buf == NULL) {
+    buf = (unsigned char *)malloc(dwSize);
+    if (buf == NULL)
+    {
         goto exit;
     }
-    memset( buf, 0, dwSize );
+    memset(buf, 0, dwSize);
 
+    while (TRUE)
+    {
 
-    while (TRUE) {
+        rc = RegQueryValueEx(HKEY_PERFORMANCE_DATA,
+                             szSubKey,
+                             NULL,
+                             &dwType,
+                             buf,
+                             &dwSize);
 
-        rc = RegQueryValueEx( HKEY_PERFORMANCE_DATA,
-                              szSubKey,
-                              NULL,
-                              &dwType,
-                              buf,
-                              &dwSize
-                            );
-
-        pPerf = (PPERF_DATA_BLOCK) buf;
+        pPerf = (PPERF_DATA_BLOCK)buf;
 
         //
         // check for success and valid perf data block signature
@@ -676,19 +683,22 @@ DWORD CPropProcess::GetTaskListNT(PPROC_LIST pTask, DWORD dwNumTasks)
             (pPerf)->Signature[0] == (WCHAR)'P' &&
             (pPerf)->Signature[1] == (WCHAR)'E' &&
             (pPerf)->Signature[2] == (WCHAR)'R' &&
-            (pPerf)->Signature[3] == (WCHAR)'F' ) {
+            (pPerf)->Signature[3] == (WCHAR)'F')
+        {
             break;
         }
 
         //
         // if buffer is not big enough, reallocate and try again
         //
-        if (rc == ERROR_MORE_DATA) {
+        if (rc == ERROR_MORE_DATA)
+        {
             dwSize += EXTEND_SIZE;
-            buf = (unsigned char *)realloc( buf, dwSize );
-            memset( buf, 0, dwSize );
+            buf = (unsigned char *)realloc(buf, dwSize);
+            memset(buf, 0, dwSize);
         }
-        else {
+        else
+        {
             goto exit;
         }
     }
@@ -696,67 +706,72 @@ DWORD CPropProcess::GetTaskListNT(PPROC_LIST pTask, DWORD dwNumTasks)
     //
     // set the perf_object_type pointer
     //
-    pObj = (PPERF_OBJECT_TYPE) ((DWORD)pPerf + pPerf->HeaderLength);
+    pObj = (PPERF_OBJECT_TYPE)((DWORD)pPerf + pPerf->HeaderLength);
 
     //
     // loop thru the performance counter definition records looking
     // for the process id counter and then save its offset
     //
-    pCounterDef = (PPERF_COUNTER_DEFINITION) ((DWORD)pObj + pObj->HeaderLength);
-    for (i=0; i<(DWORD)pObj->NumCounters; i++) {
-        if (pCounterDef->CounterNameTitleIndex == dwProcessIdTitle) {
+    pCounterDef = (PPERF_COUNTER_DEFINITION)((DWORD)pObj + pObj->HeaderLength);
+    for (i = 0; i < (DWORD)pObj->NumCounters; i++)
+    {
+        if (pCounterDef->CounterNameTitleIndex == dwProcessIdTitle)
+        {
             dwProcessIdCounter = pCounterDef->CounterOffset;
             break;
         }
         pCounterDef++;
     }
 
-    dwNumTasks = min( dwLimit, (DWORD)pObj->NumInstances );
+    dwNumTasks = min(dwLimit, (DWORD)pObj->NumInstances);
 
-    pInst = (PPERF_INSTANCE_DEFINITION) ((DWORD)pObj + pObj->DefinitionLength);
+    pInst = (PPERF_INSTANCE_DEFINITION)((DWORD)pObj + pObj->DefinitionLength);
 
     //
     // loop thru the performance instance data extracting each process name
     // and process id
     //
-    for (i=0; i<dwNumTasks; i++) {
+    for (i = 0; i < dwNumTasks; i++)
+    {
         //
         // pointer to the process name
         //
-        p = (LPSTR) ((DWORD)pInst + pInst->NameOffset);
+        p = (LPSTR)((DWORD)pInst + pInst->NameOffset);
 
         //
         // convert it to ascii
         //
-        rc = WideCharToMultiByte( CP_ACP,
-                                  0,
-                                  (LPCWSTR)p,
-                                  -1,
-                                  szProcessName,
-                                  sizeof(szProcessName),
-                                  NULL,
-                                  NULL
-                                );
+        rc = WideCharToMultiByte(CP_ACP,
+                                 0,
+                                 (LPCWSTR)p,
+                                 -1,
+                                 szProcessName,
+                                 sizeof(szProcessName),
+                                 NULL,
+                                 NULL);
 
-        if (!rc) {
+        if (!rc)
+        {
             //
-	    // if we cant convert the string then use a default value
+            // if we cant convert the string then use a default value
             //
-            strcpy( pTask->ProcessName, UNKNOWN_TASK );
+            strcpy(pTask->ProcessName, UNKNOWN_TASK);
         }
 
-        if (strlen(szProcessName)+4 <= sizeof(pTask->ProcessName)) {
-            strcpy( pTask->ProcessName, szProcessName );
-            strcat( pTask->ProcessName, ".exe" );
+        if (strlen(szProcessName) + 4 <= sizeof(pTask->ProcessName))
+        {
+            strcpy(pTask->ProcessName, szProcessName);
+            strcat(pTask->ProcessName, ".exe");
         }
 
         //
         // get the process id
         //
-        pCounter = (PPERF_COUNTER_BLOCK) ((DWORD)pInst + pInst->ByteLength);
+        pCounter = (PPERF_COUNTER_BLOCK)((DWORD)pInst + pInst->ByteLength);
         pTask->flags = 0;
-        pTask->dwProcessId = *((LPDWORD) ((DWORD)pCounter + dwProcessIdCounter));
-        if (pTask->dwProcessId == 0) {
+        pTask->dwProcessId = *((LPDWORD)((DWORD)pCounter + dwProcessIdCounter));
+        if (pTask->dwProcessId == 0)
+        {
             pTask->dwProcessId = (DWORD)-2;
         }
 
@@ -764,75 +779,75 @@ DWORD CPropProcess::GetTaskListNT(PPROC_LIST pTask, DWORD dwNumTasks)
         // next process
         //
         pTask++;
-        pInst = (PPERF_INSTANCE_DEFINITION) ((DWORD)pCounter + pCounter->ByteLength);
+        pInst = (PPERF_INSTANCE_DEFINITION)((DWORD)pCounter + pCounter->ByteLength);
     }
 
 exit:
-    if (buf) {
-        free( buf );
+    if (buf)
+    {
+        free(buf);
     }
 
-    RegCloseKey( hKeyNames );
-    RegCloseKey( HKEY_PERFORMANCE_DATA );
+    RegCloseKey(hKeyNames);
+    RegCloseKey(HKEY_PERFORMANCE_DATA);
 
     return dwNumTasks;
 }
 
 DWORD CPropProcess::GetTaskList95(PPROC_LIST pTaskList, DWORD dwNumTasks)
 /*++
-ÃèÊö:
-    µ±²Ù×÷ÏµÍ³Îª win95 »ò¸ü¸ßÊ±, Í¨¹ı API -- Toolhelp32 -- À´µÃµ½ÈÎÎñÁĞ±í
+æè¿°:
+    å½“æ“ä½œç³»ç»Ÿä¸º win95 æˆ–æ›´é«˜æ—¶, é€šè¿‡ API -- Toolhelp32 -- æ¥å¾—åˆ°ä»»åŠ¡åˆ—è¡¨
 
-²ÎÊı:
-    dwNumTasks -- pTaskList Êı×éÄÜ¹»×°ÔØµÄ×î´ó Task Êı
+å‚æ•°:
+    dwNumTasks -- pTaskList æ•°ç»„èƒ½å¤Ÿè£…è½½çš„æœ€å¤§ Task æ•°
 
-·µ»ØÖµ:
-    ·µ»Ø±»·ÅÔÚÊı×éÀïµÄ Task ÊıÁ¿
+è¿”å›å€¼:
+    è¿”å›è¢«æ”¾åœ¨æ•°ç»„é‡Œçš„ Task æ•°é‡
 --*/
 {
-	HANDLE         hProcessSnap   = NULL;
-	PROCESSENTRY32 procEntry32    = {0};
-	DWORD          dwTaskCount    = 0;
+    HANDLE hProcessSnap = NULL;
+    PROCESSENTRY32 procEntry32 = {0};
+    DWORD dwTaskCount = 0;
 
-	// ±£Ö¤ÖÁÉÙĞèÒªÁĞ¾ÙÒ»¸ö Task
-	if (dwNumTasks == 0)
-		return 0;
+    // ä¿è¯è‡³å°‘éœ€è¦åˆ—ä¸¾ä¸€ä¸ª Task
+    if (dwNumTasks == 0)
+        return 0;
 
-	// »ñµÃµ±Ç°ÏµÍ³½ø³Ì¿ìÕÕ
-	hProcessSnap = ::CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-	if (hProcessSnap == (HANDLE)-1)
-		return 0;
-	
-	// »ñÈ¡¿ìÕÕÖĞÃ¿Ò»½ø³ÌµÄĞÅÏ¢
-	dwTaskCount = 0;
-	procEntry32.dwSize = sizeof(PROCESSENTRY32);   // Ê¹ÓÃÇ°±ØĞëÉèÖÃ
-	if (::Process32First(hProcessSnap, &procEntry32))
-	{
-		do
-		{
-			LPSTR pCurChar; // ÎªË«×Ö½ÚÏµÍ³×¼±¸
+    // è·å¾—å½“å‰ç³»ç»Ÿè¿›ç¨‹å¿«ç…§
+    hProcessSnap = ::CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    if (hProcessSnap == (HANDLE)-1)
+        return 0;
 
-			// ±£´æÎÄ¼şÃûºÍÂ·¾¶
-			for (pCurChar = (procEntry32.szExeFile + lstrlen(procEntry32.szExeFile));
-				*pCurChar != '\\' && pCurChar != procEntry32.szExeFile; 
-				--pCurChar)
+    // è·å–å¿«ç…§ä¸­æ¯ä¸€è¿›ç¨‹çš„ä¿¡æ¯
+    dwTaskCount = 0;
+    procEntry32.dwSize = sizeof(PROCESSENTRY32); // ä½¿ç”¨å‰å¿…é¡»è®¾ç½®
+    if (::Process32First(hProcessSnap, &procEntry32))
+    {
+        do
+        {
+            LPSTR pCurChar; // ä¸ºåŒå­—èŠ‚ç³»ç»Ÿå‡†å¤‡
 
-			lstrcpy(pTaskList->ProcessName, pCurChar);
-			pTaskList->flags = 0;
-			pTaskList->dwProcessId = procEntry32.th32ProcessID;
+            // ä¿å­˜æ–‡ä»¶åå’Œè·¯å¾„
+            for (pCurChar = (procEntry32.szExeFile + lstrlen(procEntry32.szExeFile));
+                 *pCurChar != '\\' && pCurChar != procEntry32.szExeFile;
+                 --pCurChar)
 
-			++dwTaskCount;
-			++pTaskList; // ÏÂÒ»¸ö Task
-		}
-		while (dwTaskCount < dwNumTasks && ::Process32Next(hProcessSnap, &procEntry32));
-	}
-	else
-		dwTaskCount = 0;
+                lstrcpy(pTaskList->ProcessName, pCurChar);
+            pTaskList->flags = 0;
+            pTaskList->dwProcessId = procEntry32.th32ProcessID;
 
-	// ÊÍ·Å snapshot ¶ÔÏó
-	CloseHandle (hProcessSnap);
+            ++dwTaskCount;
+            ++pTaskList; // ä¸‹ä¸€ä¸ª Task
+        } while (dwTaskCount < dwNumTasks && ::Process32Next(hProcessSnap, &procEntry32));
+    }
+    else
+        dwTaskCount = 0;
 
-	return dwTaskCount;
+    // é‡Šæ”¾ snapshot å¯¹è±¡
+    CloseHandle(hProcessSnap);
+
+    return dwTaskCount;
 }
 
 BOOL CPropProcess::RefreshProcList()
@@ -841,26 +856,26 @@ BOOL CPropProcess::RefreshProcList()
     DWORD i;
     PROC_LIST_ENUM te;
 
-	curTaskPos = -1;
+    curTaskPos = -1;
 
-    // È¡µÃ²Ù×÷ÆäËû½ø³ÌµÄÈ¨Á¦
+    // å–å¾—æ“ä½œå…¶ä»–è¿›ç¨‹çš„æƒåŠ›
     EnableDebugPriv();
 
     memset(curTaskList, 0, sizeof(curTaskList));
 
-    // È¡µÃÏµÍ³µ±Ç°µÄ½ø³ÌÁĞ±í
+    // å–å¾—ç³»ç»Ÿå½“å‰çš„è¿›ç¨‹åˆ—è¡¨
     numTasks = GetTaskList(curTaskList, MAX_TASKS);
 
-    // Ã¶¾ÙËùÓĞ´°¿Ú²¢ÊÔÍ¼ÎªÃ¿¸ö½ø³Ì»ñµÃ´°¿Ú±êÌâ
+    // æšä¸¾æ‰€æœ‰çª—å£å¹¶è¯•å›¾ä¸ºæ¯ä¸ªè¿›ç¨‹è·å¾—çª—å£æ ‡é¢˜
     te.tlist = curTaskList;
     te.numtasks = numTasks;
-    GetWindowTitles( &te );
+    GetWindowTitles(&te);
 
-    // Ë¢ĞÂ½ø³ÌÁĞ±í
-	m_procList.SetRedraw(false);
-    for (i=0; i < numTasks; i++) 
+    // åˆ·æ–°è¿›ç¨‹åˆ—è¡¨
+    m_procList.SetRedraw(false);
+    for (i = 0; i < numTasks; i++)
     {
-        CString pid,wind,num;
+        CString pid, wind, num;
         num.Format("%03d", i + 1);
         pid.Format("%d", curTaskList[i].dwProcessId);
         wind.Format("%d", curTaskList[i].hwnd);
@@ -869,30 +884,29 @@ BOOL CPropProcess::RefreshProcList()
         m_procList.SetItemText(i, 2, pid);
         m_procList.SetItemText(i, 3, wind);
 
-        if (curTaskList[i].hwnd) 
+        if (curTaskList[i].hwnd)
         {
             m_procList.SetItemText(i, 4, curTaskList[i].WindowTitle);
-        } 
+        }
     }
-	m_procList.SetRedraw(false);
+    m_procList.SetRedraw(false);
 
-	AutoSizeColumns(&m_procList);
+    AutoSizeColumns(&m_procList);
     return TRUE;
 }
 
 DWORD CPropProcess::GetSysID()
 {
-	OSVERSIONINFO sysInfo = {0};
-	sysInfo.dwOSVersionInfoSize = sizeof(sysInfo);
-	GetVersionEx(&sysInfo);
-	return sysInfo.dwPlatformId;
+    OSVERSIONINFO sysInfo = {0};
+    sysInfo.dwOSVersionInfoSize = sizeof(sysInfo);
+    GetVersionEx(&sysInfo);
+    return sysInfo.dwPlatformId;
 }
 
-void CPropProcess::OnProcSendmsg() 
+void CPropProcess::OnProcSendmsg()
 {
-	// TODO: Add your command handler code here
-	ForceKill = FALSE;
-	OnProcTerminate();
-	ForceKill = TRUE;
+    // TODO: Add your command handler code here
+    ForceKill = FALSE;
+    OnProcTerminate();
+    ForceKill = TRUE;
 }
-

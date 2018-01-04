@@ -11,29 +11,32 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-#define VK_ESCAPE         0x1B
+#define VK_ESCAPE 0x1B
 
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About
 
 class CAboutDlg : public CDialog
 {
-public:
+  public:
 	CAboutDlg();
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CAboutDlg)
-	enum { IDD = IDD_ABOUTBOX };
+	enum
+	{
+		IDD = IDD_ABOUTBOX
+	};
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CAboutDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+  protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
-// Implementation
-protected:
+	// Implementation
+  protected:
 	//{{AFX_MSG(CAboutDlg)
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
@@ -45,7 +48,7 @@ CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
 	//}}AFX_DATA_INIT
 }
 
-void CAboutDlg::DoDataExchange(CDataExchange* pDX)
+void CAboutDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CAboutDlg)
@@ -53,15 +56,15 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
-	//{{AFX_MSG_MAP(CAboutDlg)
-		// No message handlers
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CAboutDlg)
+// No message handlers
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CSysMonDlg dialog
 
-CSysMonDlg::CSysMonDlg(CWnd* pParent /*=NULL*/)
+CSysMonDlg::CSysMonDlg(CWnd *pParent /*=NULL*/)
 	: CDialog(CSysMonDlg::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CSysMonDlg)
@@ -70,7 +73,7 @@ CSysMonDlg::CSysMonDlg(CWnd* pParent /*=NULL*/)
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
-void CSysMonDlg::DoDataExchange(CDataExchange* pDX)
+void CSysMonDlg::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CSysMonDlg)
@@ -78,29 +81,29 @@ void CSysMonDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CSysMonDlg, CDialog)
-	//{{AFX_MSG_MAP(CSysMonDlg)
-	ON_WM_SYSCOMMAND()
-	ON_WM_PAINT()
-	ON_WM_QUERYDRAGICON()
-	ON_COMMAND(IDR_SYS_ABOUT, OnSysAbout)
-	ON_COMMAND(IDM_SYS_HELP, OnSysHelp)
-	ON_COMMAND(IDM_PROC_REFRESH, OnProcRefresh)
-	ON_COMMAND(IDM_PROC_TERMINATE, OnProcTerminate)
-	ON_COMMAND(IDM_PROC_SENDMSG, OnProcSendmsg)
-	ON_WM_CHAR()
-	ON_COMMAND(IDM_SYS_EXIT, OnSysExit)
-	ON_WM_CLOSE()
-	ON_WM_SIZE()
-	ON_COMMAND(IDM_SHELLICON_SHOWWINDOW, OnShelliconShowwindow)
-	ON_COMMAND(IDM_SHELLICON_EXIT, OnShelliconExit)
-	ON_COMMAND(IDM_SVR_LOAD, OnSvrLoad)
-	ON_COMMAND(IDM_SVR_PAUSE, OnSvrPause)
-	ON_COMMAND(IDM_SVR_REFRESH, OnSvrRefresh)
-	ON_COMMAND(IDM_SVR_RESUME, OnSvrResume)
-	ON_COMMAND(IDM_SVR_STOP, OnSvrStop)
-	ON_UPDATE_COMMAND_UI(IDM_SVR_LOAD, OnUpdateSvrLoad)
-	//}}AFX_MSG_MAP
-	ON_MESSAGE(WM_SYSMONNOTIFY, OnSysMonNotify)
+//{{AFX_MSG_MAP(CSysMonDlg)
+ON_WM_SYSCOMMAND()
+ON_WM_PAINT()
+ON_WM_QUERYDRAGICON()
+ON_COMMAND(IDR_SYS_ABOUT, OnSysAbout)
+ON_COMMAND(IDM_SYS_HELP, OnSysHelp)
+ON_COMMAND(IDM_PROC_REFRESH, OnProcRefresh)
+ON_COMMAND(IDM_PROC_TERMINATE, OnProcTerminate)
+ON_COMMAND(IDM_PROC_SENDMSG, OnProcSendmsg)
+ON_WM_CHAR()
+ON_COMMAND(IDM_SYS_EXIT, OnSysExit)
+ON_WM_CLOSE()
+ON_WM_SIZE()
+ON_COMMAND(IDM_SHELLICON_SHOWWINDOW, OnShelliconShowwindow)
+ON_COMMAND(IDM_SHELLICON_EXIT, OnShelliconExit)
+ON_COMMAND(IDM_SVR_LOAD, OnSvrLoad)
+ON_COMMAND(IDM_SVR_PAUSE, OnSvrPause)
+ON_COMMAND(IDM_SVR_REFRESH, OnSvrRefresh)
+ON_COMMAND(IDM_SVR_RESUME, OnSvrResume)
+ON_COMMAND(IDM_SVR_STOP, OnSvrStop)
+ON_UPDATE_COMMAND_UI(IDM_SVR_LOAD, OnUpdateSvrLoad)
+//}}AFX_MSG_MAP
+ON_MESSAGE(WM_SYSMONNOTIFY, OnSysMonNotify)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -116,7 +119,7 @@ BOOL CSysMonDlg::OnInitDialog()
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
-	CMenu* pSysMenu = GetSystemMenu(FALSE);
+	CMenu *pSysMenu = GetSystemMenu(FALSE);
 	if (pSysMenu != NULL)
 	{
 		CString strAboutMenu;
@@ -130,12 +133,12 @@ BOOL CSysMonDlg::OnInitDialog()
 
 	// Set the icon for this dialog.  The framework does this automatically
 	//  when the application's main window is not a dialog
-	SetIcon(m_hIcon, TRUE);			// Set big icon
-	SetIcon(m_hIcon, FALSE);		// Set small icon
-	
+	SetIcon(m_hIcon, TRUE);  // Set big icon
+	SetIcon(m_hIcon, FALSE); // Set small icon
+
 	// TODO: Add extra initialization here
 	nIsHide = SW_SHOW;
-	// ≥ı ºªØ Ù–‘µ•
+	// ÂàùÂßãÂåñÂ±ûÊÄßÂçï
 	m_sheet.AddPage(&m_propSysinfo);
 	m_sheet.AddPage(&m_propProcess);
 	m_sheet.AddPage(&m_propService);
@@ -147,7 +150,7 @@ BOOL CSysMonDlg::OnInitDialog()
 	m_sheet.ModifyStyleEx(0, WS_EX_CONTROLPARENT);
 	m_sheet.ModifyStyle(0, WS_TABSTOP);
 
-	return TRUE;  // return TRUE  unless you set the focus to a control
+	return TRUE; // return TRUE  unless you set the focus to a control
 }
 
 void CSysMonDlg::OnSysCommand(UINT nID, LPARAM lParam)
@@ -167,13 +170,13 @@ void CSysMonDlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  to draw the icon.  For MFC applications using the document/view model,
 //  this is automatically done for you by the framework.
 
-void CSysMonDlg::OnPaint() 
+void CSysMonDlg::OnPaint()
 {
 	if (IsIconic())
 	{
 		CPaintDC dc(this); // device context for painting
 
-		SendMessage(WM_ICONERASEBKGND, (WPARAM) dc.GetSafeHdc(), 0);
+		SendMessage(WM_ICONERASEBKGND, (WPARAM)dc.GetSafeHdc(), 0);
 
 		// Center icon in client rectangle
 		int cxIcon = GetSystemMetrics(SM_CXICON);
@@ -196,148 +199,148 @@ void CSysMonDlg::OnPaint()
 //  the minimized window.
 HCURSOR CSysMonDlg::OnQueryDragIcon()
 {
-	return (HCURSOR) m_hIcon;
+	return (HCURSOR)m_hIcon;
 }
 
-void CSysMonDlg::OnSysAbout() 
+void CSysMonDlg::OnSysAbout()
 {
 	// TODO: Add your command handler code here
 	CAboutDlg dlgAbout;
 	dlgAbout.DoModal();
 }
 
-void CSysMonDlg::OnSysHelp() 
+void CSysMonDlg::OnSysHelp()
 {
 	// TODO: Add your command handler code here
 	AfxMessageBox("Sorry, Help is not available for now!");
 }
 
-void CSysMonDlg::OnProcRefresh() 
+void CSysMonDlg::OnProcRefresh()
 {
 	// TODO: Add your command handler code here
-    m_propProcess.OnProcRefresh();	
+	m_propProcess.OnProcRefresh();
 }
 
-void CSysMonDlg::OnProcTerminate() 
+void CSysMonDlg::OnProcTerminate()
 {
 	// TODO: Add your command handler code here
 	m_propProcess.OnProcTerminate();
 }
 
-void CSysMonDlg::OnProcSendmsg() 
+void CSysMonDlg::OnProcSendmsg()
 {
 	// TODO: Add your command handler code here
 	m_propProcess.OnProcSendmsg();
 }
 
-void CSysMonDlg::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CSysMonDlg::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	// TODO: Add your message handler code here and/or call default
 	AfxMessageBox(nChar);
-	// ÃÌº”»ŒŒÒ¿∏Õº±Í
-	if(nChar == VK_ESCAPE)
+	// Ê∑ªÂä†‰ªªÂä°Ê†èÂõæÊ†á
+	if (nChar == VK_ESCAPE)
 	{
 		NOTIFYICONDATA nid;
 
-		nid.cbSize=sizeof(NOTIFYICONDATA);
-		nid.hWnd=this->m_hWnd;
-		nid.uID=IDR_MAINFRAME;
-		nid.uFlags=NIF_MESSAGE|NIF_ICON|NIF_TIP;
-		nid.uCallbackMessage=WM_SYSMONNOTIFY;
-		nid.hIcon=LoadIcon(AfxGetInstanceHandle(),MAKEINTRESOURCE(IDR_MAINFRAME));
-		strcpy(nid.szTip, _T("œµÕ≥º‡øÿ∆˜"));
+		nid.cbSize = sizeof(NOTIFYICONDATA);
+		nid.hWnd = this->m_hWnd;
+		nid.uID = IDR_MAINFRAME;
+		nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
+		nid.uCallbackMessage = WM_SYSMONNOTIFY;
+		nid.hIcon = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_MAINFRAME));
+		strcpy(nid.szTip, _T("Á≥ªÁªüÁõëÊéßÂô®"));
 
-		Shell_NotifyIcon(NIM_ADD,&nid);
+		Shell_NotifyIcon(NIM_ADD, &nid);
 	}
 
-	// “˛≤ÿ¥∞ÃÂ
-	ShowWindow( SW_HIDE );
+	// ÈöêËóèÁ™ó‰Ωì
+	ShowWindow(SW_HIDE);
 
 	CDialog::OnChar(nChar, nRepCnt, nFlags);
 }
 
-void CSysMonDlg::OnSysMonNotify(WPARAM wParam,LPARAM lParam)
+void CSysMonDlg::OnSysMonNotify(WPARAM wParam, LPARAM lParam)
 {
-	UINT uID; //∑¢≥ˆ∏√œ˚œ¢µƒÕº±ÍµƒID
-	UINT uMouseMsg; // Û±Í∂Ø◊˜
+	UINT uID;		//ÂèëÂá∫ËØ•Ê∂àÊÅØÁöÑÂõæÊ†áÁöÑID
+	UINT uMouseMsg; //Èº†Ê†áÂä®‰Ωú
 	POINT point;
 
-	uID=(UINT) wParam;
-	uMouseMsg=(UINT) lParam;
-	if(uMouseMsg == WM_RBUTTONUP) // »Áπ˚ «À´ª˜◊Ûº¸
+	uID = (UINT)wParam;
+	uMouseMsg = (UINT)lParam;
+	if (uMouseMsg == WM_RBUTTONUP) // Â¶ÇÊûúÊòØÂèåÂáªÂ∑¶ÈîÆ
 	{
-		if(uID == IDR_MAINFRAME) // »Áπ˚ «Œ“√«µƒÕº±Í
+		if (uID == IDR_MAINFRAME) // Â¶ÇÊûúÊòØÊàë‰ª¨ÁöÑÂõæÊ†á
 		{
-			GetCursorPos(&point); //»°µ√ Û±ÍŒª÷√
+			GetCursorPos(&point); //ÂèñÂæóÈº†Ê†á‰ΩçÁΩÆ
 
-			// »°≤Àµ•◊ ‘¥
+			// ÂèñËèúÂçïËµÑÊ∫ê
 			CMenu mnuTop;
-			mnuTop.LoadMenu( IDR_MENU_SHELLICON );
+			mnuTop.LoadMenu(IDR_MENU_SHELLICON);
 
-			// »°◊”≤Àµ•
-			CMenu* pPopup = mnuTop.GetSubMenu( 0 );
-			ASSERT_VALID( pPopup );
+			// ÂèñÂ≠êËèúÂçï
+			CMenu *pPopup = mnuTop.GetSubMenu(0);
+			ASSERT_VALID(pPopup);
 
-			// …Ë÷√ƒ¨»œ≤Àµ•
+			// ËÆæÁΩÆÈªòËÆ§ËèúÂçï
 			SetMenuDefaultItem(pPopup->m_hMenu, 0, TRUE);
 
-			// œ‘ æ≤Àµ•
-			pPopup->TrackPopupMenu(	TPM_LEFTALIGN | TPM_LEFTBUTTON,
-									point.x, point.y,
-									AfxGetMainWnd(), NULL );
+			// ÊòæÁ§∫ËèúÂçï
+			pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_LEFTBUTTON,
+								   point.x, point.y,
+								   AfxGetMainWnd(), NULL);
 
-			// µØ≥ˆ Ω≤Àµ•µƒ√¸¡Óª·±ª MFC µƒœ˚œ¢¬∑”…ª˙÷∆◊‘∂Ø¥¶¿Ì	
+			// ÂºπÂá∫ÂºèËèúÂçïÁöÑÂëΩ‰ª§‰ºöË¢´ MFC ÁöÑÊ∂àÊÅØË∑ØÁî±Êú∫Âà∂Ëá™Âä®Â§ÑÁêÜ
 		}
 	}
 
-	if(uMouseMsg == WM_LBUTTONDBLCLK) //»Áπ˚ «À´ª˜◊Ûº¸
+	if (uMouseMsg == WM_LBUTTONDBLCLK) //Â¶ÇÊûúÊòØÂèåÂáªÂ∑¶ÈîÆ
 	{
-		if(uID == IDR_MAINFRAME) //»Áπ˚ «Œ“√«µƒÕº±Í
-			OnShelliconShowwindow(); // œ‘ æ¥∞ÃÂ
+		if (uID == IDR_MAINFRAME)	//Â¶ÇÊûúÊòØÊàë‰ª¨ÁöÑÂõæÊ†á
+			OnShelliconShowwindow(); // ÊòæÁ§∫Á™ó‰Ωì
 	}
 
-	return; 
+	return;
 }
 
-void CSysMonDlg::OnSysExit() 
+void CSysMonDlg::OnSysExit()
 {
 	// TODO: Add your command handler code here
-	// ÕÀ≥ˆ≥Ã–Ú
+	// ÈÄÄÂá∫Á®ãÂ∫è
 	SendMessage(WM_CLOSE);
 }
 
-void CSysMonDlg::OnClose() 
+void CSysMonDlg::OnClose()
 {
 	// TODO: Add your message handler code here and/or call default
-	if (IDOK == AfxMessageBox(_T("»∑∂®“™ÕÀ≥ˆœµÕ≥º‡øÿ≥Ã–Ú¬?"),
-		MB_OKCANCEL))
+	if (IDOK == AfxMessageBox(_T("Á°ÆÂÆöË¶ÅÈÄÄÂá∫Á≥ªÁªüÁõëÊéßÁ®ãÂ∫èÂêó?"),
+							  MB_OKCANCEL))
 	{
 		CDialog::OnClose(); // CDialog::OnOK();
 	}
 }
 
-void CSysMonDlg::OnSize(UINT nType, int cx, int cy) 
+void CSysMonDlg::OnSize(UINT nType, int cx, int cy)
 {
 	CDialog::OnSize(nType, cx, cy);
-	
+
 	// TODO: Add your message handler code here
-	// ÃÌº”»ŒŒÒ¿∏Õº±Í
+	// Ê∑ªÂä†‰ªªÂä°Ê†èÂõæÊ†á
 	if (nType == SIZE_MINIMIZED)
 	{
 		NOTIFYICONDATA nid;
 
-		nid.cbSize=sizeof(NOTIFYICONDATA);
-		nid.hWnd=this->m_hWnd;
-		nid.uID=IDR_MAINFRAME;
-		nid.uFlags=NIF_MESSAGE|NIF_ICON|NIF_TIP;
-		nid.uCallbackMessage=WM_SYSMONNOTIFY;
-		nid.hIcon=LoadIcon(AfxGetInstanceHandle(),MAKEINTRESOURCE(IDR_MAINFRAME));
-		strcpy(nid.szTip, _T("œµÕ≥º‡øÿ∆˜"));
+		nid.cbSize = sizeof(NOTIFYICONDATA);
+		nid.hWnd = this->m_hWnd;
+		nid.uID = IDR_MAINFRAME;
+		nid.uFlags = NIF_MESSAGE | NIF_ICON | NIF_TIP;
+		nid.uCallbackMessage = WM_SYSMONNOTIFY;
+		nid.hIcon = LoadIcon(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDR_MAINFRAME));
+		strcpy(nid.szTip, _T("Á≥ªÁªüÁõëÊéßÂô®"));
 
-		Shell_NotifyIcon(NIM_ADD,&nid);
+		Shell_NotifyIcon(NIM_ADD, &nid);
 	}
 
-	// “˛≤ÿ¥∞ÃÂ
+	// ÈöêËóèÁ™ó‰Ωì
 	if (nIsHide == SW_SHOW)
 	{
 		ShowWindow(SW_SHOWMINIMIZED);
@@ -347,10 +350,10 @@ void CSysMonDlg::OnSize(UINT nType, int cx, int cy)
 	}
 }
 
-void CSysMonDlg::OnShelliconShowwindow() 
+void CSysMonDlg::OnShelliconShowwindow()
 {
 	// TODO: Add your command handler code here
-	// œ‘ æ¥∞ÃÂ
+	// ÊòæÁ§∫Á™ó‰Ωì
 	if (nIsHide == SW_HIDE)
 	{
 		ShowWindow(SW_RESTORE);
@@ -358,53 +361,53 @@ void CSysMonDlg::OnShelliconShowwindow()
 		nIsHide = SW_SHOW;
 	}
 
-	// …æ≥˝»ŒŒÒ¿∏Õº±Í
+	// Âà†Èô§‰ªªÂä°Ê†èÂõæÊ†á
 	NOTIFYICONDATA nid;
 
 	nid.cbSize = sizeof(NOTIFYICONDATA);
 	nid.hWnd = this->m_hWnd;
-	nid.uID = IDR_MAINFRAME;// ±£÷§…æ≥˝µƒ «Œ“√«µƒÕº±Í
-	Shell_NotifyIcon(NIM_DELETE,&nid);
+	nid.uID = IDR_MAINFRAME; // ‰øùËØÅÂà†Èô§ÁöÑÊòØÊàë‰ª¨ÁöÑÂõæÊ†á
+	Shell_NotifyIcon(NIM_DELETE, &nid);
 }
 
-void CSysMonDlg::OnShelliconExit() 
+void CSysMonDlg::OnShelliconExit()
 {
 	// TODO: Add your command handler code here
 	OnShelliconShowwindow();
 	SendMessage(WM_CLOSE);
 }
 
-void CSysMonDlg::OnSvrLoad() 
+void CSysMonDlg::OnSvrLoad()
 {
 	// TODO: Add your command handler code here
 	m_propService.OnSvrLoad();
 }
 
-void CSysMonDlg::OnSvrPause() 
+void CSysMonDlg::OnSvrPause()
 {
 	// TODO: Add your command handler code here
 	m_propService.OnSvrPause();
 }
 
-void CSysMonDlg::OnSvrResume() 
+void CSysMonDlg::OnSvrResume()
 {
 	// TODO: Add your command handler code here
 	m_propService.OnSvrResume();
 }
 
-void CSysMonDlg::OnSvrStop() 
+void CSysMonDlg::OnSvrStop()
 {
 	// TODO: Add your command handler code here
 	m_propService.OnSvrStop();
 }
 
-void CSysMonDlg::OnSvrRefresh() 
+void CSysMonDlg::OnSvrRefresh()
 {
 	// TODO: Add your command handler code here
 	m_propService.OnSvrRefresh();
 }
 
-void CSysMonDlg::OnUpdateSvrLoad(CCmdUI* pCmdUI) 
+void CSysMonDlg::OnUpdateSvrLoad(CCmdUI *pCmdUI)
 {
 	// TODO: Add your command update UI handler code here
 	AfxMessageBox("!");

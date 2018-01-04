@@ -21,17 +21,15 @@ extern void AutoSizeColumns(CListCtrl *m_List, int col = -1);
 /////////////////////////////////////////////////////////////////////////////
 // CSelector dialog
 
-
-CSelector::CSelector(CWnd* pParent /*=NULL*/)
+CSelector::CSelector(CWnd *pParent /*=NULL*/)
 	: CDialog(CSelector::IDD, pParent)
 {
 	//{{AFX_DATA_INIT(CSelector)
-		// NOTE: the ClassWizard will add member initialization here
+	// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 }
 
-
-void CSelector::DoDataExchange(CDataExchange* pDX)
+void CSelector::DoDataExchange(CDataExchange *pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CSelector)
@@ -39,24 +37,23 @@ void CSelector::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CSelector, CDialog)
-	//{{AFX_MSG_MAP(CSelector)
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CSelector)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CSelector message handlers
 
-void CSelector::OnOK() 
+void CSelector::OnOK()
 {
 	// TODO: Add extra validation here
-	// ÑéÖ¤Ö¸ÕëÊÇ·ñÓĞĞ§
+	// éªŒè¯æŒ‡é’ˆæ˜¯å¦æœ‰æ•ˆ
 	VERIFY(m_pListForQuery);
 
-	// ±éÀúÑ¡ÔñµÄÏîÄ¿
+	// éå†é€‰æ‹©çš„é¡¹ç›®
 	POSITION pos = m_SelectorList.GetFirstSelectedItemPosition();
-	// Ã»ÓĞÑ¡Ôñ,·µ»Ø
+	// æ²¡æœ‰é€‰æ‹©,è¿”å›
 	if (pos == NULL)
 	{
 		CDialog::OnCancel();
@@ -75,7 +72,7 @@ void CSelector::OnOK()
 			strDisplayName = m_SelectorList.GetItemText(nItem, 0);
 
 			int nCount = m_pListForQuery->GetItemCount();
-			// ÅĞ¶ÏÊÇ·ñÖØ¸´
+			// åˆ¤æ–­æ˜¯å¦é‡å¤
 			BOOL bDouble = FALSE;
 			for (int i = 0; i < nCount; i++)
 			{
@@ -89,41 +86,39 @@ void CSelector::OnOK()
 			if (bDouble)
 				continue;
 
-			// Ğ´ÈëÁĞ±í
+			// å†™å…¥åˆ—è¡¨
 			int iInsPos = m_pListForQuery->InsertItem(nCount, "");
-			if(m_pListForQuery->SetItemText(iInsPos, 0, strDisplayName) == 0)
+			if (m_pListForQuery->SetItemText(iInsPos, 0, strDisplayName) == 0)
 				bSuccess = FALSE;
-			if(m_pListForQuery->SetItemText(iInsPos, 1, strServiceName) == 0)
+			if (m_pListForQuery->SetItemText(iInsPos, 1, strServiceName) == 0)
 				bSuccess = FALSE;
 		}
 		m_pListForQuery->SetRedraw(true);
 
-		if(!bSuccess)
-			AfxMessageBox(_T("²Ù×÷¹ı³ÌÖĞÓöµ½´íÎó!"));
+		if (!bSuccess)
+			AfxMessageBox(_T("æ“ä½œè¿‡ç¨‹ä¸­é‡åˆ°é”™è¯¯!"));
 	}
 
 	CDialog::OnOK();
 }
 
-BOOL CSelector::OnInitDialog() 
+BOOL CSelector::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	
-	// TODO: Add extra initialization here
-	// ³õÊ¼»¯ CListCtrl
-	m_SelectorList.InsertColumn(0, _T("ÏÔÊ¾Ãû³Æ"), LVCFMT_LEFT, 70);
-	m_SelectorList.InsertColumn(1, _T("·şÎñÃû³Æ"), LVCFMT_LEFT, 70);
 
-    m_SelectorList.SetExtendedStyle(m_SelectorList.GetExtendedStyle()
-        |LVS_EX_FULLROWSELECT|LVS_EX_GRIDLINES|LVS_EX_HEADERDRAGDROP
-		|LVS_EX_ONECLICKACTIVATE);
+	// TODO: Add extra initialization here
+	// åˆå§‹åŒ– CListCtrl
+	m_SelectorList.InsertColumn(0, _T("æ˜¾ç¤ºåç§°"), LVCFMT_LEFT, 70);
+	m_SelectorList.InsertColumn(1, _T("æœåŠ¡åç§°"), LVCFMT_LEFT, 70);
+
+	m_SelectorList.SetExtendedStyle(m_SelectorList.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES | LVS_EX_HEADERDRAGDROP | LVS_EX_ONECLICKACTIVATE);
 
 	FillList();
 	AutoSizeColumns(&m_SelectorList);
 	m_SelectorList.SetFocus();
 
-	return FALSE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+	return FALSE; // return TRUE unless you set the focus to a control
+				  // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 BOOL CSelector::FillList()
@@ -132,18 +127,18 @@ BOOL CSelector::FillList()
 	LONG lRet = 0L;
 
 	lRet = RegOpenKey(HKEY_LOCAL_MACHINE, "SYSTEM\\CurrentControlSet\\Services",
-		&hRegServicesKey);
+					  &hRegServicesKey);
 
-	if(lRet == ERROR_SUCCESS)
+	if (lRet == ERROR_SUCCESS)
 	{
 		DWORD dwSubKeys = 0, dwMaxSubKeyNameLen = 0;
-		lRet = RegQueryInfoKey(hRegServicesKey, NULL, NULL, NULL, &dwSubKeys, &dwMaxSubKeyNameLen, 
-			NULL, NULL, NULL, NULL, NULL, NULL);
+		lRet = RegQueryInfoKey(hRegServicesKey, NULL, NULL, NULL, &dwSubKeys, &dwMaxSubKeyNameLen,
+							   NULL, NULL, NULL, NULL, NULL, NULL);
 
-		if(lRet != ERROR_SUCCESS)
+		if (lRet != ERROR_SUCCESS)
 		{
 			CString errStr;
-			errStr.Format("²éÑ¯·şÎñĞÅÏ¢Ê±³öÏÖ´íÎó,´íÎóºÅ #%ld .\nÈÎÎñÊ§°Ü!", lRet);
+			errStr.Format("æŸ¥è¯¢æœåŠ¡ä¿¡æ¯æ—¶å‡ºç°é”™è¯¯,é”™è¯¯å· #%ld .\nä»»åŠ¡å¤±è´¥!", lRet);
 			AfxMessageBox(_T(errStr));
 
 			return FALSE;
@@ -151,10 +146,10 @@ BOOL CSelector::FillList()
 
 		SC_HANDLE hSCManager = OpenSCManager(GetLocalMachineName(), NULL, GENERIC_READ);
 
-		if(hSCManager == NULL)
+		if (hSCManager == NULL)
 		{
 			CString errStr;
-			errStr.Format("´ò¿ª·şÎñ¹ÜÀí¾ä±úÊ±³öÏÖ´íÎó.\nÈÎÎñÊ§°Ü!");
+			errStr.Format("æ‰“å¼€æœåŠ¡ç®¡ç†å¥æŸ„æ—¶å‡ºç°é”™è¯¯.\nä»»åŠ¡å¤±è´¥!");
 			AfxMessageBox(_T(errStr));
 
 			return FALSE;
@@ -162,23 +157,23 @@ BOOL CSelector::FillList()
 
 		VERIFY(dwMaxSubKeyNameLen <= MAX_PATH + 1);
 		m_SelectorList.SetRedraw(false);
-		for (DWORD dwIndex = 0;	dwIndex < dwSubKeys; dwIndex++)
+		for (DWORD dwIndex = 0; dwIndex < dwSubKeys; dwIndex++)
 		{
-			//	È¡µÃ·şÎñÃû³Æ
+			//	å–å¾—æœåŠ¡åç§°
 			char pszServiceName[MAX_PATH + 1] = "";
 			DWORD dwServiceNameLen = MAX_PATH + 1;
 			lRet = RegEnumKey(hRegServicesKey, dwIndex, pszServiceName, dwServiceNameLen);
 
-			if(lRet == ERROR_NO_MORE_ITEMS)
+			if (lRet == ERROR_NO_MORE_ITEMS)
 				break;
 
-			if(lRet != ERROR_SUCCESS)
+			if (lRet != ERROR_SUCCESS)
 				continue;
-			
-			// ¼ì²éÊÇ·ñÎª·şÎñ
+
+			// æ£€æŸ¥æ˜¯å¦ä¸ºæœåŠ¡
 			SC_HANDLE hService = OpenService(hSCManager, pszServiceName, GENERIC_READ);
 
-			if(hService == NULL)
+			if (hService == NULL)
 				continue;
 
 			DWORD cbBytesNeeded;
@@ -186,7 +181,7 @@ BOOL CSelector::FillList()
 			// pass a false size to QueryServiceConfig
 			QueryServiceConfig(hService, NULL, 0, &cbBytesNeeded);
 			pqsc = (LPQUERY_SERVICE_CONFIG)malloc(cbBytesNeeded);
-			if(QueryServiceConfig(hService, pqsc, cbBytesNeeded, &cbBytesNeeded) == 0)
+			if (QueryServiceConfig(hService, pqsc, cbBytesNeeded, &cbBytesNeeded) == 0)
 			{
 				free(pqsc);
 				CloseServiceHandle(hService);
@@ -195,7 +190,7 @@ BOOL CSelector::FillList()
 				continue;
 			}
 
-			if(!(pqsc->dwServiceType & SERVICE_WIN32))
+			if (!(pqsc->dwServiceType & SERVICE_WIN32))
 			{
 				free(pqsc);
 				CloseServiceHandle(hService);
@@ -204,7 +199,7 @@ BOOL CSelector::FillList()
 				continue;
 			}
 
-			// ²åÈëÁĞ±í
+			// æ’å…¥åˆ—è¡¨
 			int nCount = m_SelectorList.GetItemCount();
 			int iInsPos = m_SelectorList.InsertItem(nCount, "");
 			m_SelectorList.SetItemText(iInsPos, 0, _T(pqsc->lpDisplayName));
@@ -216,27 +211,27 @@ BOOL CSelector::FillList()
 		}
 		m_SelectorList.SetRedraw(true);
 
-		if(CloseServiceHandle(hSCManager) == 0)
-			AfxMessageBox(_T("²Ù×÷¼´½«Íê³ÉÊ±³öÏÖÒâÍâ´íÎó!"));
+		if (CloseServiceHandle(hSCManager) == 0)
+			AfxMessageBox(_T("æ“ä½œå³å°†å®Œæˆæ—¶å‡ºç°æ„å¤–é”™è¯¯!"));
 	}
 	else
 	{
 		CString errStr;
-		errStr.Format("´ò¿ª×¢²á±íÊ±³öÏÖ´íÎó,´íÎóºÅ #%ld .\nÈÎÎñÊ§°Ü!", lRet);
+		errStr.Format("æ‰“å¼€æ³¨å†Œè¡¨æ—¶å‡ºç°é”™è¯¯,é”™è¯¯å· #%ld .\nä»»åŠ¡å¤±è´¥!", lRet);
 		AfxMessageBox(_T(errStr));
 
 		return FALSE;
 	}
-	
+
 	if (RegCloseKey(hRegServicesKey) != ERROR_SUCCESS)
-		AfxMessageBox(_T("²Ù×÷¼´½«Íê³ÉÊ±³öÏÖÒâÍâ´íÎó!"));
+		AfxMessageBox(_T("æ“ä½œå³å°†å®Œæˆæ—¶å‡ºç°æ„å¤–é”™è¯¯!"));
 
 	return TRUE;
 }
 
 BOOL CSelector::Init(CListCtrl *lpList)
 {
-	if(lpList)
+	if (lpList)
 	{
 		m_pListForQuery = lpList;
 		return TRUE;

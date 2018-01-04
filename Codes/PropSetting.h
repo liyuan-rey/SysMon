@@ -10,39 +10,40 @@
 /////////////////////////////////////////////////////////////////////////////
 // CPropSetting dialog
 
-// 综合设置属性页的类
+// 缁煎悎璁剧疆灞炴�ч〉鐨勭被
 class CPropSetting : public CPropertyPage
 {
 	DECLARE_DYNCREATE(CPropSetting)
 
-// Construction
-public:
+	// Construction
+  public:
 	CPropSetting();
 	~CPropSetting();
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CPropSetting)
-	enum { IDD = IDD_PROPPAGE_SETTING };
-		// NOTE - ClassWizard will add data members here.
-		//    DO NOT EDIT what you see in these blocks of generated code !
+	enum
+	{
+		IDD = IDD_PROPPAGE_SETTING
+	};
+	// NOTE - ClassWizard will add data members here.
+	//    DO NOT EDIT what you see in these blocks of generated code !
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generate virtual function overrides
 	//{{AFX_VIRTUAL(CPropSetting)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+  protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
-// Implementation
-protected:
+	// Implementation
+  protected:
 	// Generated message map functions
 	//{{AFX_MSG(CPropSetting)
-		// NOTE: the ClassWizard will add member functions here
+	// NOTE: the ClassWizard will add member functions here
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
-
 };
 
 //{{AFX_INSERT_LOCATION}}

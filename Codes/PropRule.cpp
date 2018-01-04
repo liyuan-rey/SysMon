@@ -26,7 +26,7 @@ IMPLEMENT_DYNCREATE(CPropRule, CPropertyPage)
 CPropRule::CPropRule() : CPropertyPage(CPropRule::IDD)
 {
 	//{{AFX_DATA_INIT(CPropRule)
-		// NOTE: the ClassWizard will add member initialization here
+	// NOTE: the ClassWizard will add member initialization here
 	//}}AFX_DATA_INIT
 }
 
@@ -34,7 +34,7 @@ CPropRule::~CPropRule()
 {
 }
 
-void CPropRule::DoDataExchange(CDataExchange* pDX)
+void CPropRule::DoDataExchange(CDataExchange *pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CPropRule)
@@ -45,44 +45,43 @@ void CPropRule::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
-
 BEGIN_MESSAGE_MAP(CPropRule, CPropertyPage)
-	//{{AFX_MSG_MAP(CPropRule)
-	ON_BN_CLICKED(IDC_BUTTON_ADDMON, OnButtonAddmon)
-	ON_BN_CLICKED(IDC_BUTTON_DECMON, OnButtonDecmon)
-	ON_BN_CLICKED(ID_APPLY_NOW, OnApplyNow)
-	ON_BN_CLICKED(IDC_CHECK_RESOURCE, OnCheckResource)
-	ON_BN_CLICKED(IDC_CHECK_SENDMSG, OnCheckSendmsg)
-	ON_NOTIFY(NM_CLICK, IDC_RULELIST, OnClickRulelist)
-	ON_NOTIFY(NM_RCLICK, IDC_RULELIST, OnRclickRulelist)
-	ON_WM_TIMER()
-	ON_EN_CHANGE(IDC_EDIT_PERCENT, OnChangeEditPercent)
-	ON_EN_CHANGE(IDC_EDIT_MSGTO, OnChangeEditMsgto)
-	ON_BN_CLICKED(IDC_CHECK_STARTMON, OnCheckStartmon)
-	//}}AFX_MSG_MAP
+//{{AFX_MSG_MAP(CPropRule)
+ON_BN_CLICKED(IDC_BUTTON_ADDMON, OnButtonAddmon)
+ON_BN_CLICKED(IDC_BUTTON_DECMON, OnButtonDecmon)
+ON_BN_CLICKED(ID_APPLY_NOW, OnApplyNow)
+ON_BN_CLICKED(IDC_CHECK_RESOURCE, OnCheckResource)
+ON_BN_CLICKED(IDC_CHECK_SENDMSG, OnCheckSendmsg)
+ON_NOTIFY(NM_CLICK, IDC_RULELIST, OnClickRulelist)
+ON_NOTIFY(NM_RCLICK, IDC_RULELIST, OnRclickRulelist)
+ON_WM_TIMER()
+ON_EN_CHANGE(IDC_EDIT_PERCENT, OnChangeEditPercent)
+ON_EN_CHANGE(IDC_EDIT_MSGTO, OnChangeEditMsgto)
+ON_BN_CLICKED(IDC_CHECK_STARTMON, OnCheckStartmon)
+//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CPropRule message handlers
 
-void CPropRule::OnButtonAddmon() 
+void CPropRule::OnButtonAddmon()
 {
 	// TODO: Add your control notification handler code here
-	// Õ£÷πº∆ ±∆˜
+	// ÂÅúÊ≠¢ËÆ°Êó∂Âô®
 	BOOL bPreIsMon = bIsMon;
-	if(bIsMon)
+	if (bIsMon)
 	{
 		KillTimer(IDT_MONTIMER);
 		bIsMon = FALSE;
 	}
 
-	// —°‘Ò“™º‡ ”µƒ∑˛ŒÒ
+	// ÈÄâÊã©Ë¶ÅÁõëËßÜÁöÑÊúçÂä°
 	CSelector select;
 
-	if(!select.Init(&m_ruleList))
+	if (!select.Init(&m_ruleList))
 		return;
 
-	if(select.DoModal() == IDOK)
+	if (select.DoModal() == IDOK)
 	{
 		AutoSizeColumns(&m_ruleList);
 		m_applyNow.EnableWindow();
@@ -90,40 +89,38 @@ void CPropRule::OnButtonAddmon()
 
 	m_ruleList.SetFocus();
 
-	// ª÷∏¥º∆ ±∆˜
-	if(bPreIsMon)
+	// ÊÅ¢Â§çËÆ°Êó∂Âô®
+	if (bPreIsMon)
 	{
 		IDT_MONTIMER = SetTimer(8148, 5000, NULL);
-		if(!IDT_MONTIMER)
+		if (!IDT_MONTIMER)
 			AfxMessageBox(_T(
-			"¥¥Ω®º∆ ±∆˜ ß∞‹!º‡øÿπ¶ƒ‹Œﬁ∑®’˝≥£‘À◊™!\n«Î÷ÿ–¬∆Ù∂Ø≥Ã–ÚªÚ’ﬂº∆À„ª˙.")); 
+			"ÂàõÂª∫ËÆ°Êó∂Âô®Â§±Ë¥•!ÁõëÊéßÂäüËÉΩÊó†Ê≥ïÊ≠£Â∏∏ËøêËΩ¨!\nËØ∑ÈáçÊñ∞ÂêØÂä®Á®ãÂ∫èÊàñËÄÖËÆ°ÁÆóÊú∫."));
 	}
 }
 
-BOOL CPropRule::OnInitDialog() 
+BOOL CPropRule::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
-	
-	// TODO: Add extra initialization here
-	// ≥ı ºªØ CListCtrl
-	m_ruleList.InsertColumn(0, _T("œ‘ æ√˚≥∆"), LVCFMT_LEFT, 70);
-	m_ruleList.InsertColumn(1, _T("∑˛ŒÒ√˚≥∆"), LVCFMT_LEFT, 70);
 
-    m_ruleList.SetExtendedStyle(m_ruleList.GetExtendedStyle()
-        |LVS_EX_FULLROWSELECT|LVS_EX_GRIDLINES|LVS_EX_HEADERDRAGDROP
-		|LVS_EX_ONECLICKACTIVATE);
+	// TODO: Add extra initialization here
+	// ÂàùÂßãÂåñ CListCtrl
+	m_ruleList.InsertColumn(0, _T("ÊòæÁ§∫ÂêçÁß∞"), LVCFMT_LEFT, 70);
+	m_ruleList.InsertColumn(1, _T("ÊúçÂä°ÂêçÁß∞"), LVCFMT_LEFT, 70);
+
+	m_ruleList.SetExtendedStyle(m_ruleList.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES | LVS_EX_HEADERDRAGDROP | LVS_EX_ONECLICKACTIVATE);
 
 	AutoSizeColumns(&m_ruleList);
 	m_ruleList.SetFocus();
 
-	CButton* pButton = (CButton*)GetDlgItem(IDC_RADIO_RESTART);
+	CButton *pButton = (CButton *)GetDlgItem(IDC_RADIO_RESTART);
 	VERIFY(pButton != NULL);
 	pButton->SetCheck(1);
 
 	bIsMon = FALSE;
-	
-	return FALSE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
+
+	return FALSE; // return TRUE unless you set the focus to a control
+				  // EXCEPTION: OCX Property Pages should return FALSE
 }
 
 BOOL CPropRule::RestartSevices()
@@ -131,35 +128,35 @@ BOOL CPropRule::RestartSevices()
 #ifdef _DEBUG
 	AfxMessageBox("Do restart services!");
 #endif
-	// ºÏ≤È∑˛ŒÒ◊¥Ã¨
+	// Ê£ÄÊü•ÊúçÂä°Áä∂ÊÄÅ
 	int number = m_ruleList.GetItemCount();
 	if (number < 1)
 		return TRUE;
 
 	SC_HANDLE hSCManager = OpenSCManager(GetLocalMachineName(), NULL, GENERIC_READ);
-	if(hSCManager == NULL)
+	if (hSCManager == NULL)
 	{
 		CString errLog;
 		errLog.Format(
-			"\n\n***********************\n÷ÿ–¬∆Ù∂Ø∑˛ŒÒ ±, ¥Úø™π‹¿Ìæ‰±˙≥ˆœ÷¥ÌŒÛ!\n¥ÌŒÛ√Ë ˆ:\n#");
+			"\n\n***********************\nÈáçÊñ∞ÂêØÂä®ÊúçÂä°Êó∂, ÊâìÂºÄÁÆ°ÁêÜÂè•ÊüÑÂá∫Áé∞ÈîôËØØ!\nÈîôËØØÊèèËø∞:\n#");
 
 		WriteToLog(errLog, GetLastError());
 
 		return FALSE;
 	}
 
-	for(int nItem = 0; nItem < number; nItem++)
+	for (int nItem = 0; nItem < number; nItem++)
 	{
 		BOOL bSuccess = TRUE;
 		char pszServiceName[MAX_PATH + 1] = "";
 		m_ruleList.GetItemText(nItem, 1, pszServiceName, MAX_PATH);
 
 		SC_HANDLE hService = OpenService(hSCManager, pszServiceName, SERVICE_ALL_ACCESS);
-		if(pszServiceName == NULL)
+		if (pszServiceName == NULL)
 		{
 			CString errLog;
 			errLog.Format(
-				"\n\n***********************\n÷ÿ–¬∆Ù∂Ø∑˛ŒÒ ±, ¥Úø™∑˛ŒÒæ‰±˙≥ˆœ÷¥ÌŒÛ!\n¥ÌŒÛ√Ë ˆ:\n#");
+				"\n\n***********************\nÈáçÊñ∞ÂêØÂä®ÊúçÂä°Êó∂, ÊâìÂºÄÊúçÂä°Âè•ÊüÑÂá∫Áé∞ÈîôËØØ!\nÈîôËØØÊèèËø∞:\n#");
 
 			WriteToLog(errLog, GetLastError());
 
@@ -169,11 +166,11 @@ BOOL CPropRule::RestartSevices()
 		SERVICE_STATUS ss;
 		LONG lRet = QueryServiceStatus(hService, &ss);
 
-		if(lRet == 0)
+		if (lRet == 0)
 		{
 			CString errLog;
 			errLog.Format(
-				"\n\n***********************\n÷ÿ–¬∆Ù∂Ø∑˛ŒÒ ±, ≤È—Ø∑˛ŒÒ◊¥Ã¨≥ˆœ÷¥ÌŒÛ!\nµ±«∞∑˛ŒÒ√˚: %s\n¥ÌŒÛ√Ë ˆ:\n#",
+				"\n\n***********************\nÈáçÊñ∞ÂêØÂä®ÊúçÂä°Êó∂, Êü•ËØ¢ÊúçÂä°Áä∂ÊÄÅÂá∫Áé∞ÈîôËØØ!\nÂΩìÂâçÊúçÂä°Âêç: %s\nÈîôËØØÊèèËø∞:\n#",
 				pszServiceName);
 
 			WriteToLog(errLog, GetLastError());
@@ -181,54 +178,54 @@ BOOL CPropRule::RestartSevices()
 			continue;
 		}
 
-		switch(ss.dwCurrentState)
+		switch (ss.dwCurrentState)
 		{
-			// »Áπ˚∑˛ŒÒÕ£÷π, æÕ÷ÿ∆Ù∂Ø
-			case SERVICE_STOPPED:
-			case SERVICE_STOP_PENDING:
-				{
-					if(StartService(hService, 0, NULL) == 0)
-					{
-						CString errLog;
-						errLog.Format(
-							"\n\n***********************\n‘⁄÷ÿ–¬∆Ù∂Ø∑˛ŒÒ ±, ÷ÿ∆Ù≤Ÿ◊˜≥ˆœ÷¥ÌŒÛ!\nµ±«∞∑˛ŒÒ√˚: %s\n¥ÌŒÛ√Ë ˆ:\n#",
-							pszServiceName);
+		// Â¶ÇÊûúÊúçÂä°ÂÅúÊ≠¢, Â∞±ÈáçÂêØÂä®
+		case SERVICE_STOPPED:
+		case SERVICE_STOP_PENDING:
+		{
+			if (StartService(hService, 0, NULL) == 0)
+			{
+				CString errLog;
+				errLog.Format(
+					"\n\n***********************\nÂú®ÈáçÊñ∞ÂêØÂä®ÊúçÂä°Êó∂, ÈáçÂêØÊìç‰ΩúÂá∫Áé∞ÈîôËØØ!\nÂΩìÂâçÊúçÂä°Âêç: %s\nÈîôËØØÊèèËø∞:\n#",
+					pszServiceName);
 
-						WriteToLog(errLog, GetLastError());
-					}
+				WriteToLog(errLog, GetLastError());
+			}
 
-					break;
-				}
-			// »Áπ˚∑˛ŒÒ‘›Õ£, æÕª÷∏¥
-			case SERVICE_PAUSE_PENDING:
-			case SERVICE_PAUSED:
-				{
-					if(ControlService(hService, SERVICE_CONTROL_CONTINUE, &ss))
-					{
-						CString errLog;
-						errLog.Format(
-							"\n\n***********************\n‘⁄÷ÿ–¬∆Ù∂Ø∑˛ŒÒ ±, ª÷∏¥‘À––≤Ÿ◊˜≥ˆœ÷¥ÌŒÛ!\nµ±«∞∑˛ŒÒ√˚: %s\n¥ÌŒÛ√Ë ˆ:\n#",
-							pszServiceName);
+			break;
+		}
+		// Â¶ÇÊûúÊúçÂä°ÊöÇÂÅú, Â∞±ÊÅ¢Â§ç
+		case SERVICE_PAUSE_PENDING:
+		case SERVICE_PAUSED:
+		{
+			if (ControlService(hService, SERVICE_CONTROL_CONTINUE, &ss))
+			{
+				CString errLog;
+				errLog.Format(
+					"\n\n***********************\nÂú®ÈáçÊñ∞ÂêØÂä®ÊúçÂä°Êó∂, ÊÅ¢Â§çËøêË°åÊìç‰ΩúÂá∫Áé∞ÈîôËØØ!\nÂΩìÂâçÊúçÂä°Âêç: %s\nÈîôËØØÊèèËø∞:\n#",
+					pszServiceName);
 
-						WriteToLog(errLog, GetLastError());
-					}
-					break;
-				}
+				WriteToLog(errLog, GetLastError());
+			}
+			break;
+		}
 
-			//»Áπ˚∑˛ŒÒ‘⁄‘À––, æÕ∫ˆ¬‘
-			case SERVICE_START_PENDING:
-			case SERVICE_RUNNING:
-			case SERVICE_CONTINUE_PENDING:
-				break;
-			default:
-				{
-					CString errLog;
-					errLog.Format(
-						"\n\n***********************\n‘⁄÷ÿ–¬∆Ù∂Ø∑˛ŒÒ ±, Œﬁ∑®»∑∂®∑˛ŒÒ◊¥Ã¨!\nµ±«∞∑˛ŒÒ√˚: %s\n¥ÌŒÛ√Ë ˆ:\n#",
-						pszServiceName);
+		//Â¶ÇÊûúÊúçÂä°Âú®ËøêË°å, Â∞±ÂøΩÁï•
+		case SERVICE_START_PENDING:
+		case SERVICE_RUNNING:
+		case SERVICE_CONTINUE_PENDING:
+			break;
+		default:
+		{
+			CString errLog;
+			errLog.Format(
+				"\n\n***********************\nÂú®ÈáçÊñ∞ÂêØÂä®ÊúçÂä°Êó∂, Êó†Ê≥ïÁ°ÆÂÆöÊúçÂä°Áä∂ÊÄÅ!\nÂΩìÂâçÊúçÂä°Âêç: %s\nÈîôËØØÊèèËø∞:\n#",
+				pszServiceName);
 
-					WriteToLog(errLog, GetLastError());
-				}
+			WriteToLog(errLog, GetLastError());
+		}
 		}
 
 		CloseServiceHandle(hService);
@@ -240,12 +237,12 @@ BOOL CPropRule::RestartSevices()
 	return TRUE;
 }
 
-void CPropRule::OnButtonDecmon() 
+void CPropRule::OnButtonDecmon()
 {
 	// TODO: Add your control notification handler code here
-	// Õ£÷πº∆ ±∆˜
+	// ÂÅúÊ≠¢ËÆ°Êó∂Âô®
 	BOOL bPreIsMon = bIsMon;
-	if(bIsMon)
+	if (bIsMon)
 	{
 		KillTimer(IDT_MONTIMER);
 		bIsMon = FALSE;
@@ -253,7 +250,7 @@ void CPropRule::OnButtonDecmon()
 
 	m_ruleList.SetRedraw(false);
 	BOOL bSuccess = TRUE;
-	// √ø¥Œ…æ≥˝≤Ÿ◊˜∫Û, ÷ÿ–¬≤∂◊Ω—°‘ÒµƒœÓƒø
+	// ÊØèÊ¨°Âà†Èô§Êìç‰ΩúÂêé, ÈáçÊñ∞ÊçïÊçâÈÄâÊã©ÁöÑÈ°πÁõÆ
 	while (true)
 	{
 		POSITION pos = m_ruleList.GetFirstSelectedItemPosition();
@@ -266,53 +263,53 @@ void CPropRule::OnButtonDecmon()
 
 		int nItem = m_ruleList.GetNextSelectedItem(pos);
 
-		// …æ≥˝¡–±ÌœÓƒø
-		if(!m_ruleList.DeleteItem(nItem))
+		// Âà†Èô§ÂàóË°®È°πÁõÆ
+		if (!m_ruleList.DeleteItem(nItem))
 			bSuccess = FALSE;
 	}
 	m_ruleList.SetRedraw(true);
 
-	if(!bSuccess)
-		AfxMessageBox(_T("≤Ÿ◊˜π˝≥Ã÷–”ˆµΩ¥ÌŒÛ!"));
+	if (!bSuccess)
+		AfxMessageBox(_T("Êìç‰ΩúËøáÁ®ã‰∏≠ÈÅáÂà∞ÈîôËØØ!"));
 	m_decMon.EnableWindow(FALSE);
 	m_ruleList.SetFocus();
 	m_applyNow.EnableWindow();
 
-	// ª÷∏¥º∆ ±∆˜
-	if(bPreIsMon)
+	// ÊÅ¢Â§çËÆ°Êó∂Âô®
+	if (bPreIsMon)
 	{
 		IDT_MONTIMER = SetTimer(8148, 5000, NULL);
-		if(!IDT_MONTIMER)
+		if (!IDT_MONTIMER)
 			AfxMessageBox(_T(
-			"¥¥Ω®º∆ ±∆˜ ß∞‹!º‡øÿπ¶ƒ‹Œﬁ∑®’˝≥£‘À◊™!\n«Î÷ÿ–¬∆Ù∂Ø≥Ã–ÚªÚ’ﬂº∆À„ª˙.")); 
+			"ÂàõÂª∫ËÆ°Êó∂Âô®Â§±Ë¥•!ÁõëÊéßÂäüËÉΩÊó†Ê≥ïÊ≠£Â∏∏ËøêËΩ¨!\nËØ∑ÈáçÊñ∞ÂêØÂä®Á®ãÂ∫èÊàñËÄÖËÆ°ÁÆóÊú∫."));
 	}
 }
 
-void CPropRule::OnApplyNow() 
+void CPropRule::OnApplyNow()
 {
 	// TODO: Add your control notification handler code here
-	
+
 	m_applyNow.EnableWindow(FALSE);
 }
 
-void CPropRule::OnCheckResource() 
+void CPropRule::OnCheckResource()
 {
 	// TODO: Add your control notification handler code here
-	CButton* pButton = (CButton*)GetDlgItem(IDC_CHECK_RESOURCE);
+	CButton *pButton = (CButton *)GetDlgItem(IDC_CHECK_RESOURCE);
 	VERIFY(pButton != NULL);
 	int bStatus = pButton->GetCheck();
 
-	CEdit* pEdit = (CEdit*)GetDlgItem(IDC_EDIT_PERCENT);
+	CEdit *pEdit = (CEdit *)GetDlgItem(IDC_EDIT_PERCENT);
 	VERIFY(pEdit != NULL);
-	if(bStatus == 1)
+	if (bStatus == 1)
 	{
 		pEdit->EnableWindow();
 		pEdit->SetFocus();
 	}
-	else if(bStatus == 0)
+	else if (bStatus == 0)
 	{
 		pEdit->EnableWindow(FALSE);
-		CButton* pButtonFocus = (CButton*)GetDlgItem(ID_APPLY_NOW);
+		CButton *pButtonFocus = (CButton *)GetDlgItem(ID_APPLY_NOW);
 		pButtonFocus->SetFocus();
 	}
 	else
@@ -321,18 +318,18 @@ void CPropRule::OnCheckResource()
 	m_applyNow.EnableWindow();
 }
 
-void CPropRule::OnCheckSendmsg() 
+void CPropRule::OnCheckSendmsg()
 {
 	// TODO: Add your control notification handler code here
-	CButton* pButton = (CButton*)GetDlgItem(IDC_CHECK_SENDMSG);
+	CButton *pButton = (CButton *)GetDlgItem(IDC_CHECK_SENDMSG);
 	VERIFY(pButton != NULL);
 	int bStatus = pButton->GetCheck();
 
-	CEdit* pEdit = (CEdit*)GetDlgItem(IDC_EDIT_MSGTO);
+	CEdit *pEdit = (CEdit *)GetDlgItem(IDC_EDIT_MSGTO);
 	VERIFY(pEdit != NULL);
-	if(bStatus == 1)
+	if (bStatus == 1)
 		pEdit->EnableWindow();
-	else if(bStatus == 0)
+	else if (bStatus == 0)
 		pEdit->EnableWindow(FALSE);
 	else
 		AfxMessageBox(_T("ERROR IN GET WINDOW STATUS"));
@@ -340,7 +337,7 @@ void CPropRule::OnCheckSendmsg()
 	m_applyNow.EnableWindow();
 }
 
-void CPropRule::OnClickRulelist(NMHDR* pNMHDR, LRESULT* pResult) 
+void CPropRule::OnClickRulelist(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	// TODO: Add your control notification handler code here
 	SetCtrlStatus();
@@ -349,7 +346,7 @@ void CPropRule::OnClickRulelist(NMHDR* pNMHDR, LRESULT* pResult)
 	*pResult = 0;
 }
 
-void CPropRule::OnRclickRulelist(NMHDR* pNMHDR, LRESULT* pResult) 
+void CPropRule::OnRclickRulelist(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	// TODO: Add your control notification handler code here
 	SetCtrlStatus();
@@ -369,7 +366,7 @@ BOOL CPropRule::SetCtrlStatus()
 	return TRUE;
 }
 
-void CPropRule::OnTimer(UINT nIDEvent) 
+void CPropRule::OnTimer(UINT nIDEvent)
 {
 	// TODO: Add your message handler code here and/or call default
 	if (nIDEvent != IDT_MONTIMER)
@@ -379,22 +376,22 @@ void CPropRule::OnTimer(UINT nIDEvent)
 	}
 
 	MessageBeep(0xFFFFFFFF);
-	if(CheckResource() == FALSE)
+	if (CheckResource() == FALSE)
 	{
 #ifdef _DEBUG
-		if(!
+		if (!
 #endif
 			ReBoot()
 #ifdef _DEBUG
-			)
+		)
 			AfxMessageBox("ReBoot fail!")
 #endif
-			;
-			
+				;
+
 		return;
 	}
 
-	if(CheckSvrStatus())
+	if (CheckSvrStatus())
 	{
 		CPropertyPage::OnTimer(nIDEvent);
 		return;
@@ -407,36 +404,36 @@ void CPropRule::OnTimer(UINT nIDEvent)
 	CPropertyPage::OnTimer(nIDEvent);
 }
 
-void CPropRule::OnChangeEditPercent() 
+void CPropRule::OnChangeEditPercent()
 {
 	// TODO: If this is a RICHEDIT control, the control will not
 	// send this notification unless you override the CPropertyPage::OnInitDialog()
 	// function and call CRichEditCtrl().SetEventMask()
 	// with the ENM_CHANGE flag ORed into the mask.
-	
+
 	// TODO: Add your control notification handler code here
 	m_applyNow.EnableWindow();
 }
 
-void CPropRule::OnChangeEditMsgto() 
+void CPropRule::OnChangeEditMsgto()
 {
 	// TODO: If this is a RICHEDIT control, the control will not
 	// send this notification unless you override the CPropertyPage::OnInitDialog()
 	// function and call CRichEditCtrl().SetEventMask()
 	// with the ENM_CHANGE flag ORed into the mask.
-	
+
 	// TODO: Add your control notification handler code here
 	m_applyNow.EnableWindow();
 }
 
 BOOL CPropRule::CheckSvrStatus()
 {
-	// ºÏ≤È∑˛ŒÒ◊¥Ã¨
+	// Ê£ÄÊü•ÊúçÂä°Áä∂ÊÄÅ
 	int number = m_ruleList.GetItemCount();
 	if (number < 1)
 		return TRUE;
 
-	for(int nItem = 0; nItem < number; nItem++)
+	for (int nItem = 0; nItem < number; nItem++)
 	{
 		char pszServiceName[MAX_PATH + 1] = "";
 		m_ruleList.GetItemText(nItem, 1, pszServiceName, MAX_PATH);
@@ -445,83 +442,82 @@ BOOL CPropRule::CheckSvrStatus()
 		SC_HANDLE hService = OpenService(hSCManager, pszServiceName, GENERIC_READ);
 		SERVICE_STATUS ss;
 		LONG lRet = QueryServiceStatus(hService, &ss);
-		if(hService)
+		if (hService)
 		{
 			CloseServiceHandle(hService);
 			hService = NULL;
 		}
-		if(hSCManager)
+		if (hSCManager)
 		{
 			CloseServiceHandle(hSCManager);
 			hSCManager = NULL;
 		}
 
-		if(lRet)
+		if (lRet)
 		{
-			switch(ss.dwCurrentState)
+			switch (ss.dwCurrentState)
 			{
-				case SERVICE_STOPPED:
-				case SERVICE_STOP_PENDING:
-				case SERVICE_PAUSE_PENDING:
-				case SERVICE_PAUSED:
-					return FALSE;
-				case SERVICE_START_PENDING:
-				case SERVICE_RUNNING:
-				case SERVICE_CONTINUE_PENDING:
-					continue;
-				default:
-					{
-						AfxMessageBox(_T("Unknown Service status!"));
-					}
+			case SERVICE_STOPPED:
+			case SERVICE_STOP_PENDING:
+			case SERVICE_PAUSE_PENDING:
+			case SERVICE_PAUSED:
+				return FALSE;
+			case SERVICE_START_PENDING:
+			case SERVICE_RUNNING:
+			case SERVICE_CONTINUE_PENDING:
+				continue;
+			default:
+			{
+				AfxMessageBox(_T("Unknown Service status!"));
+			}
 			}
 		}
 		else
 		{
 			CString errLog;
 			errLog.Format(
-				"\n\n***********************\n‘⁄ºÏ≤ÈÀ˘º‡ ”∑˛ŒÒ◊¥Ã¨ ±, ≥ˆœ÷¥ÌŒÛ!\nµ±«∞∑˛ŒÒ√˚: %s\n¥ÌŒÛ√Ë ˆ:\n#",
+				"\n\n***********************\nÂú®Ê£ÄÊü•ÊâÄÁõëËßÜÊúçÂä°Áä∂ÊÄÅÊó∂, Âá∫Áé∞ÈîôËØØ!\nÂΩìÂâçÊúçÂä°Âêç: %s\nÈîôËØØÊèèËø∞:\n#",
 				pszServiceName);
 
 			WriteToLog(errLog, lRet);
 		}
-
 	}
-	
+
 	return TRUE;
 }
 
 BOOL CPropRule::CheckResource()
 {
-	// ºÏ≤Èƒ⁄¥Ê◊ ‘¥
-	CButton* pButton = (CButton*)GetDlgItem(IDC_CHECK_RESOURCE);
+	// Ê£ÄÊü•ÂÜÖÂ≠òËµÑÊ∫ê
+	CButton *pButton = (CButton *)GetDlgItem(IDC_CHECK_RESOURCE);
 	VERIFY(pButton != NULL);
-	if(pButton->GetCheck() == 0)
+	if (pButton->GetCheck() == 0)
 		return TRUE;
 
-	// µ√µΩ◊ ‘¥œ¬œﬁ
-	CEdit* pEdit = (CEdit*)GetDlgItem(IDC_EDIT_PERCENT);
+	// ÂæóÂà∞ËµÑÊ∫ê‰∏ãÈôê
+	CEdit *pEdit = (CEdit *)GetDlgItem(IDC_EDIT_PERCENT);
 	VERIFY(pEdit != NULL);
 	CString limitedPercent;
 	pEdit->GetWindowText(limitedPercent);
-	if(limitedPercent == "" || limitedPercent == "00" || limitedPercent == "0")
+	if (limitedPercent == "" || limitedPercent == "00" || limitedPercent == "0")
 #ifndef _DEBUG
-		return TRUE;		
+		return TRUE;
 #endif
 #ifdef _DEBUG
-		limitedPercent = "100";
+	limitedPercent = "100";
 #endif
-	// µ√µΩ–Èƒ‚ƒ⁄¥Êµƒ π”√¬ 
+	// ÂæóÂà∞ËôöÊãüÂÜÖÂ≠òÁöÑ‰ΩøÁî®Áéá
 	LPMEMORYSTATUS pMemStatus = new MEMORYSTATUS;
 	pMemStatus->dwLength = sizeof(MEMORYSTATUS);
 	::GlobalMemoryStatus(pMemStatus);
 
 	int percent = (pMemStatus->dwAvailVirtual / 1024 ^ 2) * 100 / (pMemStatus->dwTotalVirtual / 1024 ^ 2);
-	
+
 	delete pMemStatus;
 	pMemStatus = NULL;
 
-	// ≈–∂œ
-	if(percent < atoi(limitedPercent))
+	// Âà§Êñ≠
+	if (percent < atoi(limitedPercent))
 		return FALSE;
 
 	return TRUE;
@@ -529,102 +525,102 @@ BOOL CPropRule::CheckResource()
 
 BOOL CPropRule::ReBoot()
 {
-	// ∏ƒ±‰Ω¯≥Ã”≈œ»º∂“‘±„ÕÍ≥…÷ÿ∆ÙœµÕ≥≤Ÿ◊˜
-    HANDLE hToken;
-    LUID DebugValue;
-    TOKEN_PRIVILEGES tkp;
+	// ÊîπÂèòËøõÁ®ã‰ºòÂÖàÁ∫ß‰ª•‰æøÂÆåÊàêÈáçÂêØÁ≥ªÁªüÊìç‰Ωú
+	HANDLE hToken;
+	LUID DebugValue;
+	TOKEN_PRIVILEGES tkp;
 
-    // ø™∑≈Ω¯≥Ãµƒ¥Ê»°±Í æ
-    if (!OpenProcessToken(GetCurrentProcess(),
-            TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY,
-            &hToken))
+	// ÂºÄÊîæËøõÁ®ãÁöÑÂ≠òÂèñÊ†áÁ§∫
+	if (!OpenProcessToken(GetCurrentProcess(),
+						  TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY,
+						  &hToken))
 	{
 		CString errLog;
 		errLog.Format(
-			"\n\n***********************\n‘⁄÷ÿ–¬∆Ù∂ØœµÕ≥ ±, ≥ˆœ÷¥ÌŒÛ!\n¥ÌŒÛ√Ë ˆ:\n#");
+			"\n\n***********************\nÂú®ÈáçÊñ∞ÂêØÂä®Á≥ªÁªüÊó∂, Âá∫Áé∞ÈîôËØØ!\nÈîôËØØÊèèËø∞:\n#");
 
 		WriteToLog(errLog, GetLastError());
 
-        return FALSE;
-    }
+		return FALSE;
+	}
 
-    // ªÒ»° SE_SHUTDOWN_NAME Ãÿ»®
-    if (!LookupPrivilegeValue((LPSTR) NULL,
-            SE_SHUTDOWN_NAME,
-            &DebugValue))
+	// Ëé∑Âèñ SE_SHUTDOWN_NAME ÁâπÊùÉ
+	if (!LookupPrivilegeValue((LPSTR)NULL,
+							  SE_SHUTDOWN_NAME,
+							  &DebugValue))
 	{
 		CString errLog;
 		errLog.Format(
-			"\n\n***********************\n‘⁄÷ÿ–¬∆Ù∂ØœµÕ≥ ±, ≥ˆœ÷¥ÌŒÛ!\n¥ÌŒÛ√Ë ˆ:\n#");
+			"\n\n***********************\nÂú®ÈáçÊñ∞ÂêØÂä®Á≥ªÁªüÊó∂, Âá∫Áé∞ÈîôËØØ!\nÈîôËØØÊèèËø∞:\n#");
 
 		WriteToLog(errLog, GetLastError());
 
-        return FALSE;
-    }
+		return FALSE;
+	}
 
-    tkp.PrivilegeCount = 1;
-    tkp.Privileges[0].Luid = DebugValue;
-    tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
+	tkp.PrivilegeCount = 1;
+	tkp.Privileges[0].Luid = DebugValue;
+	tkp.Privileges[0].Attributes = SE_PRIVILEGE_ENABLED;
 
-    AdjustTokenPrivileges(hToken,
-        FALSE,
-        &tkp,
-        sizeof(TOKEN_PRIVILEGES),
-        (PTOKEN_PRIVILEGES) NULL,
-        (PDWORD) NULL);
+	AdjustTokenPrivileges(hToken,
+						  FALSE,
+						  &tkp,
+						  sizeof(TOKEN_PRIVILEGES),
+						  (PTOKEN_PRIVILEGES)NULL,
+						  (PDWORD)NULL);
 
-    // AdjustTokenPrivileges µƒ∑µªÿ÷µ≤ªƒ‹±ª≤‚ ‘
-    if (GetLastError() != ERROR_SUCCESS)
+	// AdjustTokenPrivileges ÁöÑËøîÂõûÂÄº‰∏çËÉΩË¢´ÊµãËØï
+	if (GetLastError() != ERROR_SUCCESS)
 	{
 		CString errLog;
 		errLog.Format(
-			"\n\n***********************\n‘⁄÷ÿ–¬∆Ù∂ØœµÕ≥ ±, ≥ˆœ÷¥ÌŒÛ!\n¥ÌŒÛ√Ë ˆ:\n#");
+			"\n\n***********************\nÂú®ÈáçÊñ∞ÂêØÂä®Á≥ªÁªüÊó∂, Âá∫Áé∞ÈîôËØØ!\nÈîôËØØÊèèËø∞:\n#");
 
 		WriteToLog(errLog, GetLastError());
 
-        return FALSE;
-    }
+		return FALSE;
+	}
 
-	WriteToLog("\n\n***********************\n≥¢ ‘÷ÿ–¬∆Ù∂ØœµÕ≥...");
-	// ∑µªÿ÷ÿ∆ÙœµÕ≥≥…π¶”Î∑Ò
+	WriteToLog("\n\n***********************\nÂ∞ùËØïÈáçÊñ∞ÂêØÂä®Á≥ªÁªü...");
+	// ËøîÂõûÈáçÂêØÁ≥ªÁªüÊàêÂäü‰∏éÂê¶
 	return ExitWindowsEx(EWX_REBOOT, (DWORD)5000);
 }
 
-void CPropRule::OnCheckStartmon() 
+void CPropRule::OnCheckStartmon()
 {
 	// TODO: Add your control notification handler code here
-	CButton* pButton = (CButton*)GetDlgItem(IDC_CHECK_STARTMON);
+	CButton *pButton = (CButton *)GetDlgItem(IDC_CHECK_STARTMON);
 	VERIFY(pButton != NULL);
 
-	switch(pButton->GetCheck())
+	switch (pButton->GetCheck())
 	{
 	case 0:
-		{
-			if(IDT_MONTIMER)
-				KillTimer(IDT_MONTIMER);
-			bIsMon = FALSE;
+	{
+		if (IDT_MONTIMER)
+			KillTimer(IDT_MONTIMER);
+		bIsMon = FALSE;
 
-			return;
-		}
+		return;
+	}
 	case 1:
+	{
+		IDT_MONTIMER = SetTimer(8148, 5000, NULL);
+		if (!IDT_MONTIMER)
 		{
-			IDT_MONTIMER = SetTimer(8148, 5000, NULL);
-			if(!IDT_MONTIMER)
-			{
-				AfxMessageBox(_T(
-				"¥¥Ω®º∆ ±∆˜ ß∞‹!º‡øÿπ¶ƒ‹Œﬁ∑®’˝≥£‘À◊™!\n«Î÷ÿ–¬∆Ù∂Ø≥Ã–ÚªÚ’ﬂº∆À„ª˙.")); 
+			AfxMessageBox(_T(
+				"ÂàõÂª∫ËÆ°Êó∂Âô®Â§±Ë¥•!ÁõëÊéßÂäüËÉΩÊó†Ê≥ïÊ≠£Â∏∏ËøêËΩ¨!\nËØ∑ÈáçÊñ∞ÂêØÂä®Á®ãÂ∫èÊàñËÄÖËÆ°ÁÆóÊú∫."));
 
-				return;
-			}
-
-			bIsMon = TRUE;
 			return;
 		}
+
+		bIsMon = TRUE;
+		return;
+	}
 	default:
-		{
-			bIsMon = FALSE;
-			AfxMessageBox(_T("∆Ù∂Øº‡øÿ ß∞‹!")); 
-		}
+	{
+		bIsMon = FALSE;
+		AfxMessageBox(_T("ÂêØÂä®ÁõëÊéßÂ§±Ë¥•!"));
+	}
 	}
 }
 
@@ -633,40 +629,40 @@ BOOL CPropRule::WriteToLog(CString strMsg, LONG lErrMsg)
 	FILE *fLog = 0;
 
 	fLog = fopen("MonLog.txt", "a+t");
-	if(!fLog)
+	if (!fLog)
 	{
-		AfxMessageBox(_T("Œﬁ∑®¥¥Ω®»’÷æŒƒº˛. \n¥ÌŒÛŒﬁ∑®œ‘ æ!"),
-			MB_OK | MB_ICONEXCLAMATION);
-	
+		AfxMessageBox(_T("Êó†Ê≥ïÂàõÂª∫Êó•ÂøóÊñá‰ª∂. \nÈîôËØØÊó†Ê≥ïÊòæÁ§∫!"),
+					  MB_OK | MB_ICONEXCLAMATION);
+
 		return FALSE;
 	}
 
-	// »°µ√œµÕ≥¥ÌŒÛœ˚œ¢
+	// ÂèñÂæóÁ≥ªÁªüÈîôËØØÊ∂àÊÅØ
 	static char buffer[256];
-	char *end = buffer + 
-		FormatMessage(FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_SYSTEM, 0, 
-		lErrMsg,MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),buffer, sizeof(buffer)-1, 0);
+	char *end = buffer +
+				FormatMessage(FORMAT_MESSAGE_IGNORE_INSERTS | FORMAT_MESSAGE_FROM_SYSTEM, 0,
+							  lErrMsg, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), buffer, sizeof(buffer) - 1, 0);
 
-	if(end == buffer)
-		fprintf(fLog, "%s#%s", _T(strMsg), _T("Œﬁ∑®»∑∂®!"));
+	if (end == buffer)
+		fprintf(fLog, "%s#%s", _T(strMsg), _T("Êó†Ê≥ïÁ°ÆÂÆö!"));
 
-	for(end--; end >= buffer && (*end == '\r' || *end == '\n') ;end--) 
+	for (end--; end >= buffer && (*end == '\r' || *end == '\n'); end--)
 		;
 
-    end[1] = 0;
+	end[1] = 0;
 
-    CString str = (CString)buffer;
+	CString str = (CString)buffer;
 
-	// »°µ√œµÕ≥ ±º‰
+	// ÂèñÂæóÁ≥ªÁªüÊó∂Èó¥
 	SYSTEMTIME sysTime;
 	GetSystemTime(&sysTime);
 	CString strTime;
-	strTime.Format("%d‘¬%d»’ %d ±%d∑÷%d√Î",
-		sysTime.wMonth, sysTime.wDay, sysTime.wHour,
-		sysTime.wMinute, sysTime.wSecond);
+	strTime.Format("%dÊúà%dÊó• %dÊó∂%dÂàÜ%dÁßí",
+				   sysTime.wMonth, sysTime.wDay, sysTime.wHour,
+				   sysTime.wMinute, sysTime.wSecond);
 
-	fprintf(fLog, "%s#%s\nµ±«∞ ±º‰: %s", _T(strMsg), _T(str), _T(strTime));
-	if(fLog)
+	fprintf(fLog, "%s#%s\nÂΩìÂâçÊó∂Èó¥: %s", _T(strMsg), _T(str), _T(strTime));
+	if (fLog)
 		fclose(fLog);
 
 	return TRUE;
@@ -677,24 +673,24 @@ BOOL CPropRule::WriteToLog(CString strMsg)
 	FILE *fLog = 0;
 
 	fLog = fopen("MonLog.txt", "a+t");
-	if(!fLog)
+	if (!fLog)
 	{
-		AfxMessageBox(_T("Œﬁ∑®¥¥Ω®»’÷æŒƒº˛. \n¥ÌŒÛŒﬁ∑®œ‘ æ!"),
-			MB_OK | MB_ICONEXCLAMATION);
-	
+		AfxMessageBox(_T("Êó†Ê≥ïÂàõÂª∫Êó•ÂøóÊñá‰ª∂. \nÈîôËØØÊó†Ê≥ïÊòæÁ§∫!"),
+					  MB_OK | MB_ICONEXCLAMATION);
+
 		return FALSE;
 	}
 
-	// »°µ√œµÕ≥ ±º‰
+	// ÂèñÂæóÁ≥ªÁªüÊó∂Èó¥
 	SYSTEMTIME sysTime;
 	GetLocalTime(&sysTime);
 	CString strTime;
-	strTime.Format("%d‘¬%d»’ %d ±%d∑÷%d√Î",
-		sysTime.wMonth, sysTime.wDay, sysTime.wHour,
-		sysTime.wMinute, sysTime.wSecond);
+	strTime.Format("%dÊúà%dÊó• %dÊó∂%dÂàÜ%dÁßí",
+				   sysTime.wMonth, sysTime.wDay, sysTime.wHour,
+				   sysTime.wMinute, sysTime.wSecond);
 
-	fprintf(fLog, "%s\nµ±«∞ ±º‰: %s", _T(strMsg), _T(strTime));
-	if(fLog)
+	fprintf(fLog, "%s\nÂΩìÂâçÊó∂Èó¥: %s", _T(strMsg), _T(strTime));
+	if (fLog)
 		fclose(fLog);
 
 	return TRUE;

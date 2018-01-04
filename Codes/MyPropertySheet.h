@@ -10,35 +10,33 @@
 /////////////////////////////////////////////////////////////////////////////
 // CMyPropertySheet
 
-// 增加了退出时删除无模式属性单包含的属性页
+// 澧炲姞浜嗛��鍑烘椂鍒犻櫎鏃犳ā寮忓睘鎬у崟鍖呭惈鐨勫睘鎬ч〉
 class CMyPropertySheet : public CPropertySheet
 {
 	DECLARE_DYNAMIC(CMyPropertySheet)
 
-// Construction
-public:
-	CMyPropertySheet(UINT nIDCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
-	CMyPropertySheet(LPCTSTR pszCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
+	// Construction
+  public:
+	CMyPropertySheet(UINT nIDCaption, CWnd *pParentWnd = NULL, UINT iSelectPage = 0);
+	CMyPropertySheet(LPCTSTR pszCaption, CWnd *pParentWnd = NULL, UINT iSelectPage = 0);
 
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
+	// Attributes
+  public:
+	// Operations
+  public:
+	// Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CMyPropertySheet)
-	protected:
+  protected:
 	virtual void PostNcDestroy();
 	//}}AFX_VIRTUAL
 
-// Implementation
-public:
+	// Implementation
+  public:
 	virtual ~CMyPropertySheet();
 
 	// Generated message map functions
-protected:
+  protected:
 	//{{AFX_MSG(CMyPropertySheet)
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()

@@ -8,83 +8,86 @@
 //
 
 //////////////////////////////////////////////////////
-#define TITLE_SIZE      64
-#define PROCESS_SIZE    MAX_PATH
-#define MAX_TASKS       256
+#define TITLE_SIZE 64
+#define PROCESS_SIZE MAX_PATH
+#define MAX_TASKS 256
 
-typedef struct _PROC_LIST {
-    DWORD       dwProcessId; //Ω¯≥Ã ID
-    DWORD       dwInheritedFromProcessId;
-    BOOL        flags;
-    HWND        hwnd; // ¥∞ø⁄æ‰±˙
-    CHAR        ProcessName[PROCESS_SIZE]; //Ω¯≥Ã√˚
-	CHAR        ProcessPath[MAX_PATH]; //Ω¯≥Ã¬∑æ∂
-    CHAR        WindowTitle[TITLE_SIZE]; //¥∞ÃÂ±ÍÃ‚
-	CHAR        ProcessPriority; //”≈œ»º∂
-	int         nThreads; // œﬂ≥Ã ˝
-	BOOL        IsSet;
+typedef struct _PROC_LIST
+{
+	DWORD dwProcessId; //ËøõÁ®ã ID
+	DWORD dwInheritedFromProcessId;
+	BOOL flags;
+	HWND hwnd;						// Á™óÂè£Âè•ÊüÑ
+	CHAR ProcessName[PROCESS_SIZE]; //ËøõÁ®ãÂêç
+	CHAR ProcessPath[MAX_PATH];		//ËøõÁ®ãË∑ØÂæÑ
+	CHAR WindowTitle[TITLE_SIZE];   //Á™ó‰ΩìÊ†áÈ¢ò
+	CHAR ProcessPriority;			//‰ºòÂÖàÁ∫ß
+	int nThreads;					// Á∫øÁ®ãÊï∞
+	BOOL IsSet;
 } PROC_LIST, *PPROC_LIST;
 
-typedef struct _PROC_LIST_ENUM {
-    PPROC_LIST  tlist;
-    DWORD       numtasks;
+typedef struct _PROC_LIST_ENUM
+{
+	PPROC_LIST tlist;
+	DWORD numtasks;
 } PROC_LIST_ENUM, *PPROC_LIST_ENUM;
 
 //
 // Function pointer types for accessing platform-specific functions
 //
 typedef DWORD (*LPGetTaskList)(PPROC_LIST, DWORD);
-typedef BOOL  (*LPEnableDebugPriv)(VOID);
+typedef BOOL (*LPEnableDebugPriv)(VOID);
 
 /////////////////////////////////////////////////////////////////////////////
 // CPropProcess dialog
 
-// Ω¯≥Ã¡–±Ì Ù–‘“≥µƒ¿‡
+// ËøõÁ®ãÂàóË°®Â±ûÊÄßÈ°µÁöÑÁ±ª
 class CPropProcess : public CPropertyPage
 {
 	DECLARE_DYNCREATE(CPropProcess)
 
-// Construction
-public:
+	// Construction
+  public:
 	CPropProcess();
 	~CPropProcess();
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CPropProcess)
-	enum { IDD = IDD_PROPPAGE_PROCESS };
-	CListCtrl	m_procList;
+	enum
+	{
+		IDD = IDD_PROPPAGE_PROCESS
+	};
+	CListCtrl m_procList;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generate virtual function overrides
 	//{{AFX_VIRTUAL(CPropProcess)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+  protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
-// Implementation
-public:
+	// Implementation
+  public:
 	DWORD GetSysID(void);
 
 	friend class CSysMonDlg;
 
-protected:
+  protected:
 	// Generated message map functions
 	//{{AFX_MSG(CPropProcess)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+	afx_msg void OnContextMenu(CWnd *pWnd, CPoint point);
 	afx_msg void OnProcTerminate();
 	afx_msg void OnProcRefresh();
 	afx_msg void OnProcSendmsg();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
-///////////////////////////////////////////////////////
-// Process Access Common Function
-public:
-
-protected:
+	///////////////////////////////////////////////////////
+	// Process Access Common Function
+  public:
+  protected:
 	BOOL RefreshProcList();
 	PROC_LIST curTaskList[MAX_TASKS];
 	int curTaskPos;
@@ -92,14 +95,14 @@ protected:
 	BOOL EnableDebugPriv(VOID);
 	BOOL GetTaskList(PPROC_LIST pTaskList, DWORD dwNumTasks);
 
-//
-// Function prototypes
-//
-BOOL KillProcess(PPROC_LIST pTask, BOOL fForce);
-VOID GetWindowTitles(PPROC_LIST_ENUM te);
-BOOL MatchPattern(PUCHAR String, PUCHAR Pattern);
+	//
+	// Function prototypes
+	//
+	BOOL KillProcess(PPROC_LIST pTask, BOOL fForce);
+	VOID GetWindowTitles(PPROC_LIST_ENUM te);
+	BOOL MatchPattern(PUCHAR String, PUCHAR Pattern);
 
-private:
+  private:
 	BOOL ForceKill;
 	DWORD GetTaskList95(PPROC_LIST pTaskList, DWORD dwNumTasks);
 	DWORD GetTaskListNT(PPROC_LIST pTask, DWORD dwNumTasks);

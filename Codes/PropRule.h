@@ -10,36 +10,38 @@
 /////////////////////////////////////////////////////////////////////////////
 // CPropRule dialog
 
-// 规则编辑属性页的类
+// 瑙勫垯缂栬緫灞炴�ч〉鐨勭被
 class CPropRule : public CPropertyPage
 {
 	DECLARE_DYNCREATE(CPropRule)
 
-// Construction
-public:
+	// Construction
+  public:
 	CPropRule();
 	~CPropRule();
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CPropRule)
-	enum { IDD = IDD_PROPPAGE_RULE };
-	CButton	m_applyNow;
-	CButton	m_addMon;
-	CButton	m_decMon;
-	CListCtrl	m_ruleList;
+	enum
+	{
+		IDD = IDD_PROPPAGE_RULE
+	};
+	CButton m_applyNow;
+	CButton m_addMon;
+	CButton m_decMon;
+	CListCtrl m_ruleList;
 	//}}AFX_DATA
 
-
-// Overrides
+	// Overrides
 	// ClassWizard generate virtual function overrides
 	//{{AFX_VIRTUAL(CPropRule)
-	public:
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	//}}AFX_VIRTUAL
+  public:
+  protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
-// Implementation
-protected:
+	// Implementation
+  protected:
 	BOOL WriteToLog(CString strMsg, LONG lErrMsg);
 	BOOL WriteToLog(CString strMsg);
 	BOOL ReBoot();
@@ -55,8 +57,8 @@ protected:
 	afx_msg void OnApplyNow();
 	afx_msg void OnCheckResource();
 	afx_msg void OnCheckSendmsg();
-	afx_msg void OnClickRulelist(NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg void OnRclickRulelist(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnClickRulelist(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnRclickRulelist(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnTimer(UINT nIDEvent);
 	afx_msg void OnChangeEditPercent();
 	afx_msg void OnChangeEditMsgto();
@@ -64,7 +66,7 @@ protected:
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
-private:
+  private:
 	BOOL bIsMon;
 	UINT IDT_MONTIMER;
 };

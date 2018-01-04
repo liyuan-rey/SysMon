@@ -15,38 +15,41 @@
 #include "PropService.h"
 #include "PropSysinfo.h"
 
-#define WM_SYSMONNOTIFY         WM_USER + 8048
+#define WM_SYSMONNOTIFY WM_USER + 8048
 
 /////////////////////////////////////////////////////////////////////////////
 // CSysMonDlg dialog
 
 class CSysMonDlg : public CDialog
 {
-// Construction
-public:
-	CSysMonDlg(CWnd* pParent = NULL);	// standard constructor
+	// Construction
+  public:
+	CSysMonDlg(CWnd *pParent = NULL); // standard constructor
 
-// Dialog Data
+	// Dialog Data
 	//{{AFX_DATA(CSysMonDlg)
-	enum { IDD = IDD_SYSMON_DIALOG };
+	enum
+	{
+		IDD = IDD_SYSMON_DIALOG
+	};
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CSysMonDlg)
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
-	//}}AFX_VIRTUAL
+  protected:
+	virtual void DoDataExchange(CDataExchange *pDX); // DDX/DDV support
+													 //}}AFX_VIRTUAL
 
-// Implementation
-protected:
+	// Implementation
+  protected:
 	int nIsHide;
-	CPropertySheet m_sheet;	// ÊôÐÔµ¥
-	CPropSysinfo m_propSysinfo;	// ÏµÍ³ÐÅÏ¢ÊôÐÔÒ³
-	CPropProcess m_propProcess;	// ½ø³Ì¹ÜÀíÊôÐÔÒ³
-	CPropService m_propService;	// ·þÎñÁÐ±íÊôÐÔÒ³
-	CPropRule m_propRule;  // ¹æÔòÉèÖÃÊôÐÔÒ³
-	CPropTask m_propTask;  // ¼Æ»®ÈÎÎñÊôÐÔÒ³
-	CPropSetting m_propSetting;	// ×ÛºÏÉèÖÃÊôÐÔÒ³
+	CPropertySheet m_sheet;		// å±žæ€§å•
+	CPropSysinfo m_propSysinfo; // ç³»ç»Ÿä¿¡æ¯å±žæ€§é¡µ
+	CPropProcess m_propProcess; // è¿›ç¨‹ç®¡ç†å±žæ€§é¡µ
+	CPropService m_propService; // æœåŠ¡åˆ—è¡¨å±žæ€§é¡µ
+	CPropRule m_propRule;		// è§„åˆ™è®¾ç½®å±žæ€§é¡µ
+	CPropTask m_propTask;		// è®¡åˆ’ä»»åŠ¡å±žæ€§é¡µ
+	CPropSetting m_propSetting; // ç»¼åˆè®¾ç½®å±žæ€§é¡µ
 	HICON m_hIcon;
 
 	// Generated message map functions
@@ -71,13 +74,13 @@ protected:
 	afx_msg void OnSvrRefresh();
 	afx_msg void OnSvrResume();
 	afx_msg void OnSvrStop();
-	afx_msg void OnUpdateSvrLoad(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateSvrLoad(CCmdUI *pCmdUI);
 	//}}AFX_MSG
-	afx_msg void OnSysMonNotify(WPARAM wParam,LPARAM lParam);
+	afx_msg void OnSysMonNotify(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
-private:
-//	UINT IDT_MYTIMER;
-//	DWORD SelectedProcID;
+  private:
+	//	UINT IDT_MYTIMER;
+	//	DWORD SelectedProcID;
 };
 
 //{{AFX_INSERT_LOCATION}}

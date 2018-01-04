@@ -13,7 +13,7 @@ static char THIS_FILE[] = __FILE__;
 
 CString GetLocalMachineName()
 {
-	char szWkstaName[MAX_COMPUTERNAME_LENGTH+1];
+	char szWkstaName[MAX_COMPUTERNAME_LENGTH + 1];
 	DWORD dwWSize = sizeof(szWkstaName);
 	GetComputerName(szWkstaName, &dwWSize);
 	CString strLocalMachineName = (CString)(LPCTSTR)szWkstaName;
@@ -23,29 +23,30 @@ CString GetLocalMachineName()
 
 void AutoSizeColumns(CListCtrl *m_List, int col = -1)
 {
-     m_List->SetRedraw(false); // ½ûÖ¹ÖØ»æ
-     int mincol = col < 0 ? 0 : col;
-     int maxcol = col < 0 ? (m_List->GetHeaderCtrl())->GetItemCount() - 1 : col;
-     for (col = mincol; col <= maxcol; col++) {
-          m_List->SetColumnWidth(col,LVSCW_AUTOSIZE);
-          int wc1 = m_List->GetColumnWidth(col);
-          m_List->SetColumnWidth(col,LVSCW_AUTOSIZE_USEHEADER);
-          int wc2 = m_List->GetColumnWidth(col);
-          int wc = MAX(MINCOLWIDTH,MAX(wc1,wc2)); // MAX Ä£°å, ¶¨ÒåÔÚ stdAfx.h ÖĞ
-          m_List->SetColumnWidth(col,wc);
-     }
-     m_List->SetRedraw(true); // ÔÊĞíÖØ»æ
+	m_List->SetRedraw(false); // ç¦æ­¢é‡ç»˜
+	int mincol = col < 0 ? 0 : col;
+	int maxcol = col < 0 ? (m_List->GetHeaderCtrl())->GetItemCount() - 1 : col;
+	for (col = mincol; col <= maxcol; col++)
+	{
+		m_List->SetColumnWidth(col, LVSCW_AUTOSIZE);
+		int wc1 = m_List->GetColumnWidth(col);
+		m_List->SetColumnWidth(col, LVSCW_AUTOSIZE_USEHEADER);
+		int wc2 = m_List->GetColumnWidth(col);
+		int wc = MAX(MINCOLWIDTH, MAX(wc1, wc2)); // MAX æ¨¡æ¿, å®šä¹‰åœ¨ stdAfx.h ä¸­
+		m_List->SetColumnWidth(col, wc);
+	}
+	m_List->SetRedraw(true); // å…è®¸é‡ç»˜
 }
 
 /////////////////////////////////////////////////////////////////////////////
 // CSysMonApp
 
 BEGIN_MESSAGE_MAP(CSysMonApp, CWinApp)
-	//{{AFX_MSG_MAP(CSysMonApp)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
-	//}}AFX_MSG
-	ON_COMMAND(ID_HELP, CWinApp::OnHelp)
+//{{AFX_MSG_MAP(CSysMonApp)
+// NOTE - the ClassWizard will add and remove mapping macros here.
+//    DO NOT EDIT what you see in these blocks of generated code!
+//}}AFX_MSG
+ON_COMMAND(ID_HELP, CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -75,21 +76,21 @@ BOOL CSysMonApp::InitInstance()
 	//  the specific initialization routines you do not need.
 
 #ifdef _AFXDLL
-	Enable3dControls();			// Call this when using MFC in a shared DLL
+	Enable3dControls(); // Call this when using MFC in a shared DLL
 #else
-	Enable3dControlsStatic();	// Call this when linking to MFC statically
+	Enable3dControlsStatic(); // Call this when linking to MFC statically
 #endif
 
-	// ·ÀÖ¹Ó¦ÓÃ³ÌĞòÁ½´Î¼ÓÔØ
-	CWnd* pWndPre;
-//	pWndPre = CWnd::FindWindow(_T("CSysMonDlg"), _T("SysMon"));
-	pWndPre = CWnd::FindWindow(_T("#32770"), _T("SysMon")); // #32770 ÎªÀà CSysMonDlg µÄ×¢²áÀàÃû
-	if(pWndPre != NULL)
+	// é˜²æ­¢åº”ç”¨ç¨‹åºä¸¤æ¬¡åŠ è½½
+	CWnd *pWndPre;
+	//	pWndPre = CWnd::FindWindow(_T("CSysMonDlg"), _T("SysMon"));
+	pWndPre = CWnd::FindWindow(_T("#32770"), _T("SysMon")); // #32770 ä¸ºç±» CSysMonDlg çš„æ³¨å†Œç±»å
+	if (pWndPre != NULL)
 	{
-/*		CHAR className[256];
+		/*		CHAR className[256];
 		GetClassName(pWndPre->m_hWnd, className, 255);
 		AfxMessageBox(_T(className));*/
-		AfxMessageBox(_T("ÄãÒÑ¾­ÔËĞĞÁËÒ»¸öÊµÀı!"));
+		AfxMessageBox(_T("ä½ å·²ç»è¿è¡Œäº†ä¸€ä¸ªå®ä¾‹!"));
 		return FALSE;
 	}
 
@@ -111,4 +112,3 @@ BOOL CSysMonApp::InitInstance()
 	//  application, rather than start the application's message pump.
 	return FALSE;
 }
-
